@@ -32,18 +32,11 @@ Interface." The `server` controls what the app _does_. For example, the app
 below defines a title and textbox where users can type. But it does not do
 anything, since the server is empty.
     
-    ```{r code=readLines("apps/app1.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app1.R")}
     ```
     
-    ```{r, echo = FALSE, fig.cap = "Screenshot of the app defined above."}
-    appshot(app = "apps/app1.R", file = "app1.png", vheight = 400)
-    include_graphics("app1.png")
-    ```
     
-    Note that in this an all the remaining Shiny examples, I've just included a
-    screenshot of the app. If you copy and run the code into a R file, you will
-    be able to run the app interactively. You can also just download the code
-    directly from the course github page.
+    <iframe src="https://data-viz.it.wisc.edu/content/43a4312c-a124-4b63-8228-23ba5375992b/" allowfullscreen="" data-external="1"></iframe>
 
 1. The UI elements can be further broken down into Inputs, Outputs, and
 Descriptors^[I like to use these names to keep everything organized, but they are not official, and you do not need to memorize this.], all grouped together by an organizing layout function. Inputs are
@@ -75,13 +68,10 @@ have the result of that computation appear to the user. For (1), we will add a
     For (2), we will add a `textOutput` element to the `ui` layout defined
     above. Let's look at the code,
     
-    ```{r code=readLines("apps/app2.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app2.R")}
     ```
     
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app2.R", file = "app2.png", vheight = 400)
-    include_graphics("app2.png")
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/541af110-2ce1-46d1-b293-f38a96e125f3/" allowfullscreen="" data-external="1"></iframe>
     
 1. There are a few points worth noting. First, the `renderText` component was
 able to refer to the value entered in the textbox using `input$name`. This was
@@ -110,16 +100,12 @@ user. We've introduced a new type of input, a `numericInput`, which captures
 numbers. We've also added a new output, `plotOutput`, allowing with its
 accompanying renderer, `renderPlot` (remember, UI outputs are always paired with
 server renderers).
-    
-    ```{r code=readLines("apps/app3.R")}
-    ```
-    
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app3.R", file = "app3.png", vheight = 400, delay=5)
-    include_graphics("app3.png")
-    ```
-    
 
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app3.R")}
+    ```
+    
+    <iframe src="https://data-viz.it.wisc.edu/content/2cc8cc90-7c51-493c-81e1-a6b8919cd6a6/" allowfullscreen="" data-external="1" height=535 width=600></iframe>
+    
 1. We can make the plot depend on several inputs. The code below allows the user
 to change the total number of data points and the variance, this time using
 slider inputs. I recommend taking a look at different inputs on the shiny
@@ -127,26 +113,20 @@ slider inputs. I recommend taking a look at different inputs on the shiny
 aware that there are many
 [extensions](https://github.com/nanxstats/awesome-shiny-extensions) built by the
 community.
-    
-    ```{r code=readLines("apps/app4.R")}
+
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app4.R")}
     ```
     
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app4.R", file = "app4.png", vheight = 400, delay=5)
-    include_graphics("app4.png")
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/3d0d8a20-446a-438a-b373-bd06206f178f/" allowfullscreen="" data-external="1" height=735 width=600></iframe>
 
 1. We can also make the app return several outputs, not just a plot. The code
 below attempts to print the data along in addition to the histogram, but it
 makes a crucial mistake (can you spot it?).
-    
-    ```{r code=readLines("apps/app5.R")}
+
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app5.R")}
     ```
     
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app5.R", file = "app5.png", vheight = 400, delay=5)
-    include_graphics("app5.png")
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/15f7837a-64b6-4f73-9b4a-13f2ca168daa/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
     
 1. The issue is that this code reruns `rnorm` for each output. So, even though
 the interfaces suggests that the printed samples are the same as the ones in the
@@ -157,14 +137,11 @@ reactive expression. It is a type of server element that depends on the input
 and can be referred to directly by outputs, which call the reactive expression
 like a function. For example, the code below generates the random normal samples
 a single time, using the `samples()` reactive expression.
-    
-    ```{r code=readLines("apps/app6.R")}
+
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app6.R")}
     ```
     
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app6.R", file = "app6.png", vheight = 400, delay=5)
-    include_graphics("app6.png")
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/3e53bb63-a19a-4ded-8ab6-5ffbc9447c8f/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
     
 1. Finally, a good practice is to move as much non-app related code to separate
 functions. This makes the flow of the app more transparent. The clearer the
@@ -172,10 +149,7 @@ delineation between "computation required for individual app components" and
 "relationship across components," the easier the code will be to understand and
 extend.
 
-    ```{r code=readLines("apps/app7.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app7.R")}
     ```
     
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app7.R", file = "app7.png", vheight = 400, delay=5)
-    include_graphics("app7.png")
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/fe220e82-becf-4cc6-891c-7fa1c69ba850/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
