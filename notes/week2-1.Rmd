@@ -17,10 +17,6 @@ opts_chunk$set(
   fig.path = "stat679_notes/assets/week2-1/"
   )
 ```
-```{r}
-library(tidyverse)
-theme_set(theme_minimal())
-```
 
 1. All Shiny apps are made up from the same few building blocks. These notes
 review the main types of blocks. When reading code from more complex apps, it
@@ -34,7 +30,6 @@ anything, since the server is empty.
     
     ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/tuesday/app1.R")}
     ```
-    
     
     <iframe src="https://data-viz.it.wisc.edu/content/43a4312c-a124-4b63-8228-23ba5375992b/" allowfullscreen="" data-external="1"></iframe>
 
