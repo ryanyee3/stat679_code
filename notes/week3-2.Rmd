@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-__
+__An introduction to brush events in Shiny__
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -17,8 +17,6 @@ opts_chunk$set(
   fig.path = "stat679_notes/assets/week3-2/"
   )
 ```
-
-_An introduction to brush events in Shiny_
 
 1. Click events are useful for referring to individual samples. However, they
 are not ideal for referring to groups of samples. In this case, a useful type of
@@ -59,14 +57,10 @@ define a new brush input, we can set the `brush` argument to `plotOutput`.
 notes. Instead of sorting points by proximity to the click, though, prints the
 subset of rows that have been currently brushed.
 
-    ```{r code=readLines("apps/app3.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-02/apps/app3.R")}
     ```
     
-    https://data-viz.it.wisc.edu/content/a651bc7b-6773-445d-8bc6-22084155e21a
-    
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app3.R", file = "app3.png", vheight = 400, delay=5)
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/a651bc7b-6773-445d-8bc6-22084155e21a/" allowfullscreen="" data-external="1" height=700 width=600></iframe>
 
 1. It is often useful to combine multi-view composition (_i.e._, faceting or
 compound figures) with dynamic queries. The basic idea is to (a) show different
@@ -80,9 +74,8 @@ structure beyond two dimensions. The implementation is similar to the brushing
 above, except that the reactive value `selected()` is called in two `renderPlot`
 contexts, leading to changes in both plots every time the brush is moved.
 
-    ```{r code=readLines("apps/app4.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-02/apps/app4.R")}
     ```
     
-    ```{r, echo = FALSE}
-    appshot(app = "apps/app4.R", file = "app4.png", vheight = 400, delay=5)
-    ```
+    <iframe src="https://data-viz.it.wisc.edu/content/8e4b07a5-d671-40cb-9d57-22d25533b8fe/" allowfullscreen="" data-external="1" height=800 width=600></iframe>
+    
