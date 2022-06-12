@@ -33,19 +33,54 @@ output:
         *V* = {All directories in a computer}, (*v*,*v*<sup>′</sup>) ∈ *E*
         if one directory is contained in the other.
 
-    ![A visualization of the internet, from the [Opte
-    Project](https://opte.org).](/https://uwmadison.box.com/shared/static/cjk3i7mephlyguka9y5h1d40uy9rhdk2.png)
+    <figure>
 
-    ![An evolutionary tree, from the [Interactive Tree of
-    Life](https://itol.embl.de/).](/https://itol.embl.de/img/home/box2.png)
+    <img src="https://uwmadison.box.com/shared/static/cjk3i7mephlyguka9y5h1d40uy9rhdk2.png"
+            alt="The Opte project.">
 
-    ![A COVID-19 transmission network, from *Clustering and
-    superspreading potential of SARS-CoV-2 infections in Hong
-    Kong*.](/https://uwmadison.box.com/shared/static/wlnq401dxdd9pwdtg0ewgnhx7w9nzwbp.png)
+    <figcaption>
 
-    ![Directories in a file system can be organized into a tree, with
-    parent and child
-    directories.](/https://uwmadison.box.com/shared/static/erbi39htkgzndhxh8yhvcoq3imfkxdca.png)
+    A visualization of the internet, from the
+    <a href="https://opte.org">Opte Project</a>.
+
+    </figcaption>
+    </figure>
+    <figure>
+
+    <img src="https://itol.embl.de/img/home/box2.png"
+            alt="The Opte project.">
+
+    <figcaption>
+
+    An evolutionary tree, from the
+    <a href="https://itol.embl.de/">Interactive Tree of Life”&gt;</a>
+
+    </figcaption>
+    </figure>
+    <figure>
+
+    <img src="https://uwmadison.box.com/shared/static/wlnq401dxdd9pwdtg0ewgnhx7w9nzwbp.png"
+          alt="COVID-19 transmission network.">
+
+    <figcaption>
+
+    A COVID-19 transmission network, from “Clustering and superspreading
+    potential of SARS-CoV-2 infections in Hong Kong.”
+
+    </figcaption>
+    </figure>
+    <figure>
+
+    <img src="https://uwmadison.box.com/shared/static/erbi39htkgzndhxh8yhvcoq3imfkxdca.png"
+          alt="Directories in a file system can be organized into a tree, with parent and child directories.">
+
+    <figcaption>
+
+    Directories in a file system can be organized into a tree, with
+    parent and child directories.
+
+    </figcaption>
+    </figure>
 
 3.  Either vertices or edges might have attributes. For example, in the
     directory tree, we might know the sizes of the files (vertex
@@ -90,7 +125,7 @@ output:
           geom_edge_link() +
           geom_node_point()
 
-    ![](/stat679_notes/assets/week9-1/unnamed-chunk-8-1.png)
+    ![](/stat679_notes/assets/week9-1/unnamed-chunk-4-1.png)
 
 6.  We can mutate node and edge attributes using dplyr-like syntax. We
     have to distinguish node and edge mutations using `%N>%` and `%E>%`,
@@ -111,11 +146,11 @@ output:
         ## # Edge Data: 5 × 3 (active)
         ##    from    to width
         ##   <int> <int> <dbl>
-        ## 1     1     3 0.448
-        ## 2     2     3 0.629
-        ## 3     3     4 0.879
-        ## 4     4     5 0.536
-        ## 5     5     6 0.941
+        ## 1     1     3 0.164
+        ## 2     2     3 0.822
+        ## 3     3     4 0.457
+        ## 4     4     5 0.922
+        ## 5     5     6 0.141
         ## #
         ## # Node Data: 6 × 2
         ##      id group
@@ -133,7 +168,7 @@ output:
           geom_node_label(aes(label = id))
 
     ![The same network as above, but with edge size encoding the weight
-    attribute.](/stat679_notes/assets/week9-1/unnamed-chunk-10-1.png)
+    attribute.](/stat679_notes/assets/week9-1/unnamed-chunk-6-1.png)
 
 ### Example Tasks
 
@@ -160,9 +195,18 @@ output:
     -   Clusters in a recipe network could be used identify different
         culinary techniques or cuisines.
 
-    ![A representation of 1200 blogs before the 2004 election, from *The
-    political blogosphere and the 2004 US election: divided they
-    blog*.](/http://www.visualcomplexity.com/vc/images/227_big02.jpg)
+    <figure>
+
+    <img src="http://www.visualcomplexity.com/vc/images/227_big02.jpg"
+            alt="COVID-19 transmission network.">
+
+    <figcaption>
+
+    A representation of 1200 blogs before the 2004 election, from “The
+    political blogosphere and the 2004 US election: divided they blog.”
+
+    </figcaption>
+    </figure>
 
 4.  By “following paths,” we mean tracing the paths out from a
     particular node, to see which other nodes it is close to.
@@ -172,8 +216,18 @@ output:
     -   Following paths in a recommendation network might suggest other
         users who might be interested in watching a certain movie.
 
-    ![A recommendation network, linking individuals and the movies that
-    they viewed.](/https://psl.linqs.org/assets/images/hyper/fig3.png)
+    <figure>
+
+    <img src="https://psl.linqs.org/assets/images/hyper/fig3.png"
+            alt="Recommendation network">
+
+    <figcaption>
+
+    A recommendation network, linking individuals and the movies that
+    they viewed.
+
+    </figcaption>
+    </figure>
 
 5.  “Isolating key nodes” is a more fuzzy concept, usually referring to
     the task of finding nodes that are exceptional in some way. For
@@ -187,10 +241,19 @@ output:
     -   A node with large size in a directory tree might be a good
         target for reducing disk usage.
 
-    ![The scientific journal, Social Networks, links several publication
-    communities, as found by *Betweenness Centrality as an Indicator of
-    the Interdisciplinarity of Scientific
-    Journals*.](/https://www.leydesdorff.net/betweenness/index_files/image008.jpg)
+    <figure>
+
+    <img src="https://www.leydesdorff.net/betweenness/index_files/image008.jpg"
+            alt="Recommendation network">
+
+    <figcaption>
+
+    The scientific journal, Social Networks, links several publication
+    communities, as found by “Betweenness Centrality as an Indicator of
+    the Interdisciplinarity of Scientific Journals.”
+
+    </figcaption>
+    </figure>
 
 6.  If you find these questions interesting, you might enjoy the catalog
     of examples on the website

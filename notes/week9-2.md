@@ -86,20 +86,40 @@ output:
     data to salvage the node-link display. For example, in a large tree,
     a rectangular or BubbleTree layout can be used.
 
-    ![Example rectangular and BubbleTree layouts, for very large trees,
-    as shown in Visualization Analysis and
-    Design.](/https://uwmadison.box.com/shared/static/r9boadgujdkp0xy3hk23n6j2ri13yh6h.png)
+    <figure>
+
+    <img src="https://uwmadison.box.com/shared/static/r9boadgujdkp0xy3hk23n6j2ri13yh6h.png"
+            alt="Recommendation network">
+
+    <figcaption>
+
+    Example rectangular and BubbleTree layouts, for very large trees, as
+    shown in Visualization Analysis and Design.
+
+    </figcaption>
+    </figure>
 
 If a large network has a modular structure, then it is possible to first
 lay out the separate clusters far apart from one another, before running
 force directed placement.
 
-    ![A hierarchical force directed layout algorithm, as shown in Visualization Analysis and Design.](/https://uwmadison.box.com/shared/static/0zihaty78j8ytmdjwlqetbxpjzbrz8k6.png)
+    <figure>
+    <img src="https://uwmadison.box.com/shared/static/0zihaty78j8ytmdjwlqetbxpjzbrz8k6.png"
+         alt="Hierarchical layout">
+    <figcaption>A hierarchical force directed layout algorithm, as shown in Visualization Analysis and Design.</figcaption>
+
+</figure>
 
 If many edges go through a few shared paths, it may be possible to
 bundle them.
 
-    ![In edge bundling, similar paths are placed close to one another.](/https://www.data-to-viz.com/graph/IMG/bundle_compare.png)
+    <figure>
+    <img src="https://www.data-to-viz.com/graph/IMG/bundle_compare.png"
+         alt="Hierarchical layout">
+    <figcaption>In edge bundling, similar paths are placed close to one another.
+    </figcaption>
+
+</figure>
 
 Bundled connections can be visualized using the `geom_conn_bundle`
 geometry in ggraph. Before using this layout, it is necessary to have a
@@ -115,7 +135,7 @@ nodes is how the proximity of paths is determined.
       coord_fixed()
     ```
 
-    ![An example of hierarchical edge bundling in R.](/stat679_notes/assets/week9-2/unnamed-chunk-9-1.png)
+    ![An example of hierarchical edge bundling in R.](/stat679_notes/assets/week9-2/unnamed-chunk-6-1.png)
 
 1.  To summarize, node-link diagrams are very good for characterizing
     local structure, but struggle with large networks.

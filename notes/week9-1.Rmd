@@ -43,21 +43,32 @@ vertices.
 	* Directory Tree: $V = \{\text{All directories in a computer}\}, \left(v,
 	v^{\prime}\right) \in E$ if one directory is contained in the other.
 	
-    ```{r, fig.cap = "A visualization of the internet, from the [Opte Project](https://opte.org).", echo = FALSE}
-    include_graphics("https://uwmadison.box.com/shared/static/cjk3i7mephlyguka9y5h1d40uy9rhdk2.png")
-    ```
-    	
-    ```{r, fig.cap = "An evolutionary tree, from the [Interactive Tree of Life](https://itol.embl.de/).", echo = FALSE}
-    include_graphics("https://itol.embl.de/img/home/box2.png")
-    ```
-    	
-    ```{r, fig.cap = "A COVID-19 transmission network, from *Clustering and superspreading potential of SARS-CoV-2 infections in Hong Kong*.", echo = FALSE}
-    include_graphics("https://uwmadison.box.com/shared/static/wlnq401dxdd9pwdtg0ewgnhx7w9nzwbp.png")
-    ```
-    	
-    ```{r, fig.cap = "Directories in a file system can be organized into a tree, with parent and child directories.", echo = FALSE}
-    include_graphics("https://uwmadison.box.com/shared/static/erbi39htkgzndhxh8yhvcoq3imfkxdca.png")
-    ```
+  	<figure>
+      <img src="https://uwmadison.box.com/shared/static/cjk3i7mephlyguka9y5h1d40uy9rhdk2.png"
+           alt="The Opte project.">
+      <figcaption>A visualization of the internet, from the <a href="https://opte.org">Opte Project</a>.</figcaption>
+  </figure>
+  
+  	<figure>
+      <img src="https://itol.embl.de/img/home/box2.png"
+           alt="The Opte project.">
+      <figcaption>An evolutionary tree, from the <a href="https://itol.embl.de/">Interactive Tree of Life"></a>
+      </figcaption>
+  </figure>
+
+	<figure>
+    <img src="https://uwmadison.box.com/shared/static/wlnq401dxdd9pwdtg0ewgnhx7w9nzwbp.png"
+         alt="COVID-19 transmission network.">
+    <figcaption>A COVID-19 transmission network, from "Clustering and superspreading potential of SARS-CoV-2 infections in Hong Kong."
+    </figcaption>
+  </figure>
+  
+	<figure>
+    <img src="https://uwmadison.box.com/shared/static/erbi39htkgzndhxh8yhvcoq3imfkxdca.png"
+         alt="Directories in a file system can be organized into a tree, with parent and child directories.">
+    <figcaption>Directories in a file system can be organized into a tree, with parent and child directories.
+    </figcaption>
+  </figure>
    
 1. Either vertices or edges might have attributes. For example, in the directory
 tree, we might know the sizes of the files (vertex attribute), and in the
@@ -134,10 +145,13 @@ the clusters.
 	needed for the production of an important protein.
 	* Clusters in a recipe network could be used identify different culinary
 	techniques or cuisines.
-
-    ```{r, fig.cap = "A representation of 1200 blogs before the 2004 election, from *The political blogosphere and the 2004 US election: divided they blog*.", echo = FALSE}
-    include_graphics("http://www.visualcomplexity.com/vc/images/227_big02.jpg")
-    ```
+	
+  	<figure>
+      <img src="http://www.visualcomplexity.com/vc/images/227_big02.jpg"
+           alt="COVID-19 transmission network.">
+      <figcaption>A representation of 1200 blogs before the 2004 election, from "The political blogosphere and the 2004 US election: divided they blog."
+      </figcaption>
+    </figure>
     	
 1. By "following paths," we mean tracing the paths out from a particular node,
 to see which other nodes it is close to.
@@ -146,10 +160,13 @@ to see which other nodes it is close to.
 	that led to an important discovery.
 	* Following paths in a recommendation network might suggest other users who
 	might be interested in watching a certain movie.
-    	
-    ```{r, fig.cap = "A recommendation network, linking individuals and the movies that they viewed.", echo = FALSE}
-    include_graphics("https://psl.linqs.org/assets/images/hyper/fig3.png")
-    ```
+	
+  	<figure>
+      <img src="https://psl.linqs.org/assets/images/hyper/fig3.png"
+           alt="Recommendation network">
+      <figcaption>A recommendation network, linking individuals and the movies that they viewed.
+      </figcaption>
+    </figure>
 	
 1. "Isolating key nodes" is a more fuzzy concept, usually referring to the task
 of finding nodes that are exceptional in some way. For example, it’s often
@@ -161,10 +178,13 @@ otherwise isolated clusters.
 	interdisciplinary.
 	* A node with large size in a directory tree might be a good target for
 	reducing disk usage.
+	
+  	<figure>
+      <img src="https://www.leydesdorff.net/betweenness/index_files/image008.jpg"
+           alt="Recommendation network">
+      <figcaption>The scientific journal, Social Networks, links several publication communities, as found by "Betweenness Centrality as an Indicator of the  Interdisciplinarity of Scientific Journals."
+      </figcaption>
+    </figure>
     	
-    ```{r, fig.cap = "The scientific journal, Social Networks, links several publication communities, as found by *Betweenness Centrality as an Indicator of the  Interdisciplinarity of Scientific Journals*.", echo = FALSE}
-    include_graphics("https://www.leydesdorff.net/betweenness/index_files/image008.jpg")
-    ```
-  	
 1. If you find these questions interesting, you might enjoy the catalog of
 examples on the website [VisualComplexity](http://www.visualcomplexity.com/vc/).

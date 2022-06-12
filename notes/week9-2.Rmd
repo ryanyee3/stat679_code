@@ -92,24 +92,30 @@ The nodes and edges begin to overlap too much, and the result looks like a
 1. In this situation, it is possible to use additional structure in the data to
 salvage the node-link display. For example, in a large tree, a rectangular or
 BubbleTree layout can be used.
-    	
-    ```{r, fig.cap = "Example rectangular and BubbleTree layouts, for very large trees, as shown in Visualization Analysis and Design.", echo = FALSE}
-    include_graphics("https://uwmadison.box.com/shared/static/r9boadgujdkp0xy3hk23n6j2ri13yh6h.png")
-    ```
+	
+  	<figure>
+      <img src="https://uwmadison.box.com/shared/static/r9boadgujdkp0xy3hk23n6j2ri13yh6h.png"
+           alt="Recommendation network">
+      <figcaption>Example rectangular and BubbleTree layouts, for very large trees, as shown in Visualization Analysis and Design. </figcaption>
+    </figure>
   	
-If a large network has a modular structure, then it is possible to first lay out the separate clusters far apart from one another, before running force directed placement.
+  If a large network has a modular structure, then it is possible to first lay out the separate clusters far apart from one another, before running force directed placement.
     	
-    ```{r, fig.cap = "A hierarchical force directed layout algorithm, as shown in Visualization Analysis and Design.", echo = FALSE}
-    include_graphics("https://uwmadison.box.com/shared/static/0zihaty78j8ytmdjwlqetbxpjzbrz8k6.png")
-    ```
+  	<figure>
+      <img src="https://uwmadison.box.com/shared/static/0zihaty78j8ytmdjwlqetbxpjzbrz8k6.png"
+           alt="Hierarchical layout">
+      <figcaption>A hierarchical force directed layout algorithm, as shown in Visualization Analysis and Design.</figcaption>
+    </figure>
   
-If many edges go through a few shared paths, it may be possible to bundle them.
-    
-    ```{r, echo = FALSE, fig.cap = "In edge bundling, similar paths are placed close to one another."}
-    include_graphics("https://www.data-to-viz.com/graph/IMG/bundle_compare.png")
-    ```
+  If many edges go through a few shared paths, it may be possible to bundle them.
   
-Bundled connections can be visualized using the `geom_conn_bundle` geometry in
+  	<figure>
+      <img src="https://www.data-to-viz.com/graph/IMG/bundle_compare.png"
+           alt="Hierarchical layout">
+      <figcaption>In edge bundling, similar paths are placed close to one another.</figcaption>
+    </figure>
+      
+  Bundled connections can be visualized using the `geom_conn_bundle` geometry in
 ggraph. Before using this layout, it is necessary to have a hierarchy over all
 the nodes, since shared ancestry among connected nodes is how the proximity of
 paths is determined.
