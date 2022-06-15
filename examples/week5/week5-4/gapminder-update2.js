@@ -14,9 +14,9 @@ function visualize(data) {
 }
 
 function initialize(data, year) {
-  scales = make_scales(data)
+  let scales = make_scales(data)
+  setup_inputs(data, scales)
   data = data.filter(d => d.year == year)
-  setup_inputs(data)
 
   d3.select("svg")
     .selectAll("circle")
@@ -29,10 +29,11 @@ function initialize(data, year) {
     })
 }
 
-function update_continents(data) {
-  let subset = data.filter(d => d.continent == cur_value);
-  let selection = d3.select("svg").selectAll("circle")
-    .data(subset, d => d.country)
+function update_continents(ev, data, scales) {
+  continent = $(ev.target).val()
+  let subset = data.filter(d => continent.indexOf(d.continent) != -1 & d.year == year);
+      selection = d3.select("svg").selectAll("circle")
+        .data(subset, d => d.country)
 
   selection.enter()
     .append("circle")
@@ -43,6 +44,19 @@ function update_continents(data) {
     })
 
   selection.exit().remove()
+}
+
+function update_year(ev, data, scales) {
+  year = +ev.target.value
+  subset = data.filter(d => d.year == year)
+  d3.select("svg").selectAll("circle")
+    .data(subset, d => d.country)
+    .transition()
+    .duration(1000)
+    .attrs({
+      cx: d => scales.x(d.lpop),
+      cy: d => scales.y(d.life_expectancy)
+    })
 }
 
 function make_scales(data) {
@@ -59,16 +73,20 @@ function make_scales(data) {
   }
 }
 
-function setup_inputs(data) {
+function setup_inputs(data, scales) {
   d3.select("#country_select")
     .selectAll("option")
     .data([... new Set(data.map(d => d.continent))]).enter()
     .append("option")
     .text(d => d)
   d3.select("#country_select")
-    .on("change", () => update_continents(data))
+    .on("change", (ev) => update_continents(ev, data, scales))
+
+  d3.select("#year_slider")
+    .on("change", (ev) => update_year(ev, data, scales))
 }
 
-let continent = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
+let year = 1965,
+  continent = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);
