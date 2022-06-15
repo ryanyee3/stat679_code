@@ -10,14 +10,13 @@ function parse_row(d) {
 }
 
 function visualize(data) {
-  initialize(data, 1965);
+  data = data.filter(d => d.year == year)
+  let scales = make_scales(data)
+  initialize(data, year, scales);
+  setup_inputs(data, scales)
 }
 
-function initialize(data, year) {
-  scales = make_scales(data)
-  data = data.filter(d => d.year == year)
-  setup_inputs(data)
-
+function initialize(data, year, scales) {
   d3.select("svg")
     .selectAll("circle")
     .data(data, d => d.country).enter()
@@ -29,11 +28,12 @@ function initialize(data, year) {
     })
 }
 
-function update_continents(data) {
-  let subset = data.filter(d => d.continent == cur_value);
+function update_continents(ev, data, scales) {
+  continent = $(ev.target).val()
+  let subset = data.filter(d => continent.indexOf(d.continent) != -1);
+
   let selection = d3.select("svg").selectAll("circle")
     .data(subset, d => d.country)
-
   selection.enter()
     .append("circle")
     .attrs({
@@ -47,28 +47,29 @@ function update_continents(data) {
 
 function make_scales(data) {
   return {
+    y: d3.scaleLinear()
+         .domain(d3.extent(data.map(d => d.life_expectancy)))
+         .range([0, 500]),
     x: d3.scaleLinear()
          .domain([0, d3.max(data.map(d => d.lpop))])
          .range([0, 700]),
-    y: d3.scaleLinear()
-         .domain([0, d3.max(data.map(d => d.life_expectancy))])
-         .range([0, 500]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.continent))])
       .range(d3.schemeSet2)
   }
 }
 
-function setup_inputs(data) {
+function setup_inputs(data, scales) {
   d3.select("#country_select")
     .selectAll("option")
     .data([... new Set(data.map(d => d.continent))]).enter()
     .append("option")
     .text(d => d)
   d3.select("#country_select")
-    .on("change", () => update_continents(data))
+    .on("change", (ev) => update_continents(ev, data, scales))
 }
 
-let continent = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
+let year = 1965,
+    continent = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);

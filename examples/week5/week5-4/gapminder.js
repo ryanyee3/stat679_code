@@ -31,12 +31,12 @@ function initialize(data, year) {
 
 function make_scales(data) {
   return {
+    y: d3.scaleLinear()
+         .domain(d3.extent(data.map(d => d.life_expectancy)))
+         .range([0, 500]),
     x: d3.scaleLinear()
          .domain([0, d3.max(data.map(d => d.lpop))])
          .range([0, 700]),
-    y: d3.scaleLinear()
-         .domain([0, d3.max(data.map(d => d.life_expectancy))])
-         .range([0, 500]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.continent))])
       .range(d3.schemeSet2)
