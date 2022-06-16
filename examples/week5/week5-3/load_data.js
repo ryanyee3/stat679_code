@@ -9,24 +9,17 @@ function parse_row(d) {
 }
 
 function visualize(data) {
-  initialize(data, year);
-}
-
-function initialize(data, year) {
-  data = data.filter(d => d.year == year)
-  console.log(data)
-
+  data = data.filter(d => d.year == 1965)
   d3.select("svg")
     .selectAll("circle")
     .data(data).enter()
     .append("circle")
     .attrs({
       cx: d => 10 * d.lpop,
-      cy: d => d.life_expectancy
+      cy: d => d.life_expectancy,
+      r: 10
      })
 }
 
-
-year = 1965
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);
