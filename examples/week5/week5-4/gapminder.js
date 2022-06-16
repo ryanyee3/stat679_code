@@ -1,22 +1,7 @@
 
-function parse_row(d) {
-  return {
-    country: d.country,
-    continent: d.continent,
-    year: +d.year,
-    lpop: +d.lpop,
-    life_expectancy: +d.life_expectancy
-  }
-}
-
 function visualize(data) {
-  initialize(data, year);
-}
-
-function initialize(data, year) {
   scales = make_scales(data)
-  data = data.filter(d => d.year == year)
-  console.log(data)
+  data = data.filter(d => d.year == 1965)
 
   d3.select("svg")
     .selectAll("circle")
@@ -35,7 +20,7 @@ function make_scales(data) {
          .domain(d3.extent(data.map(d => d.life_expectancy)))
          .range([0, 500]),
     x: d3.scaleLinear()
-         .domain([0, d3.max(data.map(d => d.lpop))])
+         .domain(d3.extent(data.map(d => d.lpop)))
          .range([0, 700]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.continent))])
@@ -43,6 +28,15 @@ function make_scales(data) {
   }
 }
 
-year = 1965
+function parse_row(d) {
+  return {
+    country: d.country,
+    continent: d.continent,
+    year: +d.year,
+    lpop: +d.lpop,
+    life_expectancy: +d.life_expectancy
+  }
+}
+
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);

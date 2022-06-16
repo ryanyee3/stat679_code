@@ -1,12 +1,7 @@
 
-function parse_row(d) {
-  return {
-    country: d.country,
-    continent: d.continent,
-    year: +d.year,
-    lpop: +d.lpop,
-    life_expectancy: +d.life_expectancy
-  }
+function setup_inputs(data, scales) {
+  d3.select("#country_select")
+    .on("change", (ev) => update_continents(ev, data, scales))
 }
 
 function visualize(data) {
@@ -29,8 +24,8 @@ function initialize(data, year, scales) {
 }
 
 function update_continents(ev, data, scales) {
-  continent = $(ev.target).val()
-  let subset = data.filter(d => continent.indexOf(d.continent) != -1);
+  continents = $(ev.target).val()
+  let subset = data.filter(d => continents.indexOf(d.continent) != -1);
 
   let selection = d3.select("svg").selectAll("circle")
     .data(subset, d => d.country)
@@ -41,7 +36,6 @@ function update_continents(ev, data, scales) {
       cy: d => scales.y(d.life_expectancy),
       fill: d => scales.fill(d.continent),
     })
-
   selection.exit().remove()
 }
 
@@ -51,7 +45,7 @@ function make_scales(data) {
          .domain(d3.extent(data.map(d => d.life_expectancy)))
          .range([0, 500]),
     x: d3.scaleLinear()
-         .domain([0, d3.max(data.map(d => d.lpop))])
+         .domain(d3.extent(data.map(d => d.lpop)))
          .range([0, 700]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.continent))])
@@ -59,17 +53,17 @@ function make_scales(data) {
   }
 }
 
-function setup_inputs(data, scales) {
-  d3.select("#country_select")
-    .selectAll("option")
-    .data([... new Set(data.map(d => d.continent))]).enter()
-    .append("option")
-    .text(d => d)
-  d3.select("#country_select")
-    .on("change", (ev) => update_continents(ev, data, scales))
+function parse_row(d) {
+  return {
+    country: d.country,
+    continent: d.continent,
+    year: +d.year,
+    lpop: +d.lpop,
+    life_expectancy: +d.life_expectancy
+  }
 }
 
 let year = 1965,
-    continent = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
+    continents = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);

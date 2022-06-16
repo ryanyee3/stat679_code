@@ -1,23 +1,12 @@
 
-function parse_row(d) {
-  return {
-    country: d.country,
-    continent: d.continent,
-    year: +d.year,
-    lpop: +d.lpop,
-    life_expectancy: +d.life_expectancy
-  }
-}
-
 function visualize(data) {
-  initialize(data, 1965);
-}
-
-function initialize(data, year) {
   let scales = make_scales(data)
   setup_inputs(data, scales)
   data = data.filter(d => d.year == year)
+  initialize(data, scales);
+}
 
+function initialize(data, scales) {
   d3.select("svg")
     .selectAll("circle")
     .data(data, d => d.country).enter()
@@ -30,8 +19,8 @@ function initialize(data, year) {
 }
 
 function update_continents(ev, data, scales) {
-  continent = $(ev.target).val()
-  let subset = data.filter(d => continent.indexOf(d.continent) != -1 & d.year == year);
+  continents = $(ev.target).val()
+  let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
 
   let selection = d3.select("svg").selectAll("circle")
     .data(subset, d => d.country)
@@ -42,13 +31,12 @@ function update_continents(ev, data, scales) {
       cy: d => scales.y(d.life_expectancy),
       fill: d => scales.fill(d.continent),
     })
-
   selection.exit().remove()
 }
 
 function update_year(ev, data, scales) {
   year = +ev.target.value
-  subset = data.filter(d => d.year == year)
+  let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
   d3.select("svg").selectAll("circle")
     .data(subset, d => d.country)
     .transition()
@@ -57,6 +45,13 @@ function update_year(ev, data, scales) {
       cx: d => scales.x(d.lpop),
       cy: d => scales.y(d.life_expectancy)
     })
+}
+
+function setup_inputs(data, scales) {
+  d3.select("#country_select")
+    .on("change", (ev) => update_continents(ev, data, scales))
+  d3.select("#year_slider")
+    .on("change", (ev) => update_year(ev, data, scales))
 }
 
 function make_scales(data) {
@@ -73,20 +68,17 @@ function make_scales(data) {
   }
 }
 
-function setup_inputs(data, scales) {
-  d3.select("#country_select")
-    .selectAll("option")
-    .data([... new Set(data.map(d => d.continent))]).enter()
-    .append("option")
-    .text(d => d)
-  d3.select("#country_select")
-    .on("change", (ev) => update_continents(ev, data, scales))
-
-  d3.select("#year_slider")
-    .on("change", (ev) => update_year(ev, data, scales))
+function parse_row(d) {
+  return {
+    country: d.country,
+    continent: d.continent,
+    year: +d.year,
+    lpop: +d.lpop,
+    life_expectancy: +d.life_expectancy
+  }
 }
 
 let year = 1965,
-  continent = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
+  continents = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);
