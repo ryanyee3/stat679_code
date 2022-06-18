@@ -17,25 +17,29 @@ function initialize(data, scales) {
       fill: d => scales.fill(d.continent)
     })
 
+  annotations(scales)
+}
+
+function annotations(scales) {
   let x_axis = d3.select("#axes").append("g")
       y_axis = d3.select("#axes").append("g"),
       x_title = d3.select("#axes").append("text"),
       y_title = d3.select("#axes").append("text");
 
-  x_axis.attr("transform", "translate(0," + scales.y.range()[0] + ")")
+  x_axis.attr("transform", `translate(0, ${height - margins.bottom})`)
     .call(d3.axisBottom(scales.x).ticks(4))
-  y_axis.attr("transform", "translate(" + scales.x.range()[0] + ", 0)")
+  y_axis.attr("transform", `translate(${margins.left}, 0)`)
     .call(d3.axisLeft(scales.y).ticks(4))
 
   x_title.text("log(Population)")
     .attrs({
       class: "label_title",
-      transform: "translate(" + 0.5 * width + "," + (height - .25 * margins.bottom) + ")"
+      transform: `translate(${0.5 * width}, ${height - 0.25 * margins.bottom})`,
     })
   y_title.text("Life Expectancy")
     .attrs({
       class: "label_title",
-      transform: "translate(" + (0.25 * margins.left) + "," + 0.5 * height + ")rotate(-90)"
+      transform: `translate(${0.25 * margins.left}, ${0.5 * height})rotate(-90)`
     });
 }
 
