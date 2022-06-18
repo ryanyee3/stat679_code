@@ -1,13 +1,15 @@
 
-function visualize(data) {
+function visualize(data, continents, year) {
   let scales = make_scales(data)
-  setup_inputs(data, scales)
   data = data.filter(d => d.year == year)
-  initialize(data, scales);
+  console.log(continents)
+  initialize(data, scales)
+  update_year(continents, year, data, scales)
+  update_continents(continents, year, data, scales)
 }
 
 function initialize(data, scales) {
-  d3.select("#circles")
+  svg.select("#circles")
     .selectAll("circle")
     .data(data, d => d.country).enter()
     .append("circle")
@@ -20,37 +22,11 @@ function initialize(data, scales) {
   annotations(scales)
 }
 
-function setup_inputs(data, scales) {
-  let continents = [... new Set(data.map(d => d.continent))]
-  d3.select("#inputs")
-    .append("select")
-    .attr("multiple", true)
-    .selectAll("option")
-    .data(continents).enter()
-    .append("option")
-    .text(d => d)
-
-  d3.select("#inputs > select")
-    .on("change", ev => update_continents(ev, data, scales))
-
-  let years = [... new Set(data.map(d => d.year))]
-  d3.select("#inputs")
-    .append("input")
-    .attrs({
-      type: "range",
-      min: d3.min(years),
-      max: d3.max(years),
-      step: 1,
-      value: d3.min(years)
-    })
-    .on("change", ev => update_year(ev, data, scales))
-}
-
 function annotations(scales) {
-  let x_axis = d3.select("#axes").append("g")
-      y_axis = d3.select("#axes").append("g"),
-      x_title = d3.select("#axes").append("text"),
-      y_title = d3.select("#axes").append("text");
+  let x_axis = svg.select("#axes").append("g")
+      y_axis = svg.select("#axes").append("g"),
+      x_title = svg.select("#axes").append("text"),
+      y_title = svg.select("#axes").append("text");
 
   x_axis.attr("transform", `translate(0, ${height - margins.bottom})`)
     .call(d3.axisBottom(scales.x).ticks(4))
@@ -69,11 +45,10 @@ function annotations(scales) {
     });
 }
 
-function update_continents(ev, data, scales) {
-  continents = $(ev.target).val()
+function update_continents(continents, year, data, scales) {
   let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
 
-  let selection = d3.select("#circles").selectAll("circle")
+  let selection = svg.select("#circles").selectAll("circle")
     .data(subset, d => d.country)
   selection.enter()
     .append("circle")
@@ -85,10 +60,9 @@ function update_continents(ev, data, scales) {
   selection.exit().remove()
 }
 
-function update_year(ev, data, scales) {
-  year = +ev.target.value
+function update_year(continents, year, data, scales) {
   let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
-  d3.select("#circles").selectAll("circle")
+  svg.select("#circles").selectAll("circle")
     .data(subset, d => d.country)
     .transition()
     .duration(1000)
@@ -112,20 +86,13 @@ function make_scales(data) {
   }
 }
 
-function parse_row(d) {
-  return {
-    country: d.country,
-    continent: d.continent,
-    year: +d.year,
-    lpop: +d.lpop,
-    life_expectancy: +d.life_expectancy
-  }
+let margins = {left: 60, right: 60, top: 60, bottom: 60},
+  year = r2d3.data.year,
+  continents = r2d3.data.continents;
+if (continents == null) {
+  continents = ["Americas", "Europe", "Africa", "Asia", "Oceania"];
 }
-
-let width = 700,
-  height = 500,
-  year = 1965,
-  continents = ["Americas", "Europe", "Africa", "Asia", "Oceania"],
-  margins = {left: 60, right: 60, top: 60, bottom: 60};
-d3.csv("gapminder.csv", parse_row)
-  .then(visualize);
+data = r2d3.data.gapminder;
+svg.append("g").attr("id", "circles")
+svg.append("g").attr("id", "axes")
+visualize(data, continents, year)
