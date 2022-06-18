@@ -20,6 +20,31 @@ function initialize(data, scales) {
   annotations(scales)
 }
 
+function setup_inputs(data, scales) {
+  let continents = [... new Set(data.map(d => d.continent))]
+  d3.select("#inputs")
+    .append("select")
+    .selectAll("option")
+    .data(continents).enter()
+    .append("option")
+    .text(d => d)
+
+  d3.select("#inputs > select")
+    .on("change", ev => update_continents(ev, data, scales))
+
+  let years = [... new Set(data.map(d => d.year))]
+  d3.select("#inputs")
+    .append("input")
+    .attrs({
+      type: "range",
+      min: d3.min(years),
+      max: d3.max(years),
+      step: 1,
+      value: d3.min(years)
+    })
+    .on("change", ev => update_year(ev, data, scales))
+}
+
 function annotations(scales) {
   let x_axis = d3.select("#axes").append("g")
       y_axis = d3.select("#axes").append("g"),
@@ -70,13 +95,6 @@ function update_year(ev, data, scales) {
       cx: d => scales.x(d.lpop),
       cy: d => scales.y(d.life_expectancy)
     })
-}
-
-function setup_inputs(data, scales) {
-  d3.select("#country_select")
-    .on("change", (ev) => update_continents(ev, data, scales))
-  d3.select("#year_slider")
-    .on("change", (ev) => update_year(ev, data, scales))
 }
 
 function make_scales(data) {

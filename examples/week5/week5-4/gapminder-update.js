@@ -64,6 +64,6 @@ function parse_row(d) {
 }
 
 let year = 1965,
-    continents = ["Americas", "Europe", "Africa", "Americas", "Asia", "Oceania"]
+  continents = ["Americas", "Europe", "Africa", "Asia", "Oceania"];
 d3.csv("gapminder.csv", parse_row)
   .then(visualize);
