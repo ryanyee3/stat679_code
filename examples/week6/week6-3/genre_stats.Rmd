@@ -1,0 +1,13 @@
+---
+title: "R Notebook"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+movies <- read_csv("movies.csv")
+movies %>%
+  count(Genre_Group) %>%
+  write_csv("stats.csv")
+```
+
