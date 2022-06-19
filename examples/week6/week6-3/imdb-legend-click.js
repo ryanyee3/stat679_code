@@ -11,31 +11,53 @@ function initialize(data, scales) {
     .data(data, d => d.title).enter()
     .append("circle")
     .attrs({
-      class: "plain",
+      class: "selected",
       cx: d => scales.x(d.imdb),
       cy: d => scales.y(d.rotten),
       fill: d => scales.fill(d.genre)
     })
-    .on("mouseover", (ev, d) => mouseover(ev, d))
-    .on("mouseout", (ev, d) => mouseout(ev, d))
 
-  d3.select("#tooltip").append("text")
   annotations(scales)
+  legend(scales.fill)
 }
 
-function mouseover(ev, d) {
-  d3.select("#tooltip")
-    .attr("transform", `translate(${ev.pageX}, ${ev.pageY})`)
-    .select("text")
-    .text(d.title)
+function legend(scale) {
+  let legend = d3.legendColor()
+  .title("Genre")
+  .scale(scale);
 
-  d3.select(ev.target).attr("class", "highlighted")
+  d3.select("#legend")
+    .attr("transform", `translate(${0.7 * width}, ${margins.top})`)
+    .call(legend);
+
+  d3.select("#legend .legendCells")
+    .selectAll(".cell")
+    .on("click", (ev, d) => toggle_selection(ev, d))
 }
 
-function mouseout(ev, d) {
-  d3.select("#tooltip").select("text").text("")
-  d3.select(ev.target).attr("class", "plain")
+function toggle_selection(ev, d) {
+  let ix = selected.indexOf(d)
+  if (ix == -1) {
+    selected.push(d);
+  } else {
+    selected.splice(ix, 1)
+  }
+  update_view()
 }
+
+function update_view() {
+  d3.select("#circles")
+    .selectAll("circle")
+    .attr("class", (d) => selected.indexOf(d.genre) == -1 ? "deselected" : "selected")
+
+console.log(selected)
+  d3.select(".legendCells")
+    .selectAll("rect")
+    .attr("opacity", (d) => selected.indexOf(d) == -1 ? 0.4 : 1)
+  d3.select(".legendCells")
+    .selectAll("text")
+    .attr("opacity", (d) => selected.indexOf(d) == -1 ? 0.4 : 1)
+  }
 
 function annotations(scales) {
   let x_axis = d3.select("#axes").append("g")
@@ -64,7 +86,7 @@ function make_scales(data) {
   return {
     x: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.imdb)))
-         .range([margins.left, width - margins.right]),
+         .range([margins.left, 0.7 * width - margins.right]),
     y: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.rotten)))
          .range([height - margins.bottom, margins.top]),
@@ -85,7 +107,8 @@ function parse_row(d) {
 
 let width = 700,
   height = 500,
-  genres = ["Drama"]
+  selected = ["Drama", "Other", "Musical", "Comedy", "Action", "Romantic Comedy",
+              "Adventure", "Thriller/Suspense", "Horror"],
   margins = {left: 60, right: 60, top: 60, bottom: 60};
 d3.csv("movies.csv", parse_row)
   .then(visualize);

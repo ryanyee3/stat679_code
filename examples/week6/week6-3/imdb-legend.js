@@ -16,8 +16,6 @@ function initialize(data, scales) {
       cy: d => scales.y(d.rotten),
       fill: d => scales.fill(d.genre)
     })
-    .on("mouseover", (ev, d) => mouseover(ev, d))
-    .on("mouseout", (ev, d) => mouseout(ev, d))
 
   annotations(scales)
   legend(scales.fill)
@@ -76,7 +74,7 @@ function parse_row(d) {
     title: d.Title,
     imdb: +d.IMDB_Rating,
     rotten: +d.Rotten_Tomatoes_Rating,
-    genre: d.Major_Genre
+    genre: d.Genre_Group
   }
 }
 

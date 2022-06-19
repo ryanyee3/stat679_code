@@ -77,7 +77,7 @@ function parse_row(d) {
     title: d.Title,
     imdb: +d.IMDB_Rating,
     rotten: +d.Rotten_Tomatoes_Rating,
-    genre: d.Major_Genre,
+    genre: d.Genre_Group,
     year: d.Release_Date,
     gross: d.Worldwide_Gross
   }

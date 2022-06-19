@@ -13,6 +13,20 @@
   font-family: "Nanum Gothic";
 }
 
+.selected {
+  opacity: 1;
+  height: 15;
+  width: 15;
+  r: 2;
+}
+
+.deselected {
+  opacity: 0.4;
+  height: 5;
+  width: 5;
+  r: 1;
+}
+
 #axes path {
   stroke-width: 2px;
   stroke: #4a4a4a;
