@@ -11,7 +11,8 @@ function initialize(data, scales) {
     .data(data, d => d.title).enter()
     .append("circle")
     .attrs({
-      class: "selected",
+      opacity: 1,
+      r: 2,
       cx: d => scales.x(d.imdb),
       cy: d => scales.y(d.rotten),
       fill: d => scales.fill(d.genre)
@@ -49,8 +50,11 @@ function update_view() {
   d3.select("#circles")
     .selectAll("circle")
     .transition()
-    .duration(1000)
-    .attr("class", (d) => selected.indexOf(d.genre) == -1 ? "deselected" : "selected")
+    .duration(500)
+    .attrs({
+      opacity: d => selected.indexOf(d.genre) == -1 ? 0.4 : 1,
+      r: d => selected.indexOf(d.genre) == -1 ? 1 : 2
+    })
 
   d3.select(".legendCells")
     .selectAll("rect")
@@ -93,7 +97,7 @@ function make_scales(data) {
          .range([height - margins.bottom, margins.top]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.genre))])
-      .range(d3.schemeSet2)
+      .range(d3.schemeSet3)
   }
 }
 
