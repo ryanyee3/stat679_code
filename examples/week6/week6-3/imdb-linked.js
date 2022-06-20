@@ -1,38 +1,25 @@
 
-function visualize(data) {
+function visualize(data_list) {
+  let [data, stats] = data_list;
   data = data.filter(d => d.imdb > 0 & d.rotten > 0);
-  let scales = make_scales(data)
-  initialize(data, scales);
+  let scales = make_scales(data, stats)
+  console.log(scales.x1)
+  initialize(data, stats, scales);
 }
 
-function initialize(data, scales) {
+function initialize(data, stats, scales) {
   d3.select("#circles")
     .selectAll("circle")
     .data(data, d => d.title).enter()
     .append("circle")
     .attrs({
       class: "selected",
-      cx: d => scales.x(d.imdb),
-      cy: d => scales.y(d.rotten),
+      cx: d => scales.x1(d.imdb),
+      cy: d => scales.y1(d.rotten),
       fill: d => scales.fill(d.genre)
     })
 
   annotations(scales)
-  legend(scales.fill)
-}
-
-function legend(scale) {
-  let legend = d3.legendColor()
-  .title("Genre")
-  .scale(scale);
-
-  d3.select("#legend")
-    .attr("transform", `translate(${0.7 * width}, ${margins.top})`)
-    .call(legend);
-
-  d3.select("#legend .legendCells")
-    .selectAll(".cell")
-    .on("click", (ev, d) => toggle_selection(ev, d))
 }
 
 function toggle_selection(ev, d) {
@@ -48,8 +35,6 @@ function toggle_selection(ev, d) {
 function update_view() {
   d3.select("#circles")
     .selectAll("circle")
-    .transition()
-    .duration(1000)
     .attr("class", (d) => selected.indexOf(d.genre) == -1 ? "deselected" : "selected")
 
   d3.select(".legendCells")
@@ -67,9 +52,9 @@ function annotations(scales) {
       y_title = d3.select("#axes").append("text");
 
   x_axis.attr("transform", `translate(0, ${height - margins.bottom})`)
-    .call(d3.axisBottom(scales.x).ticks(4))
+    .call(d3.axisBottom(scales.x1).ticks(4))
   y_axis.attr("transform", `translate(${margins.left}, 0)`)
-    .call(d3.axisLeft(scales.y).ticks(4))
+    .call(d3.axisLeft(scales.y1).ticks(4))
 
   x_title.text("IMDB")
     .attrs({
@@ -83,21 +68,27 @@ function annotations(scales) {
     });
 }
 
-function make_scales(data) {
+function make_scales(data, stats) {
   return {
-    x: d3.scaleLinear()
+    x1: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.imdb)))
-         .range([margins.left, 0.7 * width - margins.right]),
-    y: d3.scaleLinear()
+         .range([margins.left, 0.5 * width - margins.pad / 2]),
+    y1: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.rotten)))
          .range([height - margins.bottom, margins.top]),
+    x2: d3.scaleLinear()
+         .domain([0, d3.max(stats.map(d => d.n))])
+         .range([0.5 * width + margins.pad / 2, width - margins.right]),
+    y2: d3.scaleBand()
+          .domain([... new Set(stats.map(d => d.genre))])
+          .range([height - margins.bottom, margins.top]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.genre))])
       .range(d3.schemeSet2)
   }
 }
 
-function parse_row(d) {
+function parse_movies(d) {
   return {
     title: d.Title,
     imdb: +d.IMDB_Rating,
@@ -106,10 +97,18 @@ function parse_row(d) {
   }
 }
 
+function parse_stats(d) {
+  return { genre: d.Genre_Group, n: +d.n }
+}
+
+
 let width = 700,
   height = 500,
   selected = ["Drama", "Other", "Musical", "Comedy", "Action", "Romantic Comedy",
               "Adventure", "Thriller/Suspense", "Horror"],
-  margins = {left: 60, right: 60, top: 60, bottom: 60};
-d3.csv("movies.csv", parse_row)
-  .then(visualize);
+  margins = {left: 60, right: 60, top: 60, bottom: 60, pad: 20};
+
+  Promise.all([
+      d3.csv("movies.csv", parse_movies),
+      d3.csv("stats.csv", parse_stats),
+  ]).then(visualize)
