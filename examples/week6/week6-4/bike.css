@@ -1,0 +1,11 @@
+
+#scatter circle {
+  r: 2;
+}
+
+#series path {
+  stroke-width: 1px;
+  opacity: 0.5;
+  stroke: #0c0c0c;
+  fill: none;
+}
