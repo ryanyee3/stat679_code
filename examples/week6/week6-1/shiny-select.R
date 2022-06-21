@@ -2,11 +2,12 @@
 library(tidyverse)
 library(shiny)
 library(r2d3)
+library(jsonlite)
 
 gapminder <- read_csv("gapminder.csv")
 continents <- gapminder %>%
   pull(continent) %>%
-  distinct()
+  unique()
 
 ui <- fluidPage(
   selectInput("continents", "Continents", continents, multiple = TRUE),

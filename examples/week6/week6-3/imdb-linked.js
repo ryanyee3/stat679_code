@@ -96,8 +96,6 @@ function annotations(scales) {
       class: "label_title",
       transform: `translate(${0.25 * margins.left}, ${0.5 * height})rotate(-90)`
     });
-
-
 }
 
 function make_scales(data, stats) {
