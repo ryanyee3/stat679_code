@@ -1,5 +1,4 @@
 
-
 function visualize(data) {
   let scales = make_scales();
   initialize(data, scales)
@@ -7,7 +6,7 @@ function visualize(data) {
 }
 
 function initialize(data, scales) {
-  d3.select("#scatter")
+  d3.select("#circles")
     .selectAll("circle")
     .data(data["scatter"]).enter()
     .append("circle")
@@ -16,7 +15,7 @@ function initialize(data, scales) {
       cy: d => scales.y(d.hum) + jitter()
     })
 
-  let path = d3.line()
+  let generator = d3.line()
     .x(d => scales.hour(d.hr))
     .y(d => scales.count(d.count));
   d3.select("#series")
@@ -24,26 +23,55 @@ function initialize(data, scales) {
     .data(data["series"]).enter()
     .append("path")
     .attrs({
-      d: path
+      d: generator,
+      stroke: "#0c0c0c"
     })
-}
-
-function update(scales) {
 }
 
 function setup_brushes(data, scales) {
   let brush = d3.brush()
-    .extent([[width - 100, 0], [width, 100]])
-    .on("brush", ev => brush_update(ev, scales));
+    .extent([[0, 0], [300, 300]])
+    .on("brush", ev => brush_update(ev, data, scales));
 
-  d3.select("#context")
-    .append("g")
+  d3.select("#brush")
     .attr("class", "brush")
     .call(brush)
 }
 
-function brush_update(ev, scales) {
+function brush_update(ev, data, scales) {
+  let dates = filter_dates(ev, data, scales);
+
+  d3.select("#scatter")
+    .selectAll("circle")
+    .attrs({
+      fill: d => dates.indexOf(d  .dteday) == -1? "black" : "#d27bb9"
+    })
+
+  d3.select("#series")
+    .selectAll("path")
+    .attrs({
+      stroke: d => dates.indexOf(d[0].dteday) == -1? "black" : "#d27bb9"
+    })
+
 }
+
+function filter_dates(ev, data, scales) {
+  let [[x0, y0], [x1, y1]] = ev.selection;
+  x0 = scales.x.invert(x0);
+  y0 = scales.y.invert(y0);
+  x1 = scales.x.invert(x1);
+  y1 = scales.y.invert(y1);
+
+  let dates = [];
+  for (let i = 0; i < data.scatter.length; i++) {
+    let di = data.scatter[i]
+    if (di.temp > x0 && di.hum < y0 && di.temp < x1 && di.hum > y1) {
+      dates.push(di.dteday)
+    }
+  }
+  return dates
+}
+
 
 function make_scales() {
   // scatterplot data are already scaled
@@ -68,5 +96,4 @@ let width = 900,
     jitter = d3.randomUniform(-2, 2);
 
 d3.json("bike.json")
-  .then(visualize)
-//data.then(d => visualize(d));
+  .then(visualize);

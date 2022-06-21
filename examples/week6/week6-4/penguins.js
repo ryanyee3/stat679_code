@@ -4,18 +4,16 @@ function visualize(data) {
   console.log(data)
   let scales = make_scales(data)
   initialize(data, scales)
-  annotate()
 }
 
 function initialize(data, scales) {
-  reposition(width, margins)
   d3.select("#circles0")
     .selectAll("circle")
     .data(data).enter()
     .append("circle")
     .attrs({
-      cx: d => scales.x1(d.bill_depth),
-      cy: d => scales.y1(d.bill_length),
+      cx: d => scales.x0(d.bill_depth),
+      cy: d => scales.y0(d.bill_length),
       opacity: 1,
       r: 2,
       fill: d => scales.fill(d.species)
@@ -26,42 +24,65 @@ function initialize(data, scales) {
     .data(data).enter()
     .append("circle")
     .attrs({
-      cx: d => scales.x2(d.body_mass),
-      cy: d => scales.y2(d.flipper_length),
+      cx: d => scales.x1(d.body_mass),
+      cy: d => scales.y1(d.flipper_length),
       opacity: 1,
       r: 2,
       fill: d => scales.fill(d.species)
     })
 
-  let brushes = [
-    d3.brush().on("brush", brush1),
-    d3.brush().on("brush", brush2)
-  ]
+  brushes = [
+    d3.brush().on("brush", ev => brushed(ev, data, 0)),
+    d3.brush().on("brush", ev => brushed(ev, data, 1))
+  ];
 
-  for (i in brushes) {
+  for (let i in brushes) {
     d3.select(`#brush${i}`).call(brushes[i])
-    console.log(i)
   }
-}
 
-function brush1() {
-  console.log("first brush")
-}
+  function brushed(ev, data, b) {
+    // clear the other brush
+    let opposite = d3.select(`#brush${(b + 1) % 2}`)
+    let has_brush = d3.brushSelection(opposite.node())
+    if (!(has_brush === null)) {
+        opposite.call(brushes[(b + 1) % 2].move, null)
+    }
 
-function brush2() {
-  console.log("first brush")
-}
+    // get selection in current brush
+    let node = d3.select(`#brush${b}`).node()
+    let [[x0, y0], [x1, y1]] = d3.brushSelection(node)
 
-function reposition(width, margins) {
-  d3.select("#plot0")
-    .attr("transform", `translate(${margins.left}, ${margins.top})`)
-  let plot_start = (width - margins.pad - margins.left - margins.right) / 2 + margins.left + margins.pad;
-  d3.select("#plot1")
-    .attr("transform", `translate(${plot_start}, ${margins.top})`)
-}
+    x0 = scales[`x${b}`].invert(x0)
+    x1 = scales[`x${b}`].invert(x1)
+    y0 = scales[`y${b}`].invert(y0)
+    y1 = scales[`y${b}`].invert(y1)
 
-function annotate() {
+    cur_samples = []
+    for (let i = 0; i < data.length; i++) {
+      let di = data[i]
+      if (b == 0 && x0 < di.bill_depth && x1 > di.bill_depth && y0 > di.bill_length && y1 < di.bill_length) {
+        cur_samples.push(i)
+      } else if (b == 1 && x0 < di.body_mass && x1 > di.body_mass && y0 > di.flipper_length && y1 < di.flipper_length) {
+        cur_samples.push(i)
+      }
+    }
+    console.log(cur_samples)
 
+    // highlight those samples in either plot
+    d3.select("#plot0")
+      .selectAll("circle")
+      .attrs({
+        opacity: (d, i) => cur_samples.indexOf(i) == -1? 0.4 : 1,
+        r: (d, i) => cur_samples.indexOf(i) == -1? 2 : 3
+      })
+
+    d3.select("#plot1")
+      .selectAll("circle")
+      .attrs({
+        opacity: (d, i) => cur_samples.indexOf(i) == -1? 0.4 : 1,
+        r: (d, i) => cur_samples.indexOf(i) == -1? 2 : 3
+      })
+  }
 }
 
 function update_views() {
@@ -69,20 +90,19 @@ function update_views() {
 }
 
 function make_scales(data) {
-  let plot_width = (width - margins.pad - margins.left - margins.right) / 2;
   return {
-    x1: d3.scaleLinear()
+    x0: d3.scaleLinear()
       .domain(extent(data, "bill_depth"))
-      .range([0, plot_width]),
-    y1: d3.scaleLinear()
+      .range([0, width / 2]),
+    y0: d3.scaleLinear()
       .domain(extent(data, "bill_length"))
-      .range([height - margins.bottom, margins.top]),
-    x2: d3.scaleLinear()
+      .range([height, 0]),
+    x1: d3.scaleLinear()
       .domain(extent(data, "body_mass"))
-      .range([0, plot_width]),
-    y2: d3.scaleLinear()
+      .range([0, width / 2]),
+    y1: d3.scaleLinear()
       .domain(extent(data, "flipper_length"))
-      .range([height - margins.bottom, margins.top]),
+      .range([height, 0]),
     fill: d3.scaleOrdinal()
       .domain(extent(data, "species"))
       .range(d3.schemeSet2)
@@ -106,7 +126,8 @@ function extent(data, variable) {
 
 let height = 500,
     width = 900,
-    margins = {left: 20, right: 20, top: 20, bottom: 20, pad: 80};
+    cur_samples = d3.range(333),
+    brushes;
 
 d3.csv("penguins.csv", parse_data)
   .then(visualize)

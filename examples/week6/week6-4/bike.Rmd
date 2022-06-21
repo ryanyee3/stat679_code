@@ -14,7 +14,7 @@ library(jsonlite)
 
 ```{r}
 bike <- read_csv("https://uwmadison.box.com/shared/static/f16jmkkskylfl1hnd5rpslzduja929g2.csv") %>%
-  filter(weekday > 0, weekday < 6)
+  filter(weekday > 0, weekday < 3, yr == 0)
 ```
 ```{r}
 series <- bike %>%
@@ -32,4 +32,4 @@ data_list <- list(
 )
 
 write_json(data_list, "bike.json")
-  ```
+```
