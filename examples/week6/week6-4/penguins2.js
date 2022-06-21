@@ -1,8 +1,8 @@
 
-
 function visualize(data) {
   let scales = make_scales(data)
   initialize(data, scales)
+  setup_brushes(data, scales)
 }
 
 function initialize(data, scales) {
@@ -29,39 +29,44 @@ function initialize(data, scales) {
       r: 2,
       fill: d => scales.fill(d.species)
     })
+}
 
+function setup_brushes(data, scales) {
   brushes = [
-    d3.brush().on("brush", ev => brushed(ev, data, 0)),
-    d3.brush().on("brush", ev => brushed(ev, data, 1))
+    d3.brush().extent([[0, 0], [450, 500]]).on("brush", () => brushed(data)),
+    d3.brush().extent([[0, 0], [450, 500]]).on("brush", () => brushed(data))
   ];
 
   for (let b in brushes) {
     d3.select(`#brush${b}`).call(brushes[b])
   }
 
-  function brushed(ev, data, b) {
-    // clear the other brush
-    let opposite = d3.select(`#brush${(b + 1) % 2}`)
-    let has_brush = d3.brushSelection(opposite.node())
-    if (!(has_brush === null)) {
-        opposite.call(brushes[(b + 1) % 2].move, null)
+  function brushed(data) {
+    // get selection in both brushes
+    let s = [],
+      node;
+    for (let b in brushes) {
+      node = d3.select(`#brush${b}`).node()
+      s.push(d3.brushSelection(node))
     }
-
-    // get selection in current brush
-    let node = d3.select(`#brush${b}`).node()
-    let [[x0, y0], [x1, y1]] = d3.brushSelection(node)
-
-    x0 = scales[`x${b}`].invert(x0)
-    x1 = scales[`x${b}`].invert(x1)
-    y0 = scales[`y${b}`].invert(y0)
-    y1 = scales[`y${b}`].invert(y1)
 
     cur_samples = []
     for (let i = 0; i < data.length; i++) {
-      let di = data[i]
-      if (b == 0 && x0 < di.bill_depth && x1 > di.bill_depth && y0 > di.bill_length && y1 < di.bill_length) {
-        cur_samples.push(i)
-      } else if (b == 1 && x0 < di.body_mass && x1 > di.body_mass && y0 > di.flipper_length && y1 < di.flipper_length) {
+      let di = data[i],
+          passes = [false, false];
+      if (s[0][0][0] < scales.x0(di.bill_depth) &&
+          s[0][1][0] > scales.x0(di.bill_depth) &&
+          s[0][0][1] < scales.y0(di.bill_length) &&
+          s[0][1][1] > scales.y0(di.bill_length)) {
+          passes[0] = true;
+      } if (passes[0] &&
+            s[1][0][0] < scales.x1(di.body_mass) &&
+            s[1][1][0] > scales.x1(di.body_mass) &&
+            s[1][0][1] < scales.y1(di.flipper_length) &&
+            s[1][1][1] > scales.y1(di.flipper_length)) {
+        passes[1] = true;
+       }
+      if (passes[0] && passes[1]) {
         cur_samples.push(i)
       }
     }
@@ -81,10 +86,6 @@ function initialize(data, scales) {
         r: (d, i) => cur_samples.indexOf(i) == -1? 2 : 3
       })
   }
-}
-
-function update_views() {
-
 }
 
 function make_scales(data) {
