@@ -44,7 +44,6 @@ function update_series(ev, data) {
     })
 
   d3.select(ev.target).raise()
-
   d3.select("#tooltip")
     .style("top", ev.clientY + "px")
     .style("left", (20 + ev.clientX) + "px")
