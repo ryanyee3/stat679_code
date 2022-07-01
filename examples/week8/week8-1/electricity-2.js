@@ -4,7 +4,8 @@ function parse(data) {
     for (let t = 0; t < data[i].length; t++) {
       let dit = new Date(data[i][t].Time);
       data[i][t].Time = dit;
-      data[i][t].Date = new Date(`${dit.getFullYear()}-${1 + dit.getMonth()}-${dit.getDate()}`)
+      data[i][t].Date_string = `${dit.getFullYear()}-${1 + dit.getMonth()}-${dit.getDate()}`
+      data[i][t].Date = new Date(data[i][t].Date_string)
       data[i][t].time_of_day = new Date("2022-01-01 " + dit.toLocaleTimeString());
     }
   }
@@ -27,7 +28,27 @@ function draw_line(data, scales) {
     .selectAll("path")
     .data(data).enter() // no longer add the array
     .append("path")
-    .attr("d", path_generator);
+    .attrs({
+      d: path_generator,
+      stroke: "#a8a8a8",
+      id: d => d[0].Date_string
+    })
+    .on("mouseover", (ev, data) => update_series(ev, data));
+}
+
+function update_series(ev, data) {
+  d3.select("#series")
+    .selectAll("path")
+    .attrs({
+      "stroke": d => d[0].Date_string == ev.target.id ? "red" : "#a8a8a8"
+    })
+
+  d3.select(ev.target).raise()
+
+  d3.select("#tooltip")
+    .style("top", ev.clientY + "px")
+    .style("left", (20 + ev.clientX) + "px")
+    .text(ev.target.id)
 }
 
 function add_axes(scales) {
