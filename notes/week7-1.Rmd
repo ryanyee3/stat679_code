@@ -1,12 +1,12 @@
 ---
-title: Shiny Layouts and Customization
+title: Time Series Visualization (I)
 layout: post
 output: 
   md_document:
     preserve_yaml: true
 ---
 
-__More flexible designs in Shiny__
+_Basic tasks and visual strategies for temporal data_
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -18,3 +18,81 @@ opts_chunk$set(
   )
 ```
 
+1. Time often has a special role in many datasets. In the next few notes, we’ll
+study some of the types of time-related questions that can be answered through
+visualizations. We’ll also tour both some familiar (as well as some more
+obscure) visualizations strategies. Throughout, we’ll restrict attention to
+static views — next week, we’ll consider some interactive approaches to
+understanding temporal data.
+
+1. When we get into the details, there is no single type of time series
+visualization — all designs should be tailored to the specifics of both the data
+and the purpose at hand. For example, the data can vary across these
+characteristics,
+  
+  	* Is there one series of interest? Or are there multiple series moving together?
+  	* How is time recorded? Is it qualitative (e.g., early, middle, late) or quantitative (specific hour timestamp)? 
+  	* What types of variables are measured at each timepoint? E.g., are they categorical, quantitative, geographic?
+  	* Are the data measured at regular temporal frequencies, or is it available on an unevenly spaced grid?
+  	* Are the data expected to include strong cyclic or seasonal patterns?
+	
+1. In addition to variation across datasets, there is variation across tasks.
+The most basic questions are direct lookups,
+
+  	* Identification: Given a timepoint of interest, what was the value of some
+  	variable?
+  	* Localization: Given the value of some variable, which timepoints achieved
+  	it?
+	
+1. Instead of a direct lookup, we may instead be interested in comparison. This
+can include comparison of multiple variables at a fixed timepoint or comparison
+of multiple timepoints / ranges for a fixed variable. Further, we might be
+interested in more than queries for specific values, we might want a “synoptic”
+view of the time series, looking for higher-level trends or patterns that aren’t
+visible when restricting attention to any narrow range of timepoints or variable
+values.
+
+1. In fact, there have been several efforts to systematically taxonomize the
+types of queries that time series visualizations have been used for. See for
+example:
+<https://drive.google.com/file/d/1AIxHHlZqmzP4W8AT25dMmlX8vkJRk0oe/view?usp=sharing>
+
+1. It can be useful to have this theory in mind, if only because it helps clarify the wide range of design decisions that are implicitly made anytime we make a time series visualization. An approach that streamlines one type of lookup / comparison might come at the cost of another — it’s helpful to have language to express the trade-offs involved.
+
+1. That said, this will be enough theory for now. Let’s make some plots. First, we begin with the simple line plot. A notable aspect of this approach is that it highlights change. Our eyes immediately pick up the steepness, shallowness, or roughness of different parts of the curve.
+
+1. For example, in the figure below, we’re showing the amount of trade in
+Canadian Lynx pelts near the beginning of the 20th century. We can immediately
+recognize the seasonal structure.
+
+1. We were able to make this figure using the `geom_line` geometry in ggplot2. The `x` and `y` arguments are used to encode time and trade volume, respectively.
+
+1. Alternatively, we can emphasize the fact that these are amounts (they must be nonnegative) by drawing this as an area plot. This uses the `geom_area` mark.
+
+1. What if we had a larger collection of time series? For example, the dataset below includes the number of tourists in different states in Australia, measured quarterly by (bureau of tourism?). We are interested in questions like, which destinations are more popular, and when? Have there been periods when one (or several) regions were especially popular / avoided? Is there any strong seasonal structure or are there (upward or downward) trends?
+
+1. To approach these questions, we can try some simple modifications of the lineplot. A first attempt is to include all the lines in one frame, with color used to distinguish each state. The result is almost impossible to read, though.
+
+  	* Aside: If we hadn’t included color in our mapping, the figure would look
+  	like this. This happens because each timepoint has multiple y-values. To tell
+  	ggplot2 to create separate lines for each state, we have to use the `group`
+  	argument.
+  	
+1. Another variation on the line plot is to use faceting. This works better, but
+it takes up quite a bit of space. One downside of this approach is that it’s
+hard to exactly compare the y-values for pairs of series, since they no longer
+share the same y-axis. Also, as soon as we have to start scrolling up and down
+to compare different states, the value of the small multiples starts dropping.
+
+1. To address this, we could consider dropping line plots entirely. The approach
+below uses a heatmap, with each state on its own line. This approach is very
+compact and relatively accessible, but we no longer see trends so clearly:
+differences in color are harder to evaluate than differences in y-position.
+
+1. We can accomplish this using the `geom_tile` argument. Notice that we gave
+values for both the fill and color arguments — without color, there would be
+small gaps along the borders of each tile.
+
+1. These notes have reviewed the more familiar approaches to time series
+visualization. In the next lecture, we’ll consider some more obscure (but often
+useful) approaches.

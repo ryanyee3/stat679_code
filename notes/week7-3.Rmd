@@ -1,12 +1,12 @@
 ---
-title: 
+title: Geospatial Visualization (I)
 layout: post
 output: 
   md_document:
     preserve_yaml: true
 ---
 
-____
+_An introduction to visualizing geospatial data_
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -18,3 +18,82 @@ opts_chunk$set(
   )
 ```
 
+1. In the same way that time plays a central role in analysis of time series
+datasets, space / location is often a central element in geographic data
+visualization. Indeed, these two types of visualization have much longer
+histories than even the simple scatterplot (which only emerged in the 19th
+century, as the abstract analog of map).
+
+1. There are two types of geographic data worth distinguishing between — vector
+and raster data.
+
+1. Vector data formats are used to store geometric information, like the
+locations of hospitals (points), trajectories of bus routes (lines), or
+boundaries of counties (polygons). It’s useful to think of the associated data
+as being spatially enriched data frames, with each row corresponding to one of
+these geometric features. Vector data are usually stored in .geojson, .wkt,
+.shp, or .topojson formats.
+
+1. Raster data give a measurement along a spatial grid. You can think of them as
+spatially enriched matrices, where the metadata says where on the earth each
+entry of the matrix is associated with. Raster data are often stored in tiff
+format.
+
+1. There are three packages that are especially useful for working with spatial
+data in R. `sf` and `terra` are designed to support manipulation of vector and
+raster data, respectively. `tmap` is a visualization package applicable to
+either format (or even combinations of them).
+
+1. Let’s look at some vector data. The examples below read in a road network
+from Rio de Janeiro, polygons of glacier boundaries in Nepal, and locations of
+hospitals in Madison. Notice that each row is georeferenced (try searching the
+lat / lon coordinates online, like this).
+
+1. We will use `tmap` to visualize each of these datasets. The logic of the
+package mirrors that of `ggplot2`, we use `tmap_shape` to tell the package our
+source data, and then we can add on layers that add visual marks based on it.
+For example, to draw the road network, we use add on a `tmap_line` layer. For
+the glaciers and hospitals, we can use the analogous fill and point layers.
+
+1. Remember that each element of a vector dataset can be thought of as a row of
+a data.frame (just with added georeferencing information). This means that it is
+often possible to encode features of each element using properties of the marks
+used to represent them. For example, we’ve shaded in each of the glaciers by
+their thickness, which shows that the larger and more central ones tend to be
+thicker.
+
+1. These kinds of fill-encoded polygon visualizations are sometimes called
+choropleths. You have almost surely seen these before. For example, here are
+vote percentages across census tracts in the united states.
+
+1. What about raster data? We can again use `tmap`, but we have to use
+different types of layers. For example, the data read in below come from the
+Sentinel 2 satellite, an open (and continually updated) collection of satellite
+images maintained by the European Space Agency. They give imagery associated
+with one small subset of the glaciers labels. To visualize just one image
+channel from this data, we can use `tmap_raster`.
+
+1. Many raster datasets have more than just one channel (our Sentinel dataset
+has 13). We can plot combinations of them using `tmap_rgb`. For example,
+channels 2 - 4 correspond to the usual RGB channels that appear in ordinary
+camera images.
+
+1. In all the discussion above, we’ve worked with the original spatial data
+that were given to us. In practice, we will often want to manipulate these data
+before making a final visualization — for example, we may want to crop to a
+specific region of interest or unify sources from a few neighboring regions.
+These types of operations are the bread and butter of `sf` and `terra`. For
+example, if we want to crop the glacier labels down to the region contained by
+the satellite image, we can use `sf`’s `st_crop` command.
+
+1. We can also zoom into the raster data using `terra`’s crop function. We crop
+both datasets again to get a high-resolution view of this region.
+
+1. `tmap` provides many functions for customizing the appearance of our maps.
+For example, there are layers for adding specific cartographic elements, like
+bar scales (`tmap_bar`) and compasses (`tmap_compass`).
+
+1. Moreover, the themes and layout of the existing layers can be adapted using
+the `tmap_layout` function. In the example below, we’ve moved the legend so that
+they don’t overlap with the observed shapefiles. We’ve also changed the color
+palette so that the glaciers are more clearly visible.
