@@ -1,12 +1,12 @@
 ---
-title: Title
+title: Manipulating Graph Data
 layout: post
 output: 
   md_document:
     preserve_yaml: true
 ---
 
-_Short description_
+_Reading and modifying graph data_
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -14,7 +14,46 @@ opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/weekX-Y/"
+  fig.path = "stat679_notes/assets/week9-1/"
   )
 ```
 
+1. Before diving into graph data visualization, let’s get some experience
+manipulating graphs hands on.
+
+1. The goal of the tidygraph package is to extend the semantics of the tidyverse
+to graph-structured data. This is necessary because any graph is represented by
+two data structures, a set of nodes and a set of edges.
+
+1. This can be usefully organized as a pair of `data.frames`, and the
+`tidygraph` structure represents graphs in exactly this way. For example, the
+two data.frames below contain node and edge attributes for a friendship graph.
+
+1. We can combine them into a single `tbl_graph` data structure using the
+`as_tbl_graph` function.
+
+1. The beauty of this data structure is that we can define the analogs of the
+usual tidyverse verbs for it. For example, we can derive a new node using
+`mutate`.
+
+1. What if we want to mutate the edges instead? We have to tell tidygraph to
+“activate” the edge set,
+
+	[Example with mutating edges.]
+	
+  To avoid these activate calls, a convenient shorthand is calling mutate with
+  `%N>%` and `%E>%`.
+  
+	[Example using these shorthands]
+	
+1. There are many other verbs that have been defined for tidygraph objects. For
+example, we can join two graphs together.
+
+1. Similarly, we can filter nodes or edges based on their attributes.
+
+1. It’s possible to perform simple graph algorithms using these verbs. For
+example, we can cluster nodes based on their connection structure.
+
+1. We can even map over nodes to compute topological queries. For example, the
+block below computes the number of neighbors within two step of each node, using
+the `map_nodes` function.
