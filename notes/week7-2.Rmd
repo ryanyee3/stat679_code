@@ -17,6 +17,24 @@ opts_chunk$set(
   fig.path = "stat679_notes/assets/week-/"
   )
 ```
+```{r}
+library(tidyverse)
+library(tsibble)
+library(tsibbledata)
+library(ggHoriPlot)
+library(ggstream)
+library(colorspace)
+library(ggalluvial)
+library(scales)
+
+theme679 <- theme_bw() +
+  theme(
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.grid.minor = element_blank()
+  )
+theme_set(theme679)
+```
+
 
 1. In these notes, we continue our tour of static time series visualization
 techniques, with a special emphasis on collections of time series.
@@ -37,8 +55,19 @@ y-values, the amount of space needed to display them all is relatively small.
 We’re able to decide which overall band we are in (and hence the overall value
 of y) based on color.
 
-1. We created the figure above using the `gghorizon` package. We have to specify
-both the horizon line (`origin`) and the cutoffs that separate the bands
+```{r}
+cutpoints <- seq(0, 1000, by = 101)
+tourism %>%
+  filter(Region %in% region_totals$Region[1:16]) %>%
+  ggplot() +
+  geom_horizon(aes(Quarter, Trips, fill = ..Cutpoints..), origin = 350, horizonscale = cutpoints) +
+  scale_fill_hcl(palette = 'RdBu') +
+  facet_grid(reorder(Region, -Trips) ~ .) +
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+1. We created the figure above using the `ggHoriPlot` package. We have to
+specify both the horizon line (`origin`) and the cutoffs that separate the bands
 (`scales`). Using the `cutoffs` argument creates the color legend.
 
 1. Overall, the horizon plot gives a reasonable compromise between faceting and
@@ -52,20 +81,53 @@ how to read these figures.
 divided by total) across a collection? A few approaches make it especially easy
 to answer these types of queries.
 
-1. We’ll consider the X-men appearances dataset. This includes the number of
-times each character appeared on the page across all the issues of the comic (as
-well as whether they were dressed normally or as superheroes during each
-appearance). We’ve filtered down to just the most common characters, to make
-comparison easier.
+1. To illustrate, we’ll consider the X-men appearances dataset. This includes
+the number of times each character appeared on the page across all the issues of
+the comic (as well as whether they were dressed normally or as superheroes
+during each appearance). We’ve filtered down to just the most common characters,
+to make comparison easier.
+
+
+```{r}
+xmen <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week7/week7-1/x-men.csv")
+head(xmen)
+```
 
 1. One way to visualize how the total number and composition of character
 appearances change over issues is to use a stacked area plot. This is the analog
 of an area plot, but where multiple areas are stacked on top of one another.
 
+```{r}
+# custom color palette
+pal <- c(
+  "#8E038E", lighten("#8E038E", .2, space = "HLS"),
+  "#C20008", lighten("#C20008", .2, space = "HLS"),
+  "#13AFEF", lighten("#13AFEF", .25, space = "HLS"),
+  "#595A52", lighten("#595A52", .15, space = "HLS"),
+  "#FFB400", lighten("#FFB400", .25, space = "HLS")
+)
+
+ggplot(xmen) +
+  geom_area(aes(issue, depicted, col = interaction(costume, char_popular), fill = interaction(costume, char_popular))) +
+  scale_fill_manual(values = pal) +
+  scale_color_manual(values = pal) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0, 0.1, 0)) +
+  theme(legend.position = "bottom")
+```
+
 1. An alternative is the stream graph (also sometimes called “Theme River”). It
 is like a stacked area chart, but oriented around a central (rather than base)
 line. These are also almost always smoothed slightly, so that the transitions
 are not too jarring.
+
+```{r}
+ggplot(xmen) +
+  geom_stream(aes(issue, depicted, col = interaction(costume, char_popular), fill = interaction(costume, char_popular)), bw = 0.4) +
+  scale_fill_manual(values = pal) +
+  scale_color_manual(values = pal) +
+  theme(legend.position = "bottom")
+```
 
 1. There has been a debate about whether approaches like streamgraphs are
 actually more effective than area plots. Broadly speaking, one camp focuses on
@@ -85,8 +147,22 @@ refugees leaving countries around the world between 2000 and 2010. The stacked
 area graph shows that there was a clear increase in refugees from Iraq starting
 in 2004, but it’s unclear whether this overtook Afghanistan.
 
+```{r}
+refugees <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week7/week7-1/refugees.csv")
+ggplot(refugees) +
+  geom_stream(aes(year, refugees, fill = country), bw = 1) +
+  facet_wrap(~ region, scale = "free_y")
+```
+
 1. If we want to explicitly rank the groups, we can use an alluvial plot. It is
 a hybrid between a bump chart and streamgraph. It is read like a stream graph,
 but at each timepoint, the groups are sorted from largest to smallest
 contribution. Applying it to the dataset above shows that Iraq did indeed become
 the largest source of refugees within the Mideast starting around 2004.
+
+```{r}
+ggplot(refugees) +
+  geom_alluvium(aes(year, refugees, fill = country, alluvium = country), decreasing = FALSE, alpha = 0.9) +
+  facet_wrap(~ region, scale = "free_y") +
+  scale_y_continuous(labels = label_number(scale_cut = cut_long_scale()))
+```
