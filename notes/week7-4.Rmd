@@ -23,6 +23,14 @@ spatial and raster datasets. Those methods are used in almost every spatial data
 visualization problem. In contrast, these notes are more like a grab bag of
 tricks — often useful, but don’t expect to use them in every problem.
 
+```{r}
+library(tigris)
+library(tmap)
+library(cowplot)
+library(biscale)
+library(tidycensus)
+```
+
 ### Vector data packages
 
 1. What if we have data with geographic information (e.g., state names) but
@@ -33,6 +41,29 @@ package provides a direct interface to R.
 
 1. For example, we can find the polygon boundaries for all the counties in
 Wisconsin using the code below.
+
+```{r}
+wisconsin <- counties(state = "Wisconsin")
+
+tm_shape(wisconsin) +
+  tm_polygons()
+```
+
+```{r}
+library(tidycensus)
+
+# sign up for an api key at http://api.census.gov/data/key_signup.html
+dane <- get_acs(
+  state = "WI",
+  county = "Dane",
+  geography = "tract",
+  variables = "B19013_001", # household income
+  geometry = TRUE
+)
+
+tm_shape(dane) +
+  tm_polygons(col = "estimate", palette = "Purples")
+```
 
 ### Transforming Projections
 
@@ -58,7 +89,39 @@ can do besides create several choropleths side-by-side, each with its own color
 scales. An important special case is when there are exactly two continuous
 variables of interest.
 
-1. In this case, we can use something called a bivariate choropleth. This creates a two-dimensional color palette by blending a pair of color scales. Polygons are then encoded using this scheme. For example, in the example below, we can see ____
+1. In this case, we can use something called a bivariate choropleth. This
+creates a two-dimensional color palette by blending a pair of color scales.
+Polygons are then encoded using this scheme. For example, in the example below,
+we can see ____
+
+```{r}
+library(biscale)
+library(tidyverse)
+
+health <- read_csv("../examples/week7/week7-3/cdc-diabetes-obesity.csv", na = "No Data") %>%
+  mutate(
+    diabetes_cat = cut(diabetes, 3),
+    obesity_cat = cut(obesity, 3)
+  )
+us_counties <- counties() %>%
+  mutate(county = str_c(STATEFP, COUNTYFP)) %>%
+  right_join(health) %>%
+  bi_class(x = diabetes_cat, y = obesity_cat, style = "quantile", dim = 3)
+```
+
+
+```{r}
+map <- ggplot(us_counties) +
+  geom_sf(aes(fill = bi_class), show.legend = FALSE) +
+  bi_scale_fill(pal = "GrPink", dim = 3) 
+  
+legend <- bi_legend(pal = "GrPink", dim = 3)
+
+ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0.2, .65, 0.2, 0.2)
+```
+
 
 ### Spatiotemporal Vis
 

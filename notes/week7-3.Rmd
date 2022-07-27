@@ -111,13 +111,12 @@ with one small subset of the glaciers labels. To visualize just one image
 channel from this data, we can use `tmap_raster`.
 
 ```{r}
-im <- rast("/Users/ksankaran/Desktop/lake_labeller/analysis/G081089E30084N_2020-05-16.tif") %>%
+im <- rast("https://uwmadison.box.com/shared/static/lpmujy5odtt3otpq1bluiv16fkg0o4t2.tif") %>%
   stretch()
 
 # only the first layer
 tm_shape(subset(im, 1)) +
-  tm_raster() +
-  tm_layout(legend.position = c("left", "bottom"))
+  tm_raster()
 ```
 
 1. Many raster datasets have more than just one channel (our Sentinel dataset
@@ -126,11 +125,8 @@ channels 2 - 4 correspond to the usual RGB channels that appear in ordinary
 camera images.
 
 ```{r}
-tm_shape(subset(im, 2:4)) +
-  tm_rrgb() +
-  tm_shape(glaciers) +
-  tm_polygons(fill = "Thickness") +
-  tm_layout(legend.position = c("left", "bottom"))
+tm_shape(im) +
+  tm_rgb()
 ```
 
 
@@ -159,23 +155,18 @@ the satellite image, we can use `sf`’s `st_crop` command.
 both datasets again to get a high-resolution view of this region.
     
     ```{r, eval = FALSE}
-    tm_shape(im) +
-      tm_rgb()
-    
-    e <- ext(83.62, 83.78, 29.12, 29.22)
+    e <- ext(80.7, 81, 29.9, 30)
     im_crop <- crop(im, e)
+    glaciers_crop <- st_crop(glaciers, e)
     tm_shape(im_crop) +
-      tm_rgb()
+      tm_rgb() +
+      tm_shape(glaciers_crop) +
+      tm_polygons(col = "Thickness", palette = "Blues", legend.hist = TRUE, alpha = 0.5) +
+      tm_layout(legend.outside = TRUE)
     ```
   
 1. `tmap` provides many functions for customizing the appearance of our maps.
 For example, there are layers for adding specific cartographic elements, like
-bar scales (`tmap_bar`) and compasses (`tmap_compass`). Moreover, the themes and
+bar scales (`tmap_scale_bar`) and compasses (`tmap_compass`). Moreover, the themes and
 layout of the existing layers can be adapted using the `tmap_layout` function --
 this is how we customized the fill colors and legend properties above.
-
-    ```{r}
-    tm_shape(im_crop) +
-      tm_rgb() +
-      tm_compass()
-    ```
