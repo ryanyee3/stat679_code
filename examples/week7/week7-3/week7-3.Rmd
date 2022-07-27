@@ -17,7 +17,7 @@ library(tidyverse)
 
 
 ```{r}
-roads <- read_sf("adelaide_roads.geojson")
+roads <- read_sf("brasilia_small.geojson")
 tm_shape(roads) +
   tm_lines()
 ```
@@ -25,9 +25,9 @@ tm_shape(roads) +
 
 ```{r}
 library(terra)
-path <- "~/Downloads/glaciers_45/G083656E29120N_2021-07-04.tif"
-im <- rast(path) %>%
-  stretch()
+#path <- "~/Downloads/glaciers_45/G083656E29120N_2021-07-04.tif"
+#im <- rast(path) %>%
+#  stretch()
 ```
 
 ```{r}

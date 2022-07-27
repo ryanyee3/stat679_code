@@ -23,7 +23,7 @@ spatial and raster datasets. Those methods are used in almost every spatial data
 visualization problem. In contrast, these notes are more like a grab bag of
 tricks — often useful, but don’t expect to use them in every problem.
 
-### Natural Earth
+### Vector data packages
 
 1. What if we have data with geographic information (e.g., state names) but
 which are not explicitly georeferenced? In this case, we may be able to link the
