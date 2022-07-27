@@ -26,8 +26,10 @@ tricks — often useful, but don’t expect to use them in every problem.
 ```{r}
 library(tigris)
 library(tmap)
-library(cowplot)
+library(sf)
+library(patchwork)
 library(biscale)
+library(tidyverse)
 library(tidycensus)
 ```
 
@@ -50,8 +52,6 @@ tm_shape(wisconsin) +
 ```
 
 ```{r}
-library(tidycensus)
-
 # sign up for an api key at http://api.census.gov/data/key_signup.html
 dane <- get_acs(
   state = "WI",
@@ -95,9 +95,6 @@ Polygons are then encoded using this scheme. For example, in the example below,
 we can see ____
 
 ```{r}
-library(biscale)
-library(tidyverse)
-
 health <- read_csv("../examples/week7/week7-3/cdc-diabetes-obesity.csv", na = "No Data") %>%
   mutate(
     diabetes_cat = cut(diabetes, 3),
@@ -105,23 +102,28 @@ health <- read_csv("../examples/week7/week7-3/cdc-diabetes-obesity.csv", na = "N
   )
 us_counties <- counties() %>%
   mutate(county = str_c(STATEFP, COUNTYFP)) %>%
-  right_join(health) %>%
+  filter(!(STATEFP %in% c("15", "02", "60", "66", "69", "72", "78"))) %>%
+  left_join(health) %>%
   bi_class(x = diabetes_cat, y = obesity_cat, style = "quantile", dim = 3)
+```
+```{r}
+dim(us_counties)
+dim(health)
 ```
 
 
 ```{r}
-map <- ggplot(us_counties) +
-  geom_sf(aes(fill = bi_class), show.legend = FALSE) +
-  bi_scale_fill(pal = "GrPink", dim = 3) 
+map <- us_counties %>%
+  st_simplify(dTolerance = 1000) %>% # speeds up plot by coarsening
+  ggplot() +
+  geom_sf(aes(fill = bi_class), size = 0.1, show.legend = FALSE) +
+  bi_scale_fill(pal = "GrPink", dim = 3) +
+  bi_theme()
   
-legend <- bi_legend(pal = "GrPink", dim = 3)
+legend <- bi_legend(pal = "GrPink", dim = 3, xlab = "obesity", ylab = "diabetes")
 
-ggdraw() +
-  draw_plot(map, 0, 0, 1, 1) +
-  draw_plot(legend, 0.2, .65, 0.2, 0.2)
+map + inset_element(legend, 0, 0, .3, .3, align_to = "full")
 ```
-
 
 ### Spatiotemporal Vis
 
