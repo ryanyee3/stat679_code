@@ -9,8 +9,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+library(sf)
 library(tmap)
+library(terra)
+library(tidyverse)
 ```
+
+
+```{r}
+roads <- read_sf("adelaide_roads.geojson")
+tm_shape(roads) +
+  tm_lines()
+```
+
 
 ```{r}
 library(terra)
