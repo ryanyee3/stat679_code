@@ -106,11 +106,6 @@ us_counties <- counties() %>%
   left_join(health) %>%
   bi_class(x = diabetes_cat, y = obesity_cat, style = "quantile", dim = 3)
 ```
-```{r}
-dim(us_counties)
-dim(health)
-```
-
 
 ```{r}
 map <- us_counties %>%
