@@ -1,11 +1,3 @@
-
-function parse(d) {
-  return {
-    Issue: +d.Issue,
-    Lynx: +d.Lynx
-  }
-}
-
 function make_scales() {
   return {
     x: d3.scaleLinear()
@@ -51,5 +43,5 @@ function visualize(data) {
 }
 
 const keys = ['Gambit_Costume', 'Gambit_Non-Costume', 'Magneto_Costume', 'Magneto_Non-Costume', 'Nightcrawler_Costume', 'Nightcrawler_Non-Costume', 'Storm_Costume', 'Storm_Non-Costume', 'Wolverine_Costume', 'Wolverine_Non-Costume']
-d3.csv("xmen-wide.csv", d3.autoType)
+d3.csv("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week8/week8-1/xmen-wide.csv", d3.autoType)
   .then(visualize);
