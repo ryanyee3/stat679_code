@@ -46,8 +46,6 @@ function add_axes(scales) {
       transform: `translate(${margins.left}, 0)`
     })
     .call(y_axis)
-
-
 }
 
 function make_scales(data) {
