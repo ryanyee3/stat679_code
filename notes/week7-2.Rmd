@@ -56,7 +56,16 @@ We’re able to decide which overall band we are in (and hence the overall value
 of y) based on color.
 
 ```{r}
-cutpoints <- seq(0, 1000, by = 101)
+tourism <- tourism %>%
+  filter(Purpose == "Holiday")
+
+region_totals <- tourism %>%
+  as_tibble() %>%
+  group_by(Region) %>%
+  summarise(total = sum(Trips)) %>%
+  arrange(-total)
+
+eutpoints <- seq(0, 1000, by = 101)
 tourism %>%
   filter(Region %in% region_totals$Region[1:16]) %>%
   ggplot() +
