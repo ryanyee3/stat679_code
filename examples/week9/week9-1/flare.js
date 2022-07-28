@@ -32,10 +32,10 @@ function visualize(data) {
     .attrs({
       cx: d => d.x,
       cy: d => d.y,
-      r: d => 10 * Math.exp(-.5 * d.depth),
+      r: d => 10 * Math.exp(-.5 * d.depth), // decreasing sizes
       transform: "translate(0, 10)"
     })
 }
 
-d3.json("flare.json")
+d3.json("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week9/week9-1/flare.json")
   .then(visualize)
