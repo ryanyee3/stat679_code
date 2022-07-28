@@ -18,6 +18,12 @@ opts_chunk$set(
   )
 ```
 
+```{r}
+library(tidygraph)
+library(ggraph)
+```
+
+
 1. Before diving into graph data visualization, let’s get some experience
 manipulating graphs hands on.
 
@@ -26,34 +32,102 @@ to graph-structured data. This is necessary because any graph is represented by
 two data structures, a set of nodes and a set of edges.
 
 1. This can be usefully organized as a pair of `data.frames`, and the
-`tidygraph` structure represents graphs in exactly this way. For example, the
-two data.frames below contain node and edge attributes for a friendship graph.
+`tidygraph` structure represents graphs in exactly this way.
+For example, `G` below is a tidy graph structure showing the friendship
+connections between 70 students in a high school over two years.
 
-1. We can combine them into a single `tbl_graph` data structure using the
-`as_tbl_graph` function.
+```{r}
+G <- as_tbl_graph(highschool)
+G
+```
+
 
 1. The beauty of this data structure is that we can define the analogs of the
-usual tidyverse verbs for it. For example, we can derive a new node using
-`mutate`.
+usual tidyverse verbs for it. For example, we can derive a new node attribute
+using `mutate`.
+
+    ```{r}
+    G %>%
+      mutate(favorite_color = sample(c("red", "blue"), n(), replace = TRUE))
+    ```
 
 1. What if we want to mutate the edges instead? We have to tell tidygraph to
 “activate” the edge set,
-
-	[Example with mutating edges.]
-	
+    
+    ```{r}
+    G %>%
+      activate(edges) %>%
+      mutate(weight = runif(n()))
+    ```
+    
   To avoid these activate calls, a convenient shorthand is calling mutate with
   `%N>%` and `%E>%`.
   
-	[Example using these shorthands]
-	
+    ```{r}
+    G %E>%
+      mutate(weight = runif(n()))
+    ```
+      
 1. There are many other verbs that have been defined for tidygraph objects. For
 example, we can join two graphs together.
 
+    ```{r}
+    G1 <- create_ring(10)  %N>%
+      mutate(id = LETTERS[1:n()])
+    G2 <- create_bipartite(4, 2) %>%
+      mutate(id = LETTERS[1:n()])
+    G1 %>%
+      graph_join(G2)
+    ```
+    
+```{r, echo = FALSE}
+ggraph(G1) +
+  geom_edge_link() +
+  geom_node_label(aes(label = id))
+  
+ggraph(G2) +
+  geom_edge_link() +
+  geom_node_label(aes(label = id))
+  
+ggraph(G1 %>% graph_join(G2)) +
+  geom_edge_link() +
+  geom_node_label(aes(label = id))
+```
+    
 1. Similarly, we can filter nodes or edges based on their attributes.
 
+    ```{r}
+    G %E>%
+      mutate(weight = runif(n())) %>%
+      filter(weight < 0.2) %>%
+      arrange(-weight)
+    ```
+    
 1. It’s possible to perform simple graph algorithms using these verbs. For
 example, we can cluster nodes based on their connection structure.
+
+```{r}
+G %>%
+  to_undirected() %>%
+  mutate(cluster = group_louvain())
+```
+
+```{r}
+G %>%
+  to_undirected() %>%
+  mutate(cluster = group_louvain()) %>%
+  ggraph() +
+  geom_edge_link(width = 0.2) +
+  geom_node_point(aes(col = as.factor(cluster)), size = 3) +
+  scale_color_brewer(palette = "Set2")
+```
 
 1. We can even map over nodes to compute topological queries. For example, the
 block below computes the number of neighbors within two step of each node, using
 the `map_nodes` function.
+
+    ```{r}
+    G %>%
+      mutate(two_steps = local_size(order = 2))
+    ```
+  
