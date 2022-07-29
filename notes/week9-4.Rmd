@@ -18,6 +18,12 @@ opts_chunk$set(
   )
 ```
 
+```{r}
+library(tidygraph)
+library(ggraph)
+```
+
+
 1. In these notes, we’ll discuss how to implement a few basic types of general
 graph visualizations using R and javascript. For R, we’ll focus on ggraph, and
 for javascript, we’ll use D3’s graph layout functions.
@@ -31,13 +37,40 @@ functions are also available to customize the appearance of these marks.
 and `geom_edge_link` layers. Note that `ggraph` expects a `tbl_graph` as input,
 not simply a `data.frame`.
 
+```{r}
+G <- as_tbl_graph(highschool)
+ggraph(G) +
+  geom_edge_link(width = 0.2) +
+  geom_node_point()
+```
+
 1. Attributes of nodes and edges can be encoded using size (node radius or edge
 width) or color. The node-link representation is especially effective for the
 task of following paths. It’s an intuitive visualization for examining the local
 neighborhood of one node or describing the shortest path between two nodes.
 
-1. Let’s make the analogous graph in D3. We first read in the JSON’s associated
-the nodes and edges.
+```{r}
+G <- G %>%
+  mutate(log_degree = log(local_size(), 10))
+ggraph(G) +
+  geom_edge_link(width = 0.2) +
+  geom_node_point(aes(col = log_degree, size = log_degree))
+```
+
+1. Let’s make the analogous graph in D3. We first write the data into a JSON
+object with node and edge attributes -- this can be read in using `d3.json`.
+
+```{r}
+nodes <- G %N>%
+  as_tibble() %>%
+  mutate(id = row_number()) %>%
+  select(-name)
+edges <- G %E>%
+  filter(year == 1957) %>%
+  as_tibble() %>%
+  rename(source = from, target = to)
+write_json(list(edges = edges, nodes = nodes), "~/Desktop/teaching/stat679_code/examples/week9/week9-4/highschool.json")
+```
 
   	We can then use d3’s force-directed layout algorithm to compute a layout of the nodes given a connectivity structure. The algorithm simulates forces that try to repel nodes from each other, while tension on the edges keeps connected ones close to one another. It is just one of many layout algorithms, some of which we’ll review in the next lecture.
 
