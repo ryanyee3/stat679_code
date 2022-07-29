@@ -68,6 +68,7 @@ nodes <- G %N>%
 edges <- G %E>%
   filter(year == 1957) %>%
   as_tibble() %>%
+  mutate(value = 1) %>%
   rename(source = from, target = to)
 write_json(list(edges = edges, nodes = nodes), "~/Desktop/teaching/stat679_code/examples/week9/week9-4/highschool.json")
 ```
@@ -95,6 +96,14 @@ these 1’s and 0’s can be encoded as a black and white squares.
 1. The example below shows the adjacency matrix associated with the high-school
 student friendship network from last lecture. We use the “matrix” layout with
 a `geom_edge_tile` layer to draw adjacency matrices in ggraph.
+
+```{r, fig.width = 10, fig.height = 10}
+ggraph(G, layout = "matrix") +
+  geom_edge_tile() +
+  coord_fixed() +
+  geom_node_text(aes(label = name), x = -1, nudge_y = 0.5) +
+  geom_node_text(aes(label = name), y = -1, nudge_x = -0.5)
+```
 
 1. In D3, an adjacency matrix visualization is simply a collection of
 appropriately placed SVG `rect`s.
