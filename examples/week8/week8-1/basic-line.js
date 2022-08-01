@@ -15,8 +15,6 @@ let scales = {
     .range([200, 0])
 }
 
-console.log(line_data)
-
 path_generator = d3.line()
   .x(d => scales.x(d.t))
   .y(d => scales.y(d.value));

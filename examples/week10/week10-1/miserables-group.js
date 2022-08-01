@@ -1,7 +1,7 @@
 
 function setup_simulation(data) {
-  let nodes = data["nodes"],
-      links = data["links"];
+  nodes = data["nodes"],
+  links = data["links"];
 
   let simulation = d3.forceSimulation(nodes)
     .force("link", d3.forceLink(links)) // attracts nodes
@@ -29,6 +29,11 @@ function initialize_graph(nodes, links) {
     .selectAll("line")
     .data(links).enter()
     .append("line")
+
+  d3.select("#hulls")
+    .selectAll("path")
+    .data(convex_hull(nodes)).enter()
+    .append("path")
 }
 
 function ticked() {
@@ -48,6 +53,19 @@ function ticked() {
       x2: d => d.target.x,
       y2: d => d.target.y
     })
+
+  let path_generator = d3.line()
+    .curve(d3.curveCatmullRomClosed)
+    .x(d => d[0])
+    .y(d => d[1])
+
+  d3.select("#hulls")
+    .selectAll("path")
+    .data(convex_hull(nodes))
+    .attrs({
+      d: path_generator,
+      fill: (d, i) => scales.fill(i)
+    })
 }
 
 function dragged(event) {
@@ -61,6 +79,30 @@ function drag_start(simulation, event) {
   }
 }
 
+function convex_hull(nodes) {
+  let unique_groups = new Set(nodes.map(d => d.group)),
+      group_coord = {};
+
+  // add small buffered squares around the nodes
+  for (let i = 0; i < nodes.length; i++) {
+    if (group_coord[nodes[i].group]) {
+      group_coord[nodes[i].group].push([nodes[i].x - offset, nodes[i].y - offset])
+      group_coord[nodes[i].group].push([nodes[i].x - offset, nodes[i].y + offset])
+      group_coord[nodes[i].group].push([nodes[i].x + offset, nodes[i].y - offset])
+      group_coord[nodes[i].group].push([nodes[i].x + offset, nodes[i].y + offset])
+    } else {
+      group_coord[nodes[i].group] = [
+        [nodes[i].x - offset, nodes[i].y - offset],
+        [nodes[i].x - offset, nodes[i].y + offset],
+        [nodes[i].x + offset, nodes[i].y - offset],
+        [nodes[i].x + offset, nodes[i].y + offset]
+      ]
+    }
+  }
+
+  return Object.values(group_coord).map(d3.polygonHull)
+}
+
 function visualize(data) {
   let {simulation, nodes, links} = setup_simulation(data);
   initialize_graph(nodes, links);
@@ -74,20 +116,8 @@ function visualize(data) {
     .call(drag)
 }
 
-function visualize(data) {
-  let {simulation, nodes, links} = setup_simulation(data);
-  console.log(simulation)
-  initialize_graph(nodes, links);
-  simulation.on("tick", ticked)
-
-  let drag = d3.drag()
-    .on("start", (e) => drag_start(simulation, e))
-    .on("drag", dragged);
-  d3.select("#nodes")
-    .selectAll("circle")
-    .call(drag)
-}
-
-let scales = make_scales()
+let scales = make_scales(),
+  nodes,
+  offset = 10;
 d3.json("miserables.json")
   .then(visualize)
