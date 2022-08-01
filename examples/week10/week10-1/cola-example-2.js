@@ -2,14 +2,21 @@
 function setup_simulation(data) {
   let nodes = data["nodes"],
       links = data["edges"],
-      constraints = data["constraints"]
+      constraints = data["constraints"],
+      groups = Object.values(data["groups"])
+    for (let k = 0; k < groups.length; k++) {
+      groups[k].id = k;
+    }
 
+  console.log(Object.values(groups))
   let constrained = cola.d3adaptor()
     .linkDistance(30)
     .size([500, 500])
     .nodes(nodes)
     .links(links)
     .constraints(constraints)
+    .groups(groups)
+    .avoidOverlaps(true)
     .start()
 
   return {simulation: constrained, nodes: nodes, links: links}
@@ -59,8 +66,4 @@ let scales = {
     .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"])
 }
 
-d3.json("royalty_sim.json", function(error, graph) {
-  console.log(error)
-  console.log(graph)
-  visualize(graph)
-})
+d3.json("royalty_sim.json", (error, graph) => visualize(graph));

@@ -44,13 +44,18 @@ for (i in seq_len(nrow(nodes))) {
   }
 }
 
-constraints
-
-
+groups <- nodes %>%
+  select(cluster, index) %>%
+  rename(leaves = index) %>%
+  split(.$cluster) %>%
+  map(~ as.list(.))
+for (k in 1:K) {
+  groups[[k]]$id <- k
+}
 
 edges <- G %>% as_tibble() %>% select(source, target)
 nodes <- G %N>% as_tibble()
 constraints <- bind_rows(constraints)
 
-list(edges = edges, nodes = nodes, constraints = constraints) %>%
+list(edges = edges, nodes = nodes, constraints = constraints, groups = groups) %>%
   write_json("royalty_sim.json")
