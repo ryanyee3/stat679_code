@@ -1,4 +1,6 @@
 
+// nice reference: https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html
+
 function setup_simulation(data) {
   let nodes = data["nodes"],
       links = data["edges"],
@@ -8,7 +10,6 @@ function setup_simulation(data) {
       groups[k].id = k;
     }
 
-  console.log(Object.values(groups))
   let constrained = cola.d3adaptor()
     .linkDistance(30)
     .size([500, 500])
