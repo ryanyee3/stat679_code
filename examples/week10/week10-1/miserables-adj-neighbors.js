@@ -1,4 +1,3 @@
-
 function graph_order(data) {
   let graph = reorder.graph()
     .nodes(data["nodes"])
