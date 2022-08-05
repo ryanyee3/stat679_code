@@ -20,6 +20,17 @@ function make_scales(order) {
 }
 
 function initialize_graph(nodes, links) {
+  d3.select("#overall")
+    .on("mousemove", e => move_lens(e, links))
+
+  d3.select("#lens")
+    .append("circle")
+    .attrs({
+      r: lens_radius,
+      fill: "white",
+      stroke: "#0c0c0c"
+    })
+
   d3.select("#nodes")
     .selectAll("circle")
     .data(nodes).enter()
@@ -48,6 +59,15 @@ function ticked() {
       x2: d => d.target.x,
       y2: d => d.target.y
     })
+
+  d3.select("#local_links")
+    .selectAll("line")
+    .attrs({
+      x1: d => d.source.x,
+      y1: d => d.source.y,
+      x2: d => d.target.x,
+      y2: d => d.target.y
+    })
 }
 
 function dragged(event) {
@@ -65,10 +85,50 @@ function drag_end(simulation, event) {
   event.subject.fy = null;
 }
 
-function zoomed(e) {
-  d3.select("#overall")
-    .attr("transform", e.transform)
+function move_lens(event, links) {
+  d3.select("#lens")
+    .select("circle")
+    .attrs({
+      cx: event.x,
+      cy: event.y,
+    })
+
+  let links_ = local_links(event, links)
+  let sel = d3.select("#local_links")
+    .selectAll("line")
+    .data(links_, d => d.index)
+
+  sel.enter()
+    .append("line")
+    .attrs({
+      x1: d => d.source.x,
+      y1: d => d.source.y,
+      x2: d => d.target.x,
+      y2: d => d.target.y
+    })
+
+  sel.exit().remove()
 }
+
+function local_links(event, links) {
+  let local_nodes = [];
+  for (let i = 0; i < nodes.length; i++) {
+    let dist2 = Math.pow(nodes[i].x - event.x, 2) + Math.pow(nodes[i].y - event.y, 2)
+    if (Math.sqrt(dist2) < lens_radius) {
+      local_nodes.push(nodes[i].index)
+    }
+  }
+
+  let links_ = [];
+  for (let i = 0; i < links.length; i++) {
+    if (local_nodes.indexOf(links[i].target.index) != -1 |
+        local_nodes.indexOf(links[i].source.index) != -1) {
+          links_.push(links[i]);
+    }
+  }
+  return links_
+}
+
 
 function visualize(data) {
   let {simulation, nodes, links} = setup_simulation(data);
@@ -82,14 +142,10 @@ function visualize(data) {
   d3.select("#nodes")
     .selectAll("circle")
     .call(drag)
-
-  d3.select("#overall")
-    .call(d3.zoom()
-      .scaleExtent([0.5, 4])
-      .on('zoom', zoomed));
 }
 
 let scales = make_scales(),
-  nodes;
+  nodes,
+  lens_radius = 25;
 d3.json("miserables.json")
   .then(visualize)
