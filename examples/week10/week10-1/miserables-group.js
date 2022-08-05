@@ -79,6 +79,12 @@ function drag_start(simulation, event) {
   }
 }
 
+function drag_end(simulation, event) {
+  simulation.alphaTarget(0);
+  event.subject.fx = null;
+  event.subject.fy = null;
+}
+
 function convex_hull(nodes) {
   let unique_groups = new Set(nodes.map(d => d.group)),
       group_coord = {};
@@ -110,7 +116,8 @@ function visualize(data) {
 
   let drag = d3.drag()
     .on("start", (e) => drag_start(simulation, e))
-    .on("drag", dragged);
+    .on("drag", dragged)
+    .on("end", (e) => drag_end(simulation, e));
   d3.select("#nodes")
     .selectAll("circle")
     .call(drag)
