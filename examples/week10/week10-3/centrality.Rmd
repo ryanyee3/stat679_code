@@ -66,8 +66,11 @@ G %E>%
   cut(100) %>%
   table() %>%
   as_tibble() %>%
-  mutate(bin_ix = row_number()) %>%
-  set_names(c("bin", "n", "bin_ix")) %>%
+  mutate(
+    bin_ix = row_number(),
+    bin_start = as.numeric(str_extract(`.`, "[\\-0-9\\.]+"))
+  ) %>%
+  set_names(c("bin", "n", "bin_ix", "bin_start")) %>%
   write_json("centrality_bins.json")
 ```
 

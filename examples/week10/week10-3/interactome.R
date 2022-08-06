@@ -6,13 +6,14 @@ library(jsonlite)
 interactome <- read_json("interactome.json")
 centralities <- read_json("centrality_bins.json")
 
-ui <- fluidPage( 
+ui <- fluidPage(
   column(8, d3Output("network")),
   column(4, d3Output("histogram"))
 )
 
 server <- function(input, output) {
   output$network <- renderD3({
+    print(input$centrality_range)
     r2d3(
       interactome,
       script = "edge_brush.js",
@@ -20,7 +21,7 @@ server <- function(input, output) {
       css = "interactome.css"
     )
   })
-  
+
   output$histogram <- renderD3({
     r2d3(
       centralities,
