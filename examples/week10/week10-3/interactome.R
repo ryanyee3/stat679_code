@@ -13,9 +13,8 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$network <- renderD3({
-    print(input$centrality_range)
     r2d3(
-      interactome,
+      list(interactome, input$centrality_range),
       script = "edge_brush.js",
       dependencies = c("d3-selection-multi.v1.min.js"),
       css = "interactome.css"
