@@ -12,20 +12,20 @@ function make_scales() {
 }
 
 function visualize(data) {
-let brush = d3.brushX()
-  .extent([[0, 0], [width, scales.y.range()[1]]])
-  .on('brush', brushed)
+  let brush = d3.brushX()
+    .extent([[0, 0], [width, scales.y.range()[1]]])
+    .on('brush', brushed)
 
- svg.select("#bars")
-    .selectAll("rect")
-    .data(data).enter()
-    .append("rect")
-    .attrs({
-      x: d => scales.x(d.bin_ix),
-      y: d => height - scales.y(d.n),
-      height: d => scales.y(d.n),
-      width: scales.x.bandwidth()
-    })
+   svg.select("#bars")
+      .selectAll("rect")
+      .data(data).enter()
+      .append("rect")
+      .attrs({
+        x: d => scales.x(d.bin_ix),
+        y: d => height - scales.y(d.n),
+        height: d => scales.y(d.n),
+        width: scales.x.bandwidth()
+      })
 
   svg.select("#background")
     .call(brush)
