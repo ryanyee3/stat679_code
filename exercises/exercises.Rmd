@@ -903,27 +903,25 @@ support a new `selection.join()` pattern to streamline updates. This exercise
 provides practice with this new pattern, following the documentation available
 [here](https://observablehq.com/@d3/selection-join?collection=@d3/d3-selection).
 
-		a. Consider the join pattern in the second block in the documentation,
+	a. Consider the join pattern in the second block in the documentation,
 		
   		```{d3, eval = FALSE}
-  		{
-  		  while (true) {
-  			svg.selectAll("text")
-  			  .data(randomLetters())
-  			  .join("text")
-  				.attr("x", (d, i) => i * 16)
-  				.text(d => d);
-  		
-  			yield svg.node();
-  			await Promises.tick(2500);
-  		  }
-  		}
+		  while (true) {
+			svg.selectAll("text")
+			  .data(randomLetters())
+			  .join("text")
+				.attr("x", (d, i) => i * 16)
+				.text(d => d);
+		
+			yield svg.node();
+			await Promises.tick(2500);
+		  }
   		```
 		
-		What would happen if instead of `.join("text")`, we had used
-		`.append("text")`? What can you conclude about the behavior of `.join()`?
-	
-		b. Consider the join pattern in the third block in the documentation,
+  	What would happen if instead of `.join("text")`, we had used
+  	`.append("text")`? What can you conclude about the behavior of `.join()`?
+  
+	b. Consider the join pattern in the third block in the documentation,
 		
   		```{d3, eval = FALSE}
   		 svg.selectAll("text")
@@ -937,17 +935,35 @@ provides practice with this new pattern, following the documentation available
   		  )
   		```
 		
-		Every time new random letters are generated using `randomLetters()`, there is
-		a chance that some letters are removed, others are added, and some overlap
-		between the two calls. In each of the three cases above, how does the letter
-		appear in the visualization after the update? Does it depend on the original
-		location of that letter within the array?
+  	Every time new random letters are generated using `randomLetters()`, there is
+  	a chance that some letters are removed, others are added, and some overlap
+  	between the two calls. In each of the three cases above, how does the letter
+  	appear in the visualization after the update? Does it depend on the original
+  	location of that letter within the array?
 
-		c. Rewrite one example either from the D3 for R users
-		[book](https://jtr13.github.io/d3book/update-enter-and-exit.html) or from our
-		own course lecture notes so that, instead of using the earlier general update
-		pattern (based on `.enter()`, `.exit()`, `.merge()`, or `.update()`) it uses
-		only `.join()`.
+  	c. Rewrite one example either from the D3 for R users
+  	[book](https://jtr13.github.io/d3book/update-enter-and-exit.html) or from our
+  	own course lecture notes so that, instead of using the earlier general update
+  	pattern (based on `.enter()`, `.exit()`, `.merge()`, or `.update()`) it uses
+  	only `.join()`.
+  
+1. [Interactive Penguins II] The code at this
+[link](https://observablehq.com/@observablehq/d3-scatterplot) creates a
+scatterplot of body mass against flipper length in the penguins dataset. Your
+goal in this exercise is to provide a version that responds to user queries.
+
+    a. Skim through `penguins.csv`, which can be downloaded by clicking the
+    small paperclip symbol on the right hand side of the interface. Based on the
+    data available, discuss a potential user query that might be worth
+    supporting. What makes the query interesting?
+    b. Describe two types of interactivity available in D3 that could be used to
+    support this query. For each, explain (i) the types of input the user
+    provides to specify the query and (ii) the changes in the appearance of
+    graphical marks that is initiated by the query.
+    c. Implement one of the two interactivity possibilities that you described
+    in the previous part. You may extend the current online implementation. In
+    your submission, include a short video of the interactivity, the code you
+    used, and a brief explanation of the logic behind your implementation.
 
 # Spatial and Temporal Data
 
