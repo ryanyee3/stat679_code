@@ -18,11 +18,10 @@ opts_chunk$set(cache = TRUE, message = FALSE, warning = FALSE, echo = TRUE, incl
 [TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets), [Data Is
 Plural](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit#gid=0),
 [Kaggle Datasets](https://www.kaggle.com/datasets), [Google Dataset
-Search](https://datasetsearch.research.google.com/), or your own personal studies that you 
-would like to visualize this semester. Are there application areas that you
-would be especially excited to see datasets from? Give an example of a question
-or comparison for which this data might be useful. You do not need to download
-the dataset, but do provide a link, so we can use it to create future exercises.
+Search](https://datasetsearch.research.google.com/), or your own personal
+studies that you would like to visualize this semester. What makes you
+interested in this dataset? Please provide a link, so we can use it to create
+future exercises.
 
 1. [Data Types] For the following parts, specify whether the data field is
 Nominal, Ordinal, or Quantitative.
@@ -41,7 +40,7 @@ would do differently if you were redesigning it?
     include_graphics("figure/info-food-waste.png")
     ```
   
-1. [Critique - Science paper] Figure 2 below is from the scientific article *Both consumptive and non-consumptive effects of predators impact mosquito populations and have implications for disease transmission* by Russell et al. (2022). It describes the predators of mosquitos at different points in their life cycles. Give an example of a question that this visualization helps answer. How
+1. [Critique - Science Paper] Figure 2 below is from the scientific article *Both consumptive and non-consumptive effects of predators impact mosquito populations and have implications for disease transmission* by Russell et al. (2022). It describes the predators of mosquitos at different points in their life cycles. Give an example of a question that this visualization helps answer. How
 easy / difficult is it to answer based on the current design? What is one design
 choice that you like? What is one thing you would do differently if you were
 redesigning it?
@@ -108,17 +107,17 @@ course.
   	prioritize in the new design? Did you have to make any trade-offs? Did you
   	make any changes specifically to improve legibility.
 
-1. [Concept Map] Prepare a concept map to summarize the last week’s worth of
-reading material. An effective submission will include a thorough coverage of
-both abstract concepts and practical examples, summarized concisely into short
+1. [Concept Map] Prepare a concept map to summarize the last week of reading
+material. An effective submission will include a thorough coverage of both
+abstract concepts and practical examples, summarized concisely into short
 phrases. It will also include well-justified links between nodes, with text
 explanations for edges whose interpretation might not be obvious at first.
 
-1. [Mini-presentation] Prepare a short presentation to summarize the last week’s
-worth of reading material. Make sure to include coverage of both important
-concepts and practical implementation details. Prepare either a short set of
-slides or an original code notebook. When you present your material, make sure
-that all team members have an opportunity to speak.
+1. [Mini-presentation] Prepare a short presentation to summarize the last week
+of reading material. Make sure to include coverage of both important concepts
+and practical implementation details. Prepare either a short set of slides or an
+original code notebook. When you present your material, make sure that all team
+members have an opportunity to speak.
 
 1. [New Data Application] Create a version of a visualization included in this
 week’s readings, lecture notes, or in-class exercises, but applied to new
@@ -133,12 +132,12 @@ dataset of your choice.
 1. [Dissecting a visualization] Pick two static views of visualizations from any
 of the following sites: 1, 2, 3. For each view, answer the questions below,
 
-  a. What graphical marks are used in the display? What data attribute does
-  each mark encode?
-  b. Are there visual queries that their design makes especially
-  straightforward to answer? Are there queries that are more difficult
-  relative to a simpler alternative? 
-  c. Why do you think the authors chose the visual encodings that they did?
+    a. What graphical marks are used in the display? What data attribute does
+    each mark encode?
+    b. Are there visual queries that their design makes especially
+    straightforward to answer? Are there queries that are more difficult
+    relative to a simpler alternative? 
+    c. Why do you think the authors chose the visual encodings that they did?
   
 # Visualization with R
 
@@ -170,8 +169,7 @@ to study changes in temperature over time.
     ```
     a. Make a version of Figure 2.3 using a line mark (`geom_line`). Make at
     least one customization of the theme to make the plot more similar to the
-    version in Figure 2.3. _Hint: To group the lines by city, use the `group = `
-    aesthetic mapping like in point (11) of the Week 1 [2] notes.
+    version in Figure 2.3. _Hint: To group the lines by city, use the `group = ` aesthetic mapping._
     b. Using the `group_by` + `summarise` pattern, compute the mean temperature
     for each month in each city.
     c. Using the data generated in (b), Make a version of Figure 2.4 using a
@@ -194,38 +192,42 @@ to study changes in temperature over time.
 [link](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l) describes
 all participants in the London 2012 Olympics.
     a. Create a layered display that shows (i) the ages of athletes across sports
-and (ii) the average age within each sport. Use different marks for participants
-and for averages. To avoid overplotting, jitter the `Age` variable.
+    and (ii) the average age within each sport.
     b. Sort the sports from lowest to highest average age.
-
-1. [German Traffic] We will use `geom_ridgeline` to compare traffic volumes
-across a set of cities. The data are read in below,
+    c. Develop one new question based on these data. What makes you interested
+    in it? Provide a visualization that supports the comparisons needed to
+    arrive at an answer.
+    
     ```{r}
-    traffic <- read_csv("https://uwmadison.box.com/shared/static/x0mp3rhhic78vufsxtgrwencchmghbdf.csv")
+    olympics <- read_csv("https://uwmadison.box.com/shared/static/rzw8h2x6dp5693gdbpgxaf2koqijo12l.csv")
     ```
-    Each row is a timepoint of traffic within a city in Germany. 
-
-    a. Using `geom_ridgeline`, make a plot of traffic over time, within each of the cities.
-    b. Describe two takeaways from the resulting figure.
-    c. Propose an alternative encoding of the same data. What are the strengths of your approach? What are the strengths of the ridgeline approach?
 
 1. [Language Learning] This problem will look at a simplified version of the 
 data from the study _A critical period for second language acquisition: Evidence from 2/3 million English speakers_, 
 which measured the effect of the the age of initial language learning on
-performance in grammar quizzes. We have downloaded the raw data from the
+performance in grammar quizzes. We have downloaded the data from the
 supplementary material and reduced it down to the average and standard
-deviations of test scores within (initial learning age) $\times$ (current
-age-group) combinations. We have kept a column `n` showing how many participants
-were used to compute the associated statistics. The resulting data are available
+deviations of test scores within (initial learning age, the `Eng_start`
+variable) $\times$ (current age-group, the `age_group` variable) combinations.
+We have kept a column `n` showing how many participants were used to compute the
+associated statistics. The resulting data are available
 [here](https://uwmadison.box.com/shared/static/m53dea9w5ipczs3d7nqdnxqxx5ao501b.csv).
 
-    a. Using a tidy approach, define two new fields, `low` and `high`, giving
-    confidence intervals for the means in each row. That is, derive new variables 
-    according to $\hat{x} \pm 2 * \frac{1}{\sqrt{n}}\hat{\sigma}$.
+    a. Define two new fields, `low` and `high`, giving confidence intervals for
+    the means in each row. That is, derive new variables according to $\hat{x} \pm 2 * \frac{1}{\sqrt{n}}\hat{\sigma}$.
     
-    b. Create a ribbon plot showing confidence intervals for average test scores as
-    a function of starting age. Include a line for the average score within that
-    combination. Interpret the results of the study.
+    b. Design and implement a visualization that helps answer the following
+    questions,
+    
+      - How does test score vary as a function of current age group?
+      
+      - How does test score vary as a function of initial learning age? Is this
+      relationship the same across all age groups?
+  
+      - For which populations are we least certain about true language learning
+      ability?
+    
+    c. Provide answers for each question from (b) within context.
    
 1. [Homelessness] Take a static screenshot from any of the visualizations in
 this
@@ -374,7 +376,9 @@ transforms one dataset (I) into another (II).
     d. Provide one takeaway from the interactive visualization that is not
     possible to make using the original static version.
     
-1. [Olympics Derivations] This problem gives some practice with deriving new variables.
+1. [Olympics Derivations] This problem gives some practice with deriving and
+visualizing new variables.
+
     a. Create new columns for the city and country of birth for each athlete in the
     London 2012 Olympics
     [dataset](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l).
@@ -846,10 +850,10 @@ scatterplot is provided in the function `scatterplot`.
     }
     ```
     
-    a. [3 points] Provide server code which would allow the scatterplot to update
+    a. Provide server code which would allow the scatterplot to update
     the highlighted athletes depending on the currently selected sports.
     
-    b. [3 points] We have been asked to also print a table of the selected athletes.
+    b. We have been asked to also print a table of the selected athletes.
     Assume the UI has the form,
         
     ```{r}
@@ -889,6 +893,62 @@ two functions? Be as specific as possible.
 
 # Visualization with D3
 
+1. When D3 was introduced, it recommended creating, modifying, and deleting
+elements using a "general update pattern", and this is still found in most
+introductions to D3, e.g.,
+[1](https://jtr13.github.io/d3book/update-enter-and-exit.html),
+[2](https://infx511.github.io/d3.html), or
+[3](https://bost.ocks.org/mike/selection). However, recent versions of D3
+support a new `selection.join()` pattern to streamline updates. This exercise
+provides practice with this new pattern, following the documentation available
+[here](https://observablehq.com/@d3/selection-join?collection=@d3/d3-selection).
+
+		a. Consider the join pattern in the second block in the documentation,
+		
+  		```{d3, eval = FALSE}
+  		{
+  		  while (true) {
+  			svg.selectAll("text")
+  			  .data(randomLetters())
+  			  .join("text")
+  				.attr("x", (d, i) => i * 16)
+  				.text(d => d);
+  		
+  			yield svg.node();
+  			await Promises.tick(2500);
+  		  }
+  		}
+  		```
+		
+		What would happen if instead of `.join("text")`, we had used
+		`.append("text")`? What can you conclude about the behavior of `.join()`?
+	
+		b. Consider the join pattern in the third block in the documentation,
+		
+  		```{d3, eval = FALSE}
+  		 svg.selectAll("text")
+  		  .data(randomLetters(), d => d)
+  		  .join(
+  			enter => enter.append("text")
+  		    		.attr("fill", "green")
+  		    		.text(d => d),
+  			update => update
+  		    		.attr("fill", "gray")
+  		  )
+  		```
+		
+		Every time new random letters are generated using `randomLetters()`, there is
+		a chance that some letters are removed, others are added, and some overlap
+		between the two calls. In each of the three cases above, how does the letter
+		appear in the visualization after the update? Does it depend on the original
+		location of that letter within the array?
+
+		c. Rewrite one example either from the D3 for R users
+		[book](https://jtr13.github.io/d3book/update-enter-and-exit.html) or from our
+		own course lecture notes so that, instead of using the earlier general update
+		pattern (based on `.enter()`, `.exit()`, `.merge()`, or `.update()`) it uses
+		only `.join()`.
+
 # Spatial and Temporal Data
 
 1. [Matching Autocorrelation Functions] The purpose of this problem is to build
@@ -915,6 +975,18 @@ structure and then see what happens to the associated autocorrelation functions.
     varying magnitudes. Plot the associated autocorrelation functions and comment on
     the relationship between the strength of the trend and the shape of the
     function.
+    
+1. [German Traffic] We will use `geom_ridgeline` to compare traffic volumes
+across a set of cities. The data are read in below,
+    ```{r}
+    traffic <- read_csv("https://uwmadison.box.com/shared/static/x0mp3rhhic78vufsxtgrwencchmghbdf.csv")
+    ```
+    Each row is a timepoint of traffic within a city in Germany. 
+
+    a. Make a plot of traffic over time, within each of the cities.
+    b. Describe two takeaways from the resulting figure.
+    c. Propose an alternative encoding of the same data. What are the strengths of your approach? What are the strengths of the ridgeline approach?
+
   
 1. [Spotify Time Series]  In this problem, we will study music streaming on
 Spotify in 2017. We'll start by looking at some characteristics of the most
