@@ -1,0 +1,37 @@
+---
+title: "Problem Set 1"
+output: pdf_document
+---
+
+Prepare a write-up that includes your solutions to the following questions from
+the course exercise sheet. Make sure to include all of your code and clearly
+specify where each new problem begins.
+
+**Coding**
+
+* London Olympics [3 points]
+* Pokemon [3 points]
+* Soccer Code Review [3 points]
+* Visual Redesign [5 points]
+
+**Discussion**
+
+* Antibiotics Comparison [3 points]
+* Name App Bugs [3 points]
+
+### Grading Criteria
+
+Each coding problem will be graded according to the following criteria,
+
+* C1: _Attention to detail in visual design_. Your design choices should
+demonstrate critical thinking around the appearance of graphical marks and the
+queries that they support.
+* C2: _Elegant code style_. The code you use to implement your visualizations
+should be readable, modular, and concise. You may find it helpful to check your
+code against the Tidyverse [style guide](https://style.tidyverse.org/).
+* C3: _Thoughtful explanations, interpretations, and organization_.
+Your justifications should be complete, your interpretations should draw
+creatively from relevant sources, and the submission overall should be
+well-organized and formatted.
+
+Discussion problems will be evaluated based on only the last.
