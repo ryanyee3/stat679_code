@@ -893,9 +893,9 @@ two functions? Be as specific as possible.
 
 # Visualization with D3
 
-1. When D3 was introduced, it recommended creating, modifying, and deleting
-elements using a "general update pattern", and this is still found in most
-introductions to D3, e.g.,
+1. [A revised "general update pattern"] When D3 was introduced, it recommended
+creating, modifying, and deleting elements using a "general update pattern", and
+this is still found in most introductions to D3, e.g.,
 [1](https://jtr13.github.io/d3book/update-enter-and-exit.html),
 [2](https://infx511.github.io/d3.html), or
 [3](https://bost.ocks.org/mike/selection). However, recent versions of D3
