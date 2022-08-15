@@ -817,7 +817,7 @@ same exercise for one of the apps in the Shiny User Showcase. _Note: In many cas
 interactively visualizing athlete weight and heights in the 2012 London
 Olympics. We would like to have an interactive scatterplot of `Weight` vs.
 `Height, cm` that updates which points (athletes) are highlighted depending on
-sports have been selected by a dropdown menu. Code for generating the
+which sports have been selected by a dropdown menu. Code for generating the
 scatterplot is provided in the function `scatterplot`.
     
     ```{r}
@@ -992,8 +992,8 @@ structure and then see what happens to the associated autocorrelation functions.
     the relationship between the strength of the trend and the shape of the
     function.
     
-1. [German Traffic] We will use `geom_ridgeline` to compare traffic volumes
-across a set of cities. The data are read in below,
+1. [German Traffic] We will use compare and contrast two encodings to visualize
+traffic volumes across a set of cities. The data are read in below,
     ```{r}
     traffic <- read_csv("https://uwmadison.box.com/shared/static/x0mp3rhhic78vufsxtgrwencchmghbdf.csv")
     ```
@@ -1001,7 +1001,8 @@ across a set of cities. The data are read in below,
 
     a. Make a plot of traffic over time, within each of the cities.
     b. Describe two takeaways from the resulting figure.
-    c. Propose an alternative encoding of the same data. What are the strengths of your approach? What are the strengths of the ridgeline approach?
+    c. Propose an alternative encoding of the same data. What are the strengths
+    of the second approach? What are the strengths of the original approach?
 
   
 1. [Spotify Time Series]  In this problem, we will study music streaming on

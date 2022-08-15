@@ -1,0 +1,17 @@
+---
+title: "Penguins"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+1. [Penguins] The data below measures properties of various Antarctic penguins.
+    ```{r, echo = TRUE}
+    penguins <- read_csv("https://uwmadison.box.com/shared/static/ijh7iipc9ect1jf0z8qa2n3j7dgem1gh.csv")
+    ```
+    Create a single plot that makes it easy to answer both of these questions, (i) How is bill length related to bill depth within and across species? (ii) On which islands are which species found?
+    
+    Read about [Simpson's paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox) and summarize it in your own words. Then, explain how part (i) provides a real-world example of this paradox.
+

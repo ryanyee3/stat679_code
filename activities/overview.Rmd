@@ -1,0 +1,150 @@
+---
+title: "activity_plans"
+output:
+  xaringan::moon_reader:
+    css: ["default", "css/xaringan-themer.css"]
+    self_contained: false
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+    seal: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  cache = TRUE,
+  dpi = 200,
+  fig.align = "center",
+  out.width = 650,
+  fig.height = 3,
+  fig.width = 9
+  )
+th <- theme_minimal() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.border = element_rect(fill = NA, color = "#0c0c0c", size = 0.6),
+    axis.text = element_text(size = 14),
+    axis.title = element_text(size = 16),
+    legend.position = "bottom"
+  )
+theme_set(th)
+options(width = 100)
+```
+
+---
+
+# September 7, 2022
+
+1. [Review syllabus](https://canvas.wisc.edu/courses/321152/files/27081478?module_item_id=5152442)
+1. Review class resources
+1. [In-Class Exercise 1.1](https://canvas.wisc.edu/courses/321152/assignments/1623480?module_item_id=5162096)
+
+---
+
+### Syllabus
+
+* Learning Outcomes
+* Teaching team and office hours
+* Assessments
+* Grading
+
+---
+
+### Learning Outcomes
+
+1.	Draw from a catalog of visual encodings to support specific visual comparisons in temporal, geospatial, network, hierarchical, high-dimensional count, text, and uncertain data and demonstrate facility implementing them using the R and javascript programming languages.
+2.	Draw from a catalog of interactivity patterns to compose visualizations that respond to user’s dynamic queries.
+3.	Using the vocabulary of data visualization, analyze and critique visual designs.
+4.	Given a data analysis problem and initial design solution, iteratively refine visual encodings and interactivity idioms from across the design space until a satisfactory solution is discovered.
+5.	Navigate the data visualization research literature, summarize the contributions of a specific methodological proposal, and evaluate their applicability in specific problem contexts.
+
+---
+
+### Teaching Team
+
+* Kris Sankaran and ...
+* We will announce in-person and virtual office hours depending on the results of
+this poll: https://tinyurl.com/8wf4utsp
+
+---
+
+### Assessments
+
+* In-class exercises and discussions (graded {0, 50, 100%})
+* 6 problem sets 
+* 3 project reports and 1 presentation
+* 1 midterm exam
+
+---
+
+### Grading
+
+* Problem Sets: 35%
+* Group Project: 25%
+* In-Class Exercises: 20%
+* Midterm: 20%
+
+---
+
+### Class Resources
+
+1. [Canvas page](https://canvas.wisc.edu/courses/321152)
+  - Links to all other resources
+1. [Readings](https://drive.google.com/file/d/16jr5MlX8axfDVZ3kS4vZuWzqDOpj1Wng/view?usp=sharing)
+1. [Piazza](https://piazza.com/wisc/fall2022/stat679f22/home)
+1. [Online notes](https://krisrs1128.github.io/stat679_notes/)
+1. [Online recordings](https://mediaspace.wisconsin.edu/)
+1. [Worked code examples](https://github.com/krisrs1128/stat679_code)
+
+---
+
+### Questions?
+
+Also feel free to speak with me after class.
+
+---
+
+### Exercise 1.1
+
+1. Submit a response to [Formulating Questions] in the exercise sheet.
+
+2. Share your chosen datasets in groups of 2 - 3 people.
+
+[Formulating Questions] Pick a dataset from
+[TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets), [Data Is
+Plural](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit#gid=0),
+[Kaggle Datasets](https://www.kaggle.com/datasets), [Google Dataset
+Search](https://datasetsearch.research.google.com/), or your own personal
+studies that you would like to visualize this semester. What makes you
+interested in this dataset? Please provide a link, so we can use it to create
+future exercises.
+
+---
+
+
+# September 12, 2022
+
+1. Code demo - [Penguins]
+1. Exercise review
+1. [In-Class Exercise 2.1]
+
+---
+
+### Exercise Review
+
+---
+
+
+# September 15, 2022
+
+1. Code demo - [Plant growth]
+1. Exercise review
+1. [In-Class Exercise 2.2]
+
+---
