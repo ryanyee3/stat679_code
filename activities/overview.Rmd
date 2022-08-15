@@ -47,6 +47,18 @@ options(width = 100)
 
 ---
 
+### Welcome!!
+
+I'm excited to share this course with you this semester. There are few
+activities that engage creative, quantitative, and critical thinking skills all
+at once, but data visualization is one of them.
+
+
+Nothing makes my day like a good data visualization, and I look forward to
+seeing those that you create.
+
+---
+
 ### Syllabus
 
 * Learning Outcomes
@@ -68,9 +80,31 @@ options(width = 100)
 
 ### Teaching Team
 
-* Kris Sankaran and ...
-* We will announce in-person and virtual office hours depending on the results of
+.pull-left[
+We will announce in-person and virtual office hours depending on the results of
 this poll: https://tinyurl.com/8wf4utsp
+]
+
+.pull-right[
+```{r, out.width = 300}
+include_graphics("figures/20210607_132459.jpg")
+```
+]
+
+---
+
+### Teaching Team
+
+.pull-left[
+We will announce in-person and virtual office hours depending on the results of
+this poll: https://tinyurl.com/8wf4utsp
+]
+
+.pull-right[
+```{r, out.width = 300}
+include_graphics("figures/20210607_132612.jpg")
+```
+]
 
 ---
 
