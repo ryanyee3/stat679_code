@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-*Encoding options in ggplot2*
+*Encodings available in ggplot2.*
 
     library(tidyverse)
     library(scales)
@@ -25,24 +25,28 @@ output:
     and we’re using shape and the y position to distinguish between
     country clusters.
 
-        gapminder <- read_csv("https://uwmadison.box.com/shared/static/dyz0qohqvgake2ghm4ngupbltkzpqb7t.csv", col_types = cols()) %>%
-          mutate(cluster = as.factor(cluster)) # specify that cluster is nominal
-        gap2000 <- gapminder %>%
-          filter(year == 2000) # keep only year 2000
-            ggplot(gap2000) +
-              geom_point(aes(x = fertility, y = cluster, shape = cluster))
+{% highlight R %}
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-3-1.png)
+    gapminder <- read_csv("https://uwmadison.box.com/shared/static/dyz0qohqvgake2ghm4ngupbltkzpqb7t.csv", col_types = cols()) %>%
+      mutate(cluster = as.factor(cluster)) # specify that cluster is nominal
+    gap2000 <- gapminder %>%
+      filter(year == 2000) # keep only year 2000
+    ggplot(gap2000) +
+      geom_point(aes(x = fertility, y = cluster, shape = cluster))
 
-3.  **Bar marks** Bar marks let us associate a continuous field with a
-    nominal one.
+{% endhighlight %}
+
+![](/stat679_notes/assets/week1-3/unnamed-chunk-4-1.png)
+
+1.  **Bar marks** let us associate a continuous field with a nominal
+    one.
 
         ggplot(gap2000) +
           geom_col(aes(country, pop))
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-4-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-5-1.png)
 
-4.  This plot can be improved. The grid lines and tick marks associated
+2.  This plot can be improved. The grid lines and tick marks associated
     with each bar are distracting and the axis labels are all running
     over one another. We resolve this by changing the theme and turning
     the bars on their side[1]
@@ -54,13 +58,22 @@ output:
                 axis.ticks = element_blank() # remove tick marks
               )
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-5-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-6-1.png)
 
-5.  To make comparisons between countries with similar populations
+3.  To make comparisons between countries with similar populations
     easier, we can order them by population (alphabetical ordering is
     not that meaningful). To compare clusters, we can color in the bars.
 
-6.  We’ve been spending a lot of time on this plot. This is because I
+        ggplot(gap2000) +
+           geom_bar(aes(pop, reorder(country, pop), fill = cluster), stat = "identity") +
+           theme(
+             axis.ticks = element_blank(),
+             panel.grid.major.y = element_blank()
+           )
+
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-7-1.png)
+
+4.  We’ve been spending a lot of time on this plot. This is because I
     want to emphasize that a visualization is not just something we can
     get just by memorizing some magic (programming) incantation.
     Instead, it is something worth critically engaging with and
@@ -68,13 +81,16 @@ output:
     Philosophy aside, there are still a few points that need to be
     improved in this figure,
 
-         * The axis titles are not meaningful.
-         * There is a strange gap between the left hand edge of the plot and the start of the bars.
-         * I would also prefer if the bars were exactly touching one another, without the small vertical gap.
-         * The scientific notation for population size is unnecessarily technical.
-         * The color scheme is a bit boring^[.
+    -   The axis titles are not meaningful.
+    -   There is a strange gap between the left hand edge of the plot
+        and the start of the bars.
+    -   I would also prefer if the bars were exactly touching one
+        another, without the small vertical gap.
+    -   The scientific notation for population size is unnecessarily
+        technical.
+    -   The color scheme is a bit boring…
 
-7.  I’ve addressed each issue in the block below. Can you tell which
+5.  I’ve addressed each issue in the block below. Can you tell which
     piece of code makes which change? Try removing different components
     to verify your guesses.
 
@@ -92,9 +108,9 @@ output:
                  panel.grid.major.y = element_blank()
                )
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-6-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-8-1.png)
 
-8.  **Segment marks**. In the plot above, each bar is anchored at 0.
+6.  **Segment marks**. In the plot above, each bar is anchored at 0.
     Instead, we could have each bar encode two continuous values, a left
     and right. To illustrate, let’s compare the minimum and maximimum
     life expectancies within each country cluster. We’ll need to create
@@ -119,9 +135,9 @@ output:
           labs(x = "Minimum and Maximum Expected Span", col = "Country Group", y = "Country Group") +
           xlim(0, 85) # otherwise would only range from 42 to 82
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-7-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-9-1.png)
 
-9.  **Line marks** are useful for comparing changes. Our eyes naturally
+7.  **Line marks** are useful for comparing changes. Our eyes naturally
     focus on rates of change when we see lines. Below, we’ll plot the
     fertility over time, colored in by country cluster. The group
     argument is useful for ensuring each country gets its own line; if
@@ -137,9 +153,9 @@ output:
               scale_x_continuous(expand = c(0, 0)) +  # same trick of removing gap
               scale_color_manual(values = cols)
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-8-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-10-1.png)
 
-10. Area marks have a flavor of both bar and line marks. The filled area
+8.  Area marks have a flavor of both bar and line marks. The filled area
     supports absolute comparisons, while the changes in shape suggest
     derivatives.
 
@@ -149,13 +165,13 @@ output:
 
         ggplot(population_sums) +
           geom_area(aes(year, total_pop, fill = cluster)) +
-          scale_y_continuous(expand = c(0, 0, .1, .1), label = label_number(cut_short_scale())) +
+          scale_y_continuous(expand = c(0, 0, .1, .1), label = label_number_si()) +
           scale_x_continuous(expand = c(0, 0)) +
           scale_fill_manual(values = cols)
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-9-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-11-1.png)
 
-11. Just like in bar marks, we don’t necessarily need to anchor the
+9.  Just like in bar marks, we don’t necessarily need to anchor the
     y-axis at 0. For example, here the bottom and top of each area mark
     is given by the 30% and 70% quantiles of population within each
     country cluster.
@@ -173,7 +189,7 @@ output:
           scale_x_continuous(expand = c(0, 0)) +
           scale_fill_manual(values = cols)
 
-    ![](/stat679_notes/assets/week1-3/unnamed-chunk-10-1.png)
+    ![](/stat679_notes/assets/week1-3/unnamed-chunk-12-1.png)
 
 [1] An alternative is to turn rotate the labels by 90 degrees. I prefer
 to turn the whole plot this, because this way, readers don’t have to

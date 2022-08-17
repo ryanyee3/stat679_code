@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-*Increased information density through faceting*
+*Increased information density through faceting.*
 
     library(dslabs)
     library(tidyverse)
@@ -89,7 +89,7 @@ output:
     multiple geom layers at once. The dataset below shows the abundances
     of five different bacteria across three different subjects over
     time, as they were subjected to antibiotics. The data were the basis
-    for \[this study\](&lt;)&gt;.
+    for [this study](https://pubmed.ncbi.nlm.nih.gov/20847294/).
 
         antibiotic <- read_csv("https://uwmadison.box.com/shared/static/5jmd9pku62291ek20lioevsw1c588ahx.csv")
         head(antibiotic)

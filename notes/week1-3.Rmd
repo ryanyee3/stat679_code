@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-_Encoding options in ggplot2_
+_Encodings available in ggplot2._
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -29,17 +29,27 @@ theme_set(theme_minimal())
 size, and shape. Below, each mark is a country, and we’re using shape and the y
 position to distinguish between country clusters.
 
-    ```{r}
-    gapminder <- read_csv("https://uwmadison.box.com/shared/static/dyz0qohqvgake2ghm4ngupbltkzpqb7t.csv", col_types = cols()) %>%
-      mutate(cluster = as.factor(cluster)) # specify that cluster is nominal
-    gap2000 <- gapminder %>%
-      filter(year == 2000) # keep only year 2000
-  	ggplot(gap2000) +
-  	  geom_point(aes(x = fertility, y = cluster, shape = cluster))
-    ```
-	
+{% highlight R %}
+```{r, eval = FALSE}
+gapminder <- read_csv("https://uwmadison.box.com/shared/static/dyz0qohqvgake2ghm4ngupbltkzpqb7t.csv", col_types = cols()) %>%
+  mutate(cluster = as.factor(cluster)) # specify that cluster is nominal
+gap2000 <- gapminder %>%
+  filter(year == 2000) # keep only year 2000
+ggplot(gap2000) +
+  geom_point(aes(x = fertility, y = cluster, shape = cluster))
+```
+{% endhighlight %}
 
-3. **Bar marks** Bar marks let us associate a continuous field with a nominal one.
+```{r, echo = FALSE}
+gapminder <- read_csv("https://uwmadison.box.com/shared/static/dyz0qohqvgake2ghm4ngupbltkzpqb7t.csv", col_types = cols()) %>%
+  mutate(cluster = as.factor(cluster)) # specify that cluster is nominal
+gap2000 <- gapminder %>%
+  filter(year == 2000) # keep only year 2000
+ggplot(gap2000) +
+  geom_point(aes(x = fertility, y = cluster, shape = cluster))
+```
+
+3. **Bar marks** let us associate a continuous field with a nominal one.
 
     ```{r}
     ggplot(gap2000) +
@@ -48,7 +58,7 @@ position to distinguish between country clusters.
   
 4. This plot can be improved. The grid lines and tick marks associated with each bar are distracting and the axis labels are all running over one another. We resolve this by changing the theme and turning the bars on their side^[An alternative is to turn rotate the labels by 90  degrees. I prefer to turn the whole plot this, because this way, readers don’t have to tilt their heads to read the country names.]
 
-    ```{r}
+    ```{r, fig.height = 8.5}
   	ggplot(gap2000) +
   	  geom_col(aes(pop, country)) +
   	  theme(
@@ -58,20 +68,32 @@ position to distinguish between country clusters.
     ```
 
 
-5. To make comparisons between countries with similar populations easier, we can order them by population (alphabetical ordering is not that meaningful). To compare clusters, we can color in the bars.
+5. To make comparisons between countries with similar populations easier, we can
+order them by population (alphabetical ordering is not that meaningful). To
+compare clusters, we can color in the bars.
+
+    ```{r, fig.height = 8.5}
+    ggplot(gap2000) +
+       geom_bar(aes(pop, reorder(country, pop), fill = cluster), stat = "identity") +
+       theme(
+         axis.ticks = element_blank(),
+         panel.grid.major.y = element_blank()
+       )
+    ```
+  
 6. We’ve been spending a lot of time on this plot. This is because I want to emphasize that a visualization is not just something we can get just by memorizing some magic (programming) incantation. Instead, it is something worth critically engaging with and refining, in a similar way that we would refine an essay or speech. Philosophy aside, there are still a few points that need to be improved in this figure,
 
-		* The axis titles are not meaningful.
-		* There is a strange gap between the left hand edge of the plot and the start of the bars.
-		* I would also prefer if the bars were exactly touching one another, without the small vertical gap.
-		* The scientific notation for population size is unnecessarily technical.
-		* The color scheme is a bit boring^[.
+	* The axis titles are not meaningful.
+	* There is a strange gap between the left hand edge of the plot and the start of the bars.
+	* I would also prefer if the bars were exactly touching one another, without the small vertical gap.
+	* The scientific notation for population size is unnecessarily technical.
+	* The color scheme is a bit boring...
 
 7. I’ve addressed each issue in the block below. Can you tell which piece of
 code makes which change? Try removing different components to verify your
 guesses.
 
-    ```{r}
+    ```{r, fig.height = 8.5}
     cols <- c("#80BFA2", "#7EB6D9", "#3E428C", "#D98BB6", "#BF2E21", "#F23A29")
   	ggplot(gap2000) +
   	   geom_col(
@@ -129,7 +151,7 @@ guesses.
     
     ggplot(population_sums) +
       geom_area(aes(year, total_pop, fill = cluster)) +
-      scale_y_continuous(expand = c(0, 0, .1, .1), label = label_number(cut_short_scale())) +
+      scale_y_continuous(expand = c(0, 0, .1, .1), label = label_number_si()) +
       scale_x_continuous(expand = c(0, 0)) +
       scale_fill_manual(values = cols)
     ```
