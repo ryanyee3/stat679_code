@@ -34,11 +34,13 @@ anything, since the server is empty.
     <iframe src="https://data-viz.it.wisc.edu/content/43a4312c-a124-4b63-8228-23ba5375992b/" allowfullscreen="" data-external="1"></iframe>
 
 1. The UI elements can be further broken down into Inputs, Outputs, and
-Descriptors^[I like to use these names to keep everything organized, but they are not official, and you do not need to memorize this.], all grouped together by an organizing layout function. Inputs are
-UI elements that users can manipulate to prompt certain types of computation.
-Outputs are parts of the interface that reflects the result of a `server`
-computation. Descriptors are parts of the page that aren't involved in
-computation, but which provide narrative structure and guide the user. 
+Descriptors^[I like to use these names to keep everything organized, but they
+are not standard in the community.], all grouped together by an organizing
+layout function. Inputs are UI elements that users can manipulate to prompt
+certain types of computation. Outputs are parts of the interface that reflects
+the result of a `server` computation. Descriptors are parts of the page that
+aren't involved in computation, but which provide narrative structure and guide
+the user.
 
     For example, in the toy app above, `titlePage` is a descriptor providing
     some title text. `textInput` is an input element allowing users to enter
@@ -71,7 +73,7 @@ have the result of that computation appear to the user. For (1), we will add a
 1. There are a few points worth noting. First, the `renderText` component was
 able to refer to the value entered in the textbox using `input$name`. This was
 possible because `name` was the ID that we gave to the `textInput` component. It
-also would not have worked if we had used `input$text` outside of a `render*`
+would not have worked if we had used `input$text` outside of a `render*`
 function: this is what we mean by the `render*` functions making the UI inputs
 available for computation. Finally, we were able to refer to the rendered output
 in the UI by adding a `textOutput` component. By giving this component the id

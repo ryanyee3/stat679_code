@@ -8,9 +8,6 @@ output:
 
 *Vocabulary used by R Shiny Library, and a few example apps.*
 
-    library(tidyverse)
-    theme_set(theme_minimal())
-
 1.  All Shiny apps are made up from the same few building blocks. These
     notes review the main types of blocks. When reading code from more
     complex apps, it can be helpful to try to classify pieces of the
@@ -290,4 +287,4 @@ output:
     <iframe src="https://data-viz.it.wisc.edu/content/fe220e82-becf-4cc6-891c-7fa1c69ba850/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
 
 [1] I like to use these names to keep everything organized, but they are
-not official, and you do not need to memorize this.
+not standard in the community.
