@@ -139,6 +139,43 @@ of the following sites: 1, 2, 3. For each view, answer the questions below,
     relative to a simpler alternative? 
     c. Why do you think the authors chose the visual encodings that they did?
   
+  
+1. [Analyzing a Demo] Watch one of the following interactive demos,
+
+	or choose a comparable one from your own visualization interests.
+
+	a. Analyze the transitions or interactivity are shared in the demo.
+	Specifically, list all transition or interactive elements of the visualization
+	and summarize the designer’s motivation for including them.
+	b. For one of the transition or interactivity elements, imagine an alternative
+	design that accomplishes a similar purpose. Compare and contrast your proposed
+	implementation with that in the original display.
+
+1. [Guided literature search] This exercise will help you search for references
+to support the literature review for your course project.
+
+	a. Reflect on the problem your project is trying to solve. List 6 - 10 data
+	visualization related keywords that should bring up literature relevant to that
+	problem. These keywords can be related to the type of data you have or the
+	visual tasks your work is supposed to support.
+
+	b. Use these keywords to search for 10 - 15 papers relevant papers. You may
+	find it useful to (i) search using [Google Scholar](https://scholar.google.com), (ii) skim the bibliographies
+	of the first few papers you find that seem relevant (especially if they are
+	review papers), (iii) browse abstracts in major journals / conferences (like
+	[TVCG](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945),
+	[PacificVis](https://pvis2022.github.io/pvis2022/program/sessions/),
+	[IEEEVis](http://ieeevis.org/year/2022/info/papers-sessions),
+	[EuroVis](https://conferences.eg.org/eurovis2022/program/) or
+	[VAST](https://ieeexplore.ieee.org/xpl/conhome/1001630/all-proceedings), or
+	(iv) go to the home pages of researchers chairing conference sessions related
+	to your keywords.
+
+	c. Skim the abstracts from the papers on your list. Based on your quick
+	reading, group your identified papers into overall themes. Prepare a short
+	description of each theme. How are the groups of papers similar / different
+	from one another?
+  
 # Visualization with R
 
 1. [Ikea Furniture] The dataset below shows prices of pieces of Ikea furniture.
@@ -885,7 +922,25 @@ process of building this visualization.
     
     d. Comment on the resulting visualization(s). If you had a friend who was
     interested in renting an Airbnb in NYC, what would you tell them?
-    
+
+1. [Shiny free exploration] Pick one of the following datasets,
+
+  * [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l)
+  * [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv)
+  * [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv)
+  * [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv)
+
+  or propose one based on your own interest.
+  
+	a. Based on your understanding of how the data were collected and what they
+	represent, prepare four questions that you are interested in. Choose questions
+	that reflect different aspects of the data and whose answers will require more
+	nuanced analysis.
+	
+	b. Design and implement a Shiny app whose interactivity helps to answer the
+	questions you identified in (a).
+	
+	c. Sketch the reactivity graph of your app’s final implementation.
     
 1. [Reactivity Discussion] Consider the `reactive()` and `observeEvent()`
 functions implemented by the `shiny` package. What are common use cases for the
@@ -1058,6 +1113,28 @@ University of Washington.]
   	c. Allow the user to switch between the genders available in the dataset.
   	When a selection is made, apply a smooth transition to the heights of the
   	bars.
+  	
+  	
+1. [D3 free exploration] Pick one of the following datasets:
+
+  * [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l)
+  * [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv)
+  * [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv)
+  * [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv)
+  
+  or propose one based on your own interest.
+
+  	a. Based on your understanding of how the data were collected and what they
+  	represent, prepare four questions that you are interested in. Choose
+  	questions that reflect different aspects of the data and whose answers will
+  	require more nuanced analysis.
+  	
+	b. Design and implement a D3 visualization whose interactivity helps to answer
+	the questions you identified in (a). Make sure to include the general update
+	pattern in some part of your implementation.
+	
+	c. Explain the way the general update pattern is used in your visualization.
+	Describe why you do or do not use transitions within your implementation.
 
 # Spatial and Temporal Data
 
@@ -2091,7 +2168,7 @@ though each neuron is a linear combination of the previous layer's units.
     layers. Design and implement a visualization that shows the predicted
     probabilities for each sample after the model has converged.
     
-    ```{r}
+    ```{r, eval = FALSE}
     library(keras)
     model <- keras_model_sequential() %>% 
       layer_dense(units = 20, activation = "relu", input_shape = c(2)) %>% 
@@ -2116,7 +2193,7 @@ though each neuron is a linear combination of the previous layer's units.
       activations for a single neuron behave, as a function of the input $x$
       coordinates. Make the analogous visualization for a deeper layer.
       
-    ```{r}
+    ```{r, eval = FALSE}
     submodel <- keras_model(model$input, model$layers[[1]]$output)
     ```
   
@@ -2154,7 +2231,7 @@ different neurons are learning.
     examples from this dataset and print out their class labels. What does class 7
     seem to correspond to?
   
-    ```{r, echo = TRUE, include = TRUE}
+    ```{r, echo = TRUE, include = TRUE, eval = FALSE}
     library(keras)
     cifar <- dataset_cifar10()$train
     ```
@@ -2176,7 +2253,7 @@ different neurons are learning.
     images that have the highest activation for neuron 1. What does this neuron seem
     to be responsive to?
         
-    ```{r, echo = TRUE, include = TRUE}
+    ```{r, echo = TRUE, include = TRUE, eval = FALSE}
     activation_model <- keras_model(inputs = model$input, outputs = model$layers[[7]]$output)
     features <- activation_model(cifar$x[1:5000,,, ]) %>%
       as.matrix()
