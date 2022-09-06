@@ -1,12 +1,15 @@
 ---
 title: IMDB Shiny Application
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 *Using Shiny to explore a movies dataset*
+
+[Recording](https://mediaspace.wisc.edu/media/Week+2+-+3A+IMDB+Shiny+Application/1_yitx0198),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week2-3.Rmd)
 
 1.  So far, all of our Shiny applications have been based on toy
     simulated data. In this set of notes, we’ll use Shiny to explore a

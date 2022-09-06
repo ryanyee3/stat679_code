@@ -1,12 +1,15 @@
 ---
 title: Elements of a Shiny App
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 *Vocabulary used by R Shiny Library, and a few example apps.*
+
+[Recording](https://mediaspace.wisc.edu/media/Week+2+-+1A+Elements+of+a+Shiny+App/1_rlzn96xp),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week2-1.Rmd)
 
 1.  All Shiny apps are made up from the same few building blocks. These
     notes review the main types of blocks. When reading code from more
@@ -86,14 +89,14 @@ output:
 6.  There are a few points worth noting. First, the `renderText`
     component was able to refer to the value entered in the textbox
     using `input$name`. This was possible because `name` was the ID that
-    we gave to the `textInput` component. It also would not have worked
-    if we had used `input$text` outside of a `render*` function: this is
-    what we mean by the `render*` functions making the UI inputs
-    available for computation. Finally, we were able to refer to the
-    rendered output in the UI by adding a `textOutput` component. By
-    giving this component the id `printed_name`, we were able to tell it
-    to look into the server for a rendered output named `printed_name`
-    and fill it in.
+    we gave to the `textInput` component. It would not have worked if we
+    had used `input$text` outside of a `render*` function: this is what
+    we mean by the `render*` functions making the UI inputs available
+    for computation. Finally, we were able to refer to the rendered
+    output in the UI by adding a `textOutput` component. By giving this
+    component the id `printed_name`, we were able to tell it to look
+    into the server for a rendered output named `printed_name` and fill
+    it in.
 
 7.  An even deeper idea is that the code did not simply run linearly,
     from top of the script to the bottom. If that were all the code did,

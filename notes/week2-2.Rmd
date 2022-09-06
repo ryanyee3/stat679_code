@@ -1,12 +1,14 @@
 ---
 title: Introduction to Reactivity
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 _Viewing shiny code execution as a graph_
+
+[Recording](https://mediaspace.wisc.edu/media/Week%202%20-%202%3A%20Introduction%20to%20Reactivity/1_zf6r85l4), [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week2-2.Rmd)
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -31,14 +33,14 @@ server should be used to populate the visible interface.
 graph. Note that I've drawn input and output nodes differently, to emphasize the
 flow of computation. I've also copied the code from the original app for
 reference.
-    
+
     ```{r, echo = FALSE}
     include_graphics("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-10-week04-02/figures/names.png")
     ```
 
     ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-10-week04-02/apps/app1.R")}
     ```
-    
+
     <iframe src="https://data-viz.it.wisc.edu/content/43a4312c-a124-4b63-8228-23ba5375992b/" allowfullscreen="" data-external="1"></iframe>
 
 1. Even though the graph is simple, note that the outputs will be recomputed
@@ -55,12 +57,12 @@ plotter, with the reactive `samples()` expression.
     ```{r, echo = FALSE}
     include_graphics("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-10-week04-02/figures/reactive_histo.png")
     ```
-    
+
     ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/2-1/app2.R")}
     ```
-    
+
     <iframe src="https://data-viz.it.wisc.edu/content/6063856c-2c50-4bb2-b272-b1c41b30f574/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
-    
+
 1. A useful perspective is to think of reactive expressions as simplifying the
 overall reactivity graph. Specifically, by adding a reactive node, it's possible
 to trim away many edges. For example, our initial implementation of the random
@@ -80,13 +82,13 @@ data.
 
     ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week2/2-1/app3.R")}
     ```
-    
+
     <iframe src="https://data-viz.it.wisc.edu/content/1f5cecd2-a4c7-46bd-a2ea-07443b009687/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
-    
+
     Other than that, the only difference is that I've saved output from the
     `t.test` using `test_result`. Notice the use of the `broom` package, which
     helps format the test output into a `data.frame`.
-    
+
 1. So far, all of our reactive code has lived within the `render*` or
 `reactive()` sets of functions. However, there is a another kind that is often
 useful, especially in more advanced applications: `observers`. An observer is a
@@ -99,6 +101,5 @@ next week.
 
     ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-10-week04-02/apps/app4.R")}
     ```
-    
+
     <iframe src="https://data-viz.it.wisc.edu/content/752b80de-5c75-4dd9-b7fe-2d399c3ea3da/" allowfullscreen="" data-external="1" height=935 width=600></iframe>
-    

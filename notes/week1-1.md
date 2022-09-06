@@ -1,12 +1,15 @@
 ---
 title: Introduction to ggplot2
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 *Design principles from the grammar of graphics.*
+
+[Recording](https://mediaspace.wisc.edu/media/Week+1-+1A+Introduction+to+ggplot2/1_x4qfp03g),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week1-1.Rmd)
 
     library(tidyverse)
     library(ggrepel)
@@ -112,8 +115,8 @@ output:
 
     ![](/stat679_notes/assets/week1-2/unnamed-chunk-7-1.png)
 
-10. The original plot used a log-scale. To transform the x and y axes,
-    we can use scales.
+10. The plot at the start of these notes used a log-scale. To transform
+    the x and y axes, we can use scales.
 
         ggplot(murders) +
           geom_point(aes(x = population, y = total, col = region)) +
@@ -206,7 +209,7 @@ output:
 
 15. Putting all these modifications together yields
 
-        r <- murders %>% 
+        r <- murders %>%
           summarize(rate = sum(total) /  sum(population)) %>%
           pull(rate)
 

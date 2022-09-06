@@ -8,6 +8,8 @@ output:
 
 _Increased information density through faceting._
 
+[Recording](https://mediaspace.wisc.edu/media/Week+1+-+4A+Small+Multiples+and+Faceting/1_koyt3twe), [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week1-4.Rmd)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")

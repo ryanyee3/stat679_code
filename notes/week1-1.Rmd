@@ -1,18 +1,20 @@
 ---
 title: Introduction to ggplot2
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 _Design principles from the grammar of graphics._
 
+[Recording](https://mediaspace.wisc.edu/media/Week+1-+1A+Introduction+to+ggplot2/1_x4qfp03g), [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week1-1.Rmd)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE,
   fig.path = "stat679_notes/assets/week1-2/"
 )
@@ -36,10 +38,10 @@ building blocks can support a very wide range of expression.
 2. In these notes, we'll create this plot.
 
     ```{r, echo = FALSE}
-    r <- murders %>% 
+    r <- murders %>%
       summarize(rate = sum(total) /  sum(population)) %>%
       pull(rate)
-    
+
     ggplot(murders, aes(population, total)) +
       geom_abline(intercept = log10(r), size = 0.4, col = "#b3b3b3") +
       geom_text_repel(aes(label = abb), segment.size = 0.2) +
@@ -62,7 +64,7 @@ ggplot2 plot is made from three components,
 	* Data: This is the data.frame that we want to visualize.
 	* Geometry: These are the types of visual marks that appear on the plot.
 	* Aesthetic Mapping: This links the data with the visual marks.
-	
+
 4. **Data**. Each row is an observation, and each column is an attribute that
 describes the observation. This is important because each mark that you see on a
 ggplot – a line, a point, a tile, … – had to start out as a row within an R
@@ -75,7 +77,7 @@ the values along columns. These type of data are often referred to as tidy data.
     data(murders)
     head(murders)
     ```
-    
+
 
 	This is one example of how the same information might be stored in a non-tidy
 	way, making visualization much harder.
@@ -87,7 +89,7 @@ the values along columns. These type of data are often referred to as tidy data.
     non_tidy <- non_tidy[-1, ]
     non_tidy[, 1:6]
     ```
-    
+
 	Often, one of the hardest parts in making a ggplot2 plot is not coming up with
 	the right ggplot2 commands, but reshaping the data so that it’s in a tidy
 	format.
@@ -138,12 +140,12 @@ and y axes, we can use scales.
       scale_x_log10() +
       scale_y_log10()
     ```
-  
+
     One nuance is that scales aren’t limited to x and y transformations. They
     can be applied to modify any relationship between a data field and its
     appearance on the page. For example, this changes the mapping between the
     region field and circle color.
-    
+
     ```{r}
     ggplot(murders) +
       geom_point(aes(x = population, y = total, col = region)) +
@@ -151,7 +153,7 @@ and y axes, we can use scales.
       scale_y_log10() +
       scale_color_manual(values = c("#6a4078", "#aa1518", "#9ecaf8", "#50838c"))
     ```
-    	
+
 12. A problem with this graph is that it doesn’t tell us which state each point corresponds to. For that, we’ll need text labels. We can encode the coordinates for these marks again using aes, but this time within a `geom_text` layer.
 
     ```{r}
@@ -164,7 +166,7 @@ and y axes, we can use scales.
       scale_x_log10() +
       scale_y_log10()
     ```
-  
+
 
   	Note that each type of layer uses different visual properties to encode the data – the argument label is only available for the `geom_text` layer. You can see which aesthetic mappings are required for each type of geom by checking that geom’s documentation page, under the Aesthetics heading.
 
@@ -177,7 +179,7 @@ and y axes, we can use scales.
       scale_x_log10() +
       scale_y_log10()
     ```
-  
+
 14. How can we improve the readability of this plot? You might already have ideas,
 
 	* Prevent labels from overlapping. It’s impossible to read some of the state names.
@@ -200,10 +202,10 @@ and y axes, we can use scales.
 16. Putting all these modifications together yields
 
     ```{r}
-    r <- murders %>% 
+    r <- murders %>%
       summarize(rate = sum(total) /  sum(population)) %>%
       pull(rate)
-    
+
     ggplot(murders, aes(population, total)) +
       geom_abline(intercept = log10(r), size = 0.4, col = "#b3b3b3") +
       geom_text_repel(aes(label = abb), segment.size = 0.2) +
@@ -219,5 +221,3 @@ and y axes, we can use scales.
       ) +
       theme_minimal()
     ```
-  
-  

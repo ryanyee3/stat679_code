@@ -1,12 +1,15 @@
 ---
 title: Introduction to Reactivity
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 *Viewing shiny code execution as a graph*
+
+[Recording](https://mediaspace.wisc.edu/media/Week%202%20-%202%3A%20Introduction%20to%20Reactivity/1_zf6r85l4),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week2-2.Rmd)
 
 1.  These notes will explore the idea of reactivity in more depth.
     Recall that reactivity refers to the fact that Shiny app code is not

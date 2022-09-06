@@ -1,12 +1,15 @@
 ---
 title: Visual Encodings
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
-*Design principles from the grammar of graphics.*
+*Choosing visual encoding.*
+
+[Recording](https://mediaspace.wisc.edu/media/Week%201%20-%202%3A%20Visual%20Encodings/1_8er9cq7m),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week1-2.Rmd)
 
 1.  Visualizations link abstract data with the physical, geometric
     marks,

@@ -1,18 +1,20 @@
 ---
 title: Visual Encodings
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
-_Design principles from the grammar of graphics._
+_Choosing visual encoding._
+
+[Recording](https://mediaspace.wisc.edu/media/Week%201%20-%202%3A%20Visual%20Encodings/1_8er9cq7m), [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week1-2.Rmd)
 
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE,
   fig.path = "stat679_notes/assets/week1-1/"
   )
@@ -50,7 +52,7 @@ field are.
     * Quantitative: These are field types that let you make distance comparisons
     between observations. For interval data, absolute comparisons can be made ($A - B$), while for ratio data, only relative ones ($A/B$) are possible.
       - Temperature, stock price, number of drinks sold in a coffee shop per day
-  
+
 4. This is not an exhaustive list, and there are subtleties,
 
     * The same field could be treated as nominal, ordinal, or quantitative depending
@@ -62,11 +64,11 @@ field are.
     * Even though temporal fields can be thought of as quantitative, they come with
     their own conventions. For example, the hour - week - month hierarchy is a
     natural one for temporal data.
-      
+
 5. It's worth highlighting that, even if a particular encoding *could* be used for
 a given data type, different encodings have different effectiveness. When trying
 to encoding several data fields at once, a choice of one encoding over another
-will implicitly prioritize certain comparisons over others. 
+will implicitly prioritize certain comparisons over others.
 
     For example, in the figure below (Figure 5.8
     [here](https://search.library.wisc.edu/catalog/9911196629502121)), the same two
@@ -74,18 +76,18 @@ will implicitly prioritize certain comparisons over others.
     shared $y$-axis, position on distinct $y$-axes, etc. -- and study participants
     were asked to gauge the difference in the numbers. People were best at comparing
     positions on a common scale, and worst at distinguishing differences in areas.
-    
+
     ![](/stat679_notes/assets/week1-1/encoding_effectiveness.png)
-  
+
 6. Here is a similar example. In the left four panels, a nominal field is
 encoded using color (left two) and shape (middle two). The red circles are
 easiest to find in the left two. In the right two panels, two nominal fields are
 encoded, using both shape and color. It's much harder to find the red circle --
 you have to scan over the entire image to find it, which you didn't have to do
 at all for the first two panels.
-    
+
     ![](/stat679_notes/assets/week1-1/encoding_effectiveness_2.png)
-  
+
 7. Implicit in this discussion is that there is never any "perfect"
 visualization for a given dataset -- the quality of a visualization is a
 function of its intended purpose. What comparisons do you want to facilitate?

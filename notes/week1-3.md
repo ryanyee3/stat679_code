@@ -1,12 +1,15 @@
 ---
 title: A Vocabulary of Marks
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 *Encodings available in ggplot2.*
+
+[Recording](https://mediaspace.wisc.edu/media/Week+1+-+3A+A+Vocabulary+of+Marks/1_ke20cnja),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week1-3.Rmd)
 
     library(tidyverse)
     library(scales)
