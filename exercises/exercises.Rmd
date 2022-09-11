@@ -923,19 +923,12 @@ process of building this visualization.
     d. Comment on the resulting visualization(s). If you had a friend who was
     interested in renting an Airbnb in NYC, what would you tell them?
 
-1. [Shiny free exploration] Pick one of the following datasets,
-
-  * [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l)
-  * [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv)
-  * [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv)
-  * [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv)
-
-  or propose one based on your own interest.
+1. [Shiny free exploration] Pick one of the following datasets, or propose one of your own interest: [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l), [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv), [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv), [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv).
   
-	a. Based on your understanding of how the data were collected and what they
-	represent, prepare four questions that you are interested in. Choose questions
-	that reflect different aspects of the data and whose answers will require more
-	nuanced analysis.
+  a. Based on your understanding of how the data were collected and what they
+  represent, prepare four questions that you are interested in. Choose questions
+  that reflect different aspects of the data and whose answers will require more
+  nuanced analysis.
 	
 	b. Design and implement a Shiny app whose interactivity helps to answer the
 	questions you identified in (a).
@@ -948,27 +941,22 @@ two functions? Be as specific as possible.
 
 # Visualization with D3
 
-1. These are some exercises to prepare you for more complex array and object manipulation that you may need in more advanced D3 visualizations. You will likely find the following resources useful: [[1](https://github.com/d3/d3-array), [2](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Array/slice), [3](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Set), [4](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Object/keys)].
+1. [javascript array manipulation] These are some exercises to prepare you for more complex array and object manipulation that you may need in more advanced D3 visualizations. You will likely find the following resources useful: [[1](https://github.com/d3/d3-array), [2](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Array/slice), [3](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Set), [4](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Object/keys)].
 
   a. Find the minimum, maximum, and mean of the following array.
-  
-    ```{ojs, eval = FALSE}
+    ```{d3, eval = FALSE}
     let x = d3.random(100);
     ```
       
-  b. Extracts the first 5 elements of `x` and then concatenate them to the last
-  5 elements of `y`.
-  
-    ```{ojs, eval = FALSE}
+  b. Extract the first 5 elements of `x` and then concatenate them to the last
+  5 elements of `y`. Your result should look like `[0, 1, 2, 3, 4, 15, 16, 17, 18, 19]`.
+    ```{d3, eval = FALSE}
     let x = d3.arrange(100),
     	  y = d3.arrange(20);
     ```
   
-  Your result should look like `[0, 1, 2, 3, 4, 15, 16, 17, 18, 19]`.
-  
   c. Given the object below, how would you create the array `['apple', 'orange', 'banana']` of just the object’s keys?
-  
-    ```{ojs, eval = FALSE}
+    ```{d3, eval = FALSE}
     let fruits = {apple: 32, orange: 14, banana: 10}
     ```
       
@@ -980,12 +968,11 @@ two functions? Be as specific as possible.
   in the original array.
 
 1. [Simple bar chart] Consider the following list of numbers,
-
-    ```{ojs, eval = FALSE}
+    ```{d3, eval = FALSE}
     let generator = d3.random();
     x = generator(20);
     ```
-
+    
   	a. Create a bar chart that has one bar per number, with the height of that
   	bar determined by the value in the array. There is no need to add labels or
   	axes.
@@ -999,9 +986,7 @@ clicked. Specifically, the function below takes an initial array `x` and creates
 a new array that removes the first element and adds a new one to the end. Using
 d3’s `.join()` function, write a function that updates the visualization from
 [Simple bar chart] every time that `update_data()` is called.
-
-    
-    ```{ojs, eval = FALSE}
+    ```{d3, eval = FALSE}
     let generator = d3.random();
     let x = generator(20);
     
@@ -1010,7 +995,6 @@ d3’s `.join()` function, write a function that updates the visualization from
       return x.slice(1) // remove first one
     }
     ```
-
 
 1. [Colorful squares] The code below draws a square on an otherwise blank
 canvas.
@@ -1033,26 +1017,23 @@ provides practice with this new pattern, following the documentation available
 [here](https://observablehq.com/@d3/selection-join?collection=@d3/d3-selection).
 
 	a. Consider the join pattern in the second block in the documentation,
-		
-  		```{d3, eval = FALSE}
-		  while (true) {
-			svg.selectAll("text")
-			  .data(randomLetters())
-			  .join("text")
-				.attr("x", (d, i) => i * 16)
-				.text(d => d);
-		
-			yield svg.node();
-			await Promises.tick(2500);
-		  }
-  		```
+		```{d3, eval = FALSE}
+		svg.selectAll("text")
+		  .data(randomLetters())
+		  .join("text")
+			.attr("x", (d, i) => i * 16)
+			.text(d => d);
+	
+		yield svg.node();
+		await Promises.tick(2500);
+		```
 		
   	What would happen if instead of `.join("text")`, we had used
   	`.append("text")`? What can you conclude about the behavior of `.join()`?
   
 	b. Consider the join pattern in the third block in the documentation,
 		
-    ```{ojs, eval = FALSE}
+    ```{d3, eval = FALSE}
      svg.selectAll("text")
       .data(randomLetters(), d => d)
       .join(
@@ -1081,20 +1062,20 @@ provides practice with this new pattern, following the documentation available
 scatterplot of body mass against flipper length in the penguins dataset. Your
 goal in this exercise is to provide a version that responds to user queries.
 
-    a. Skim through `penguins.csv`, which can be downloaded by clicking the
-    small paperclip symbol on the right hand side of the interface. Based on the
-    data available, discuss a potential user query that might be worth
-    supporting. What makes the query interesting?
-    b. Describe two types of interactivity available in D3 that could be used to
-    support this query. For each, explain (i) the types of input the user
-    provides to specify the query and (ii) the changes in the appearance of
-    graphical marks that is initiated by the query.
-    c. Implement one of the two interactivity possibilities that you described
-    in the previous part. You may extend the current online implementation. In
-    your submission, include a short video of the interactivity, the code you
-    used, and a brief explanation of the logic behind your implementation.
+  a. Skim through `penguins.csv`, which can be downloaded by clicking the
+  small paperclip symbol on the right hand side of the interface. Based on the
+  data available, discuss a potential user query that might be worth
+  supporting. What makes the query interesting?
+  b. Describe two types of interactivity available in D3 that could be used to
+  support this query. For each, explain (i) the types of input the user
+  provides to specify the query and (ii) the changes in the appearance of
+  graphical marks that is initiated by the query.
+  c. Implement one of the two interactivity possibilities that you described
+  in the previous part. You may extend the current online implementation. In
+  your submission, include a short video of the interactivity, the code you
+  used, and a brief explanation of the logic behind your implementation.
 
-1. 1. [Interactive Census] The code below creates a bar chart of US female
+1. [Interactive Census] The code below creates a bar chart of US female
 population by age groups from the 1900 census. The x-axis is age group, and the
 y-axis is number of people. We will create an interactive version of this
 display that allows us to see how the age structure changes over time. [This
@@ -1114,21 +1095,13 @@ University of Washington.]
   	When a selection is made, apply a smooth transition to the heights of the
   	bars.
   	
-  	
-1. [D3 free exploration] Pick one of the following datasets:
-
-  * [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l)
-  * [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv)
-  * [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv)
-  * [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv)
+1. [D3 free exploration] Pick one of the following datasets, or propose one of your own interest: [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l), [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv), [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv), [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv).
   
-  or propose one based on your own interest.
-
-  	a. Based on your understanding of how the data were collected and what they
-  	represent, prepare four questions that you are interested in. Choose
-  	questions that reflect different aspects of the data and whose answers will
-  	require more nuanced analysis.
-  	
+	a. Based on your understanding of how the data were collected and what they
+	represent, prepare four questions that you are interested in. Choose
+	questions that reflect different aspects of the data and whose answers will
+	require more nuanced analysis.
+	
 	b. Design and implement a D3 visualization whose interactivity helps to answer
 	the questions you identified in (a). Make sure to include the general update
 	pattern in some part of your implementation.
@@ -2146,59 +2119,6 @@ models on a simple dataset, simulated below.
     this class of models more or less sensitive to overfitting than $K$-nearest
     neighbors?
     
-1. [Deep Learning as a Mixture of Separating Planes] In this exercise, we will
-visualize the predictions and hidden layer activations in a simple, but
-nonlinear, classification problem. The goal is to illustrate how nonlinear
-decision boundaries can be learned by deeper layers of a neural network, even
-though each neuron is a linear combination of the previous layer's units.
-
-    a. The block below simulates a toy dataset with predictors `x` and response
-    `y`. Provide a visualization for the dataset and comment on why a one-layer
-    deep learning model would not be sufficient to achieve good performance.
-
-    ```{r}
-    x <- matrix(rt(N * 2, 12), N, 2)
-    y <- rowSums(x ^ 2) < 1
-    flip_ix <- sample(N, N / 20) # 5% unavoidable error
-    y[flip_ix] <- !y[flip_ix]
-    simulation <- data.frame(x = x, y = y)
-    ```
-    
-    b. The block below defines and fits a deep learning model with three hidden
-    layers. Design and implement a visualization that shows the predicted
-    probabilities for each sample after the model has converged.
-    
-    ```{r, eval = FALSE}
-    library(keras)
-    model <- keras_model_sequential() %>% 
-      layer_dense(units = 20, activation = "relu", input_shape = c(2)) %>% 
-      layer_dense(units = 20, activation = "relu", input_shape = c(20)) %>% 
-      layer_dense(units = 20, activation = "relu", input_shape = c(20)) %>% 
-      layer_dense(2, activation = "softmax")
-    
-    model %>% 
-      compile(optimizer = "adam", loss = "categorical_crossentropy") %>%
-      fit(
-        x = simulation %>% select(starts_with("x")) %>% as.matrix(),
-        y = to_categorical(simulation$y),
-        metric = "accuracy",
-        epochs = 60,
-        verbose = 0
-      )
-    ```
-      
-      c. The block below defines a `keras` model that can be used to extract
-      activations from the first hidden layer of the trained deep learning
-      model. Design and implement a visualization to characterize how
-      activations for a single neuron behave, as a function of the input $x$
-      coordinates. Make the analogous visualization for a deeper layer.
-      
-    ```{r, eval = FALSE}
-    submodel <- keras_model(model$input, model$layers[[1]]$output)
-    ```
-  
-    d. Generate a heatmap of activations across all neurons from some layer of
-    the model. Comment on the structure of the learned features.
     
 1. [Tensorflow Playground] This
 [website](http://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.06717&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=true&ySquared=true&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false)
@@ -2220,45 +2140,6 @@ reflect on its interpretation and design.
     a question it raised about neural networks more generally, or a thought
     about visual design.
   
-1. [Representation Analysis for CIFAR10] This problem asks you to investigate
-the features learned by a deep learning model trained to the [CIFAR10
-dataset](https://www.cs.toronto.edu/~kriz/cifar.html). We will study the
-structure of the dataset and develop some intuition for what representations
-different neurons are learning.
-
-    a. The code below loads the CIFAR training dataset. Training images and labels
-    can be accessed using `cifar$x` and `cifar$y`, respectively. Plot the first 15
-    examples from this dataset and print out their class labels. What does class 7
-    seem to correspond to?
-  
-    ```{r, echo = TRUE, include = TRUE, eval = FALSE}
-    library(keras)
-    cifar <- dataset_cifar10()$train
-    ```
-    
-    b. We have trained a small model to this dataset, available at this
-    [link](https://uwmadison.box.com/shared/static/c9kkxyrjb9myfj5knj5vnx0j8gn1uh0s.h5).
-    Extract and visualize the feature activations associated with the first five
-    features in layer 1 (`conv2d_8`) for the first image in the dataset.
-    
-    ```{r, echo = TRUE, include = TRUE}
-    f <- tempfile()
-    download.file("https://uwmadison.box.com/shared/static/c9kkxyrjb9myfj5knj5vnx0j8gn1uh0s.h5", f)
-    model <- load_model_hdf5(f)
-    ```
-  
-    c. The block below extracts feature activations associated with layer 7, for the
-    first 10% of the dataset. Specifically, the $ij^{th}$ element of `features`
-    gives the activation of neuron $j$ (in layer 7) on image $i$. Visualize the 10
-    images that have the highest activation for neuron 1. What does this neuron seem
-    to be responsive to?
-        
-    ```{r, echo = TRUE, include = TRUE, eval = FALSE}
-    activation_model <- keras_model(inputs = model$input, outputs = model$layers[[7]]$output)
-    features <- activation_model(cifar$x[1:5000,,, ]) %>%
-      as.matrix()
-    ```
-    
 1. [Histopathology Embeddings] This problem investigates the features learned by
 a residual network model trained trained to classify histopathology slides.
 Specifically, the script at [this
