@@ -10,6 +10,10 @@ output:
     seal: false
 ---
 
+# STAT 679 / 992: Statistical Data Visualization
+
+## Fall 2022
+
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(knitr)
@@ -43,7 +47,7 @@ options(width = 100)
 
 1. [Review syllabus](https://canvas.wisc.edu/courses/321152/files/27081478?module_item_id=5152442)
 1. Review class resources
-1. [In-Class Exercise 1.1](https://canvas.wisc.edu/courses/321152/assignments/1623480?module_item_id=5162096)
+1. [In-Class Exercise 0.1](https://canvas.wisc.edu/courses/321152/assignments/1623480?module_item_id=5162096)
 
 ---
 
@@ -53,7 +57,6 @@ I'm excited to share this course with you this semester. There are few
 activities that engage creative, quantitative, and critical thinking skills all
 at once, but data visualization is one of them.
 
-
 Nothing makes my day like a good data visualization, and I look forward to
 seeing those that you create.
 
@@ -61,7 +64,7 @@ seeing those that you create.
 
 ### Syllabus
 
-* Learning Outcomes
+* Learning outcomes
 * Teaching team and office hours
 * Assessments
 * Grading
@@ -70,15 +73,25 @@ seeing those that you create.
 
 ### Learning Outcomes
 
-1.	Draw from a catalog of visual encodings to support specific visual comparisons in temporal, geospatial, network, hierarchical, high-dimensional count, text, and uncertain data and demonstrate facility implementing them using the R and javascript programming languages.
-2.	Draw from a catalog of interactivity patterns to compose visualizations that respond to user’s dynamic queries.
-3.	Using the vocabulary of data visualization, analyze and critique visual designs.
-4.	Given a data analysis problem and initial design solution, iteratively refine visual encodings and interactivity idioms from across the design space until a satisfactory solution is discovered.
-5.	Navigate the data visualization research literature, summarize the contributions of a specific methodological proposal, and evaluate their applicability in specific problem contexts.
+In this class, you will learn to...
+
+1. Draw from a **catalog of visual encodings** to support specific visual comparisons in temporal, geospatial, network, hierarchical, high-dimensional count, text, and uncertain data and demonstrate facility implementing them using the R and javascript programming languages.
+2.	Draw from a **catalog of interactivity patterns** to compose visualizations that
+respond to user’s dynamic queries.
+3.	Using the vocabulary of data visualization, **analyze and critique visual designs**.
 
 ---
 
-### Teaching Team
+### Learning Outcomes
+
+In this class, you will learn to...
+
+4.	Given a data analysis problem and initial design solution, iteratively **refine visual encodings and interactivity** idioms from across the design space until a satisfactory solution is discovered.
+5.	**Navigate the data visualization research literature**, summarize the contributions of a specific methodological proposal, and evaluate their applicability in specific problem contexts.
+
+---
+
+### Office Hours
 
 .pull-left[
 We will announce in-person and virtual office hours depending on the results of
@@ -86,14 +99,14 @@ this poll: https://tinyurl.com/8wf4utsp
 ]
 
 .pull-right[
-```{r, out.width = 300}
+```{r, out.width = 400, echo = FALSE}
 include_graphics("figures/20210607_132459.jpg")
 ```
 ]
 
 ---
 
-### Teaching Team
+### Office Hours
 
 .pull-left[
 We will announce in-person and virtual office hours depending on the results of
@@ -101,7 +114,7 @@ this poll: https://tinyurl.com/8wf4utsp
 ]
 
 .pull-right[
-```{r, out.width = 300}
+```{r, out.width = 690, echo = FALSE}
 include_graphics("figures/20210607_132612.jpg")
 ```
 ]
@@ -111,8 +124,9 @@ include_graphics("figures/20210607_132612.jpg")
 ### Assessments
 
 * In-class exercises and discussions (graded {0, 50, 100%})
-* 6 problem sets 
-* 3 project reports and 1 presentation
+* 4 problem sets 
+* 3 group project reports and 1 presentation
+  - Teams of 4 - 5 people
 * 1 midterm exam
 
 ---
@@ -126,15 +140,25 @@ include_graphics("figures/20210607_132612.jpg")
 
 ---
 
+### Canvas Page Walkthrough
+
+```{r, echo = FALSE}
+include_graphics("figures/canvas.png")
+```
+
+
+---
+
 ### Class Resources
 
 1. [Canvas page](https://canvas.wisc.edu/courses/321152)
   - Links to all other resources
 1. [Readings](https://drive.google.com/file/d/16jr5MlX8axfDVZ3kS4vZuWzqDOpj1Wng/view?usp=sharing)
 1. [Piazza](https://piazza.com/wisc/fall2022/stat679f22/home)
+1. [Exercises](https://canvas.wisc.edu/courses/321152/files/27094119?module_item_id=5161970)
 1. [Online notes](https://krisrs1128.github.io/stat679_notes/)
-1. [Online recordings](https://mediaspace.wisconsin.edu/)
-1. [Worked code examples](https://github.com/krisrs1128/stat679_code)
+1. [Online recordings](https://mediaspace.wisconsin.edu/) (also linked in notes)
+1. [Worked code examples](https://github.com/krisrs1128/stat679_code) (also linked in notes)
 
 ---
 
@@ -144,11 +168,14 @@ Also feel free to speak with me after class.
 
 ---
 
-### Exercise 1.1
+### Exercise 0.1
+
+1. Introduce yourself to the people sitting at your table. Your name, program,
+and one thing most people don't know about you.
 
 1. Submit a response to [Formulating Questions] in the exercise sheet.
 
-2. Share your chosen datasets in groups of 2 - 3 people.
+1. Share your chosen datasets in groups of 2 - 3 people.
 
 [Formulating Questions] Pick a dataset from
 [TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets), [Data Is
@@ -161,24 +188,186 @@ future exercises.
 
 ---
 
-
 # September 12, 2022
 
-1. Code demo - [Penguins]
 1. Exercise review
-1. [In-Class Exercise 2.1]
+1. Code demo [City Temperatures]
+1. In-Class Exercise 1.1
+
+---
+
+### Announcements
+
+1. Office hours will be held 2 - 3pm Tuesdays and 11am - 12pm on Fridays. These
+sessions will be hybrid -- you can join in person at MSC 7225C or through Zoom.
+
+1. The description for how to form groups is in Project Milestone 0. If you do
+not form a team by the deadline, you will be randomly assigned one.
+
+1. Problem set 1 is online.
+---
+
+### Exercise Review
+
+* Let's analyze the exercise results together
+* I've uploaded a starter document here: https://tinyurl.com/37vn2ywb
+* It also includes the exercise we'll work on together afterwards
+
+---
+
+### Exercise 1.1
+
+The data below measures properties of various Antarctic penguins.
+
+```{r, echo = TRUE}
+penguins <- read_csv("https://uwmadison.box.com/shared/static/ijh7iipc9ect1jf0z8qa2n3j7dgem1gh.csv")
+```
+
+Create a single plot that makes it easy to answer both of these questions,
+(i) How is bill length related to bill depth within and across species? (ii)
+On which islands are which species found?
+
+Read about [Simpson's
+paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox) and summarize it
+in your own words. Then, explain how part (i) provides a real-world example
+of this paradox.
+
+If you finish early -- can you think of an alternative encoding that
+visualizes the same information? How do the encodings compare and contrast
+with one another?
+
+---
+
+# September 14, 2022
+
+1. Exercise review
+1. Code demo [Plant growth]
+1. [In-Class Exercise 1.2]
 
 ---
 
 ### Exercise Review
 
+This is an exercise in compactly encoding a mix of continuous (bill length and
+depth) and nominal (species and island) variables. There are several approaches
+possible, and there are trade-offs between them,
+
+  * Color and shape: It's convenient to place all data into the same space, but
+  shapes can be hard to read.
+  * Color combinations: It's easier to distinguish colors than shapes, but requires
+  continually looking up which color is which combination.
+  * Faceting: Easier to compare combination, but each panel gets less space.
+  
 ---
 
+### Exercise Review
 
-# September 15, 2022
+```{r, fig.width = 6, fig.height = 3}
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species, shape = island))
+```
 
-1. Code demo - [Plant growth]
-1. Exercise review
-1. [In-Class Exercise 2.2]
+---
+
+```{r, fig.width = 6, fig.height = 3}
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species, shape = island)) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+---
+
+```{r, fig.width = 6, fig.height = 3}
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = interaction(species, island))) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+---
+
+### Exercise Review
+
+```{r}
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  facet_wrap(~ island)
+```
+
+---
+
+### Exercise Review
+
+```{r}
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  facet_wrap(~ island) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+---
+
+### Exercise Review
+
+```{r}
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
+  geom_point(aes(col = species)) +
+  stat_smooth(aes(col = species), method = "lm", se = FALSE) +
+  stat_smooth(method = "lm", se = FALSE, col = "#0c0c0c") +
+  facet_wrap(~ island) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+---
+
+### Code Demo [Plant Growth]
+
+* This is a problem in reshaping data to support visualization.
+
+* I've uploaded a starter document here: https://tinyurl.com/5dzsx9ey
+
+---
+
+### Exercise 1.2
+
+20 minutes: In teams of 2 - 4 people, work through [Concept Map] in the exercise
+sheet.
+
+10 minutes: Share your concept map with a neighboring team. First, present your
+diagram -- you should recap the main points from the course in your own words.
+Then, compare and contrast the ways in which your groups organized or
+prioritized information.
+
+Note: You will have to form a team on the "People" page on Canvas. Have one
+person from your team submit a photo of your concept map and summarize the main
+points from your discussion.
+
+---
+
+### Exercise 1.2 [Concept Map]
+
+Prepare a concept map to summarize the last week of reading material. An
+effective submission will include a thorough coverage of both abstract concepts
+and practical examples, summarized concisely into short phrases. It will also
+include well-justified links between nodes, with text explanations for edges
+whose interpretation might not be obvious at first.
 
 ---

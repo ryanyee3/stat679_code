@@ -19,9 +19,14 @@ opts_chunk$set(cache = TRUE, message = FALSE, warning = FALSE, echo = TRUE, incl
 Plural](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit#gid=0),
 [Kaggle Datasets](https://www.kaggle.com/datasets), [Google Dataset
 Search](https://datasetsearch.research.google.com/), or your own personal
-studies that you would like to visualize this semester. What makes you
-interested in this dataset? Please provide a link, so we can use it to create
-future exercises.
+studies that you would like to visualize this semester. 
+    a. What makes you interested in this dataset? Please provide a link, so we
+    can use it to create future exercises.
+    b. Using whatever software that you are familar with, prepare a
+    visualization to answer one question you have based on the data. This will
+    not be evaluated except for effort -- the purpose of the problem is to
+    create a record your data visualization skills at the start of the course.
+    Submit both your visualization and code used to create it.
 
 1. [Data Types] For the following parts, specify whether the data field is
 Nominal, Ordinal, or Quantitative.
@@ -224,6 +229,18 @@ to study changes in temperature over time.
     Create a single plot that makes it easy to answer both of these questions, (i) How is bill length related to bill depth within and across species? (ii) On which islands are which species found?
     
     Read about [Simpson's paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox) and summarize it in your own words. Then, explain how part (i) provides a real-world example of this paradox.
+
+1. [Student Exercise Responses] The data
+[here](https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week1/formulating_questions.csv)
+give an (anonymized) summary of responses to the [Formulating Questions]
+exercise, given by students in Stat 679 / 992 in Fall 2022. It describes the
+dataset topic, its source, the submitted visualization type, and the software
+used to create it.
+    a. What types of topics seem to interest students in this class?
+    b. What types of visualization techniques and software to students seem most
+    familiar with? How should teaching be adapted to reflect this?
+    c. When were submissions being made? Are the in-class exercises actually being
+    solved in class?
 
 1. [London Olympics] The data at this
 [link](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l) describes
