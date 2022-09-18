@@ -8,6 +8,8 @@ output:
 
 _An introduction to click events in Shiny_
 
+[Recording](),  [Rmarkdown](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-1.Rmd)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")

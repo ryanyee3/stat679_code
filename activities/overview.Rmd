@@ -242,6 +242,7 @@ with one another?
 
 1. Exercise review
 1. Code demo [Plant growth]
+1. (If Time) Discussion [When2meet]
 1. [In-Class Exercise 1.2]
 
 ---
@@ -262,18 +263,18 @@ possible, and there are trade-offs between them,
 
 ### Exercise Review
 
-```{r, fig.width = 6, fig.height = 3}
+```{r, fig.width = 6, fig.height = 4, out.width = 600}
 ggplot(penguins) +
   geom_point(aes(bill_length_mm, bill_depth_mm, col = species, shape = island))
 ```
 
 ---
 
-```{r, fig.width = 6, fig.height = 3}
+```{r, fig.width = 6, fig.height = 4, out.width = 550}
 ggplot(penguins) +
   geom_point(aes(bill_length_mm, bill_depth_mm, col = species, shape = island)) +
   scale_color_brewer(palette = "Set2") +
-  theme(strip.text = element_text(size = 18)) +
+  scale_shape_manual(values = c(16, 0, 8)) +
   labs(
     x = "Bill Depth",
     y = "Bill Length"
@@ -281,7 +282,7 @@ ggplot(penguins) +
 ```
 ---
 
-```{r, fig.width = 6, fig.height = 3}
+```{r, fig.width = 6, fig.height = 4, out.width = 550}
 ggplot(penguins) +
   geom_point(aes(bill_length_mm, bill_depth_mm, col = interaction(species, island))) +
   scale_color_brewer(palette = "Set2") +
@@ -296,7 +297,7 @@ ggplot(penguins) +
 
 ### Exercise Review
 
-```{r}
+```{r, fig.width = 12, fig.height = 4, out.width = 1000}
 ggplot(penguins) +
   geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
   facet_wrap(~ island)
@@ -306,11 +307,29 @@ ggplot(penguins) +
 
 ### Exercise Review
 
-```{r}
+```{r, fig.width = 12, fig.height = 4, out.width = 800}
 ggplot(penguins) +
   geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
   facet_wrap(~ island) +
   scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+---
+
+### Exercise Review
+
+```{r, fig.width = 6, fig.height = 4, out.width = 320}
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
+  geom_point(aes(col = species, shape = island)) +
+  stat_smooth(aes(col = species), method = "lm", se = FALSE) +
+  stat_smooth(method = "lm", se = FALSE, col = "#0c0c0c") +
+  scale_color_brewer(palette = "Set2") +
+  scale_shape_manual(values = c(16, 0, 8)) +
   theme(strip.text = element_text(size = 18)) +
   labs(
     x = "Bill Depth",
@@ -338,6 +357,37 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
 
 ---
 
+### Discussion [When2Meet]
+
+* With your neighbors, work through (a - c) of [When2Meet] on the exercise
+sheet
+* I will ask groups to share brief a summary of their discussions with the rest
+of the class
+* The question is included on the next slide
+
+---
+
+In addition to being a scheduling tool, When2Meet polls provide a heatmap
+visualization of respondent availability. In this exercise, use the results from
+our [office hour poll](https://www.when2meet.com/?16334941-sIMyb) to evaluate
+the properties of this visualization.
+
+  a. What are two concrete questions that the heatmap visualization is
+  effective at answering? Why do you think this?
+  
+  b. What are two concrete questions that the heatmap visualization is *not* 
+  effective at answering? Why do you think this?
+  
+  c. Describe an alternative static or interactive visual design that is
+  better suited to one of the questions you identified in (b).
+  
+  d. The dataset at [this link](https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week1/when2meet_679f22.csv) include responses from our poll. Columns 1 - 35 represent students, and 1/0
+  denotes whether the student is or is not available. Implement a version of
+  your proposed visual design from (c).
+
+---
+
+
 ### Code Demo [Plant Growth]
 
 * This is a problem in reshaping data to support visualization.
@@ -348,7 +398,7 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
 
 ### Exercise 1.2
 
-20 minutes: In teams of 2 - 4 people, work through [Concept Map] in the exercise
+20 minutes: In teams of 2 - 5 people, work through [Concept Map] in the exercise
 sheet.
 
 10 minutes: Share your concept map with a neighboring team. First, present your
@@ -371,3 +421,55 @@ include well-justified links between nodes, with text explanations for edges
 whose interpretation might not be obvious at first.
 
 ---
+
+# September 19, 2022
+
+1. Exercise review
+1. Code demo [Improving an App]
+1. [In-Class Exercise 2.1]
+
+---
+
+### Exercise Review
+
+A few common themes emerged across most submissions,
+
+* The distinctions between data, geometry, and encoding in ggplot2
+* Descriptions of what make an encoding / visualization effective
+  - Clear comparisons, overall readability, orientation around specific tasks
+* Description of the different ggplot2 geometry layers
+* Examples of faceting and when it can be helpful
+
+---
+
+### Optional: Share your concept map
+
+* I created a Piazza note where you can share your concept map with others in the
+class
+* Even though the content is similar across submissions, the ways of organizing
+information could be quite different
+  - If there is a style you like, it can be a nice exercise to try imitating it
+  in a future concept map
+
+---
+
+### In-Class Demo [Improving an App]
+
+* This exercise uses reactive expressions to make messy (but still functional)
+Shiny apps more readable
+
+* I've uploaded a starter document here: https://tinyurl.com/
+
+---
+
+### Exercise 2.1
+
+[Olympics Interactive App] 
+ 
+ Hints:
+ 
+   *  For part (a), a `renderPlot()` server element needs to be rerun each time
+   the sports `selectInput` has been changed.
+   * For part (b), consider how we shared filtered data across server elements
+   in the penguin example today.
+ 

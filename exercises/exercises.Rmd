@@ -2,8 +2,10 @@
 title: "STAT 679 Exercises"
 output: bookdown::pdf_book
 header-includes:
-    - \usepackage {hyperref}
-    - \hypersetup {colorlinks = true, linkcolor = red, urlcolor = red}
+  - \usepackage {hyperref}
+  - \hypersetup {colorlinks = true, linkcolor = red, urlcolor = red}
+linkcolor: red
+urlcolor: red
 ---
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
@@ -172,8 +174,7 @@ to support the literature review for your course project.
 	[PacificVis](https://pvis2022.github.io/pvis2022/program/sessions/),
 	[IEEEVis](http://ieeevis.org/year/2022/info/papers-sessions),
 	[EuroVis](https://conferences.eg.org/eurovis2022/program/) or
-	[VAST](https://ieeexplore.ieee.org/xpl/conhome/1001630/all-proceedings), or
-	(iv) go to the home pages of researchers chairing conference sessions related
+	[VAST](https://ieeexplore.ieee.org/xpl/conhome/1001630/all-proceedings), or (iv) go to the home pages of researchers chairing conference sessions related
 	to your keywords.
 
 	c. Skim the abstracts from the papers on your list. Based on your quick
@@ -241,6 +242,20 @@ used to create it.
     familiar with? How should teaching be adapted to reflect this?
     c. When were submissions being made? Are the in-class exercises actually being
     solved in class?
+
+1. [When2Meet Queries] In addition to being a scheduling tool, When2Meet polls
+provide a heatmap visualization of respondent availability. In this exercise,
+use the results from our [office hour poll](https://www.when2meet.com/?16334941-sIMyb) to evaluate the properties
+of this visualization.
+    a. What are two concrete questions that the heatmap visualization is
+    effective at answering? Why do you think this?
+    b. What are two concrete questions that the heatmap visualization is *not* 
+    effective at answering? Why do you think this?
+    c. Describe an alternative static or interactive visual design that is
+    better suited to one of the questions you identified in (b).
+    d. The dataset at [this link](https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week1/when2meet_679f22.csv) include responses from our poll. Columns 1 - 35 represent students, and 1/0
+    denotes whether the student is or is not available. Implement a version of
+    your proposed visual design from (c).
 
 1. [London Olympics] The data at this
 [link](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l) describes
