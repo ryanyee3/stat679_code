@@ -1,0 +1,15 @@
+---
+title: "Untitled"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r}
+library(tidyverse)
+library(rmarkdown)
+library(fs)
+files <- dir_ls(glob="week1-*Rmd")
+for (f in files) {
+  render(f, md_document(preserve_yaml=TRUE))
+}
+```
