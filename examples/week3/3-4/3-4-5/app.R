@@ -1,8 +1,10 @@
 library(shiny)
 library(bslib)
+remotes::install_github("DivadNojnarg/OSUICode")
+library(OSUICode)
 
 ui <- fluidPage(
-  theme = bs_theme(bootswatch = "simplex"),
+  theme = nes_theme,
   titlePanel("Old Faithful Geyser Data"),
   sidebarLayout(
     sidebarPanel(
@@ -22,7 +24,7 @@ server <- function(input, output) {
         hist(x, breaks = bins, col = 'darkgray', border = 'white',
              xlab = 'Waiting time to next eruption (in mins)',
              main = 'Histogram of waiting times')
-    })
+    }, bg = NA)
 }
 
 shinyApp(ui = ui, server = server)

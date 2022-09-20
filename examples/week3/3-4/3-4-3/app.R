@@ -2,7 +2,11 @@ library(shiny)
 library(bslib)
 
 ui <- fluidPage(
-  theme = bs_theme(bootswatch = "simplex"),
+  theme = bs_theme(
+    bootswatch = "simplex",
+    fg =  "#5DA668",
+    bg = "#F2E9E9"
+  ),
   titlePanel("Old Faithful Geyser Data"),
   sidebarLayout(
     sidebarPanel(
@@ -22,7 +26,7 @@ server <- function(input, output) {
         hist(x, breaks = bins, col = 'darkgray', border = 'white',
              xlab = 'Waiting time to next eruption (in mins)',
              main = 'Histogram of waiting times')
-    })
+    }, bg = NA)
 }
 
 shinyApp(ui = ui, server = server)
