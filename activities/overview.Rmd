@@ -586,9 +586,24 @@ losing the overall context.
 
 ### Code Demo
 
-* This exercise uses reactive expressions to make messy (but still functional)
-Shiny apps more readable
+* This exercise will give some more practice with Shiny visualization. We'll
+look at a dataset of California Wildfires between 2013 and 2019.
 
-* I've uploaded a starter document here: https://tinyurl.com/mw35y9ve
+* I've uploaded a starter document here: https://tinyurl.com/2p9dpux2
+
+---
+
+### In-Class Exercise
+
+In teams of 2 - 4 people, work through [Reactivity Graphs] in the exercise
+sheet.
+
+For submission, have one member of your team submit a short video of the
+original interactive visualization and a sketch of the reactive graph you
+derived from it. Work in the same teams that you used to submit exercise 1.2.
+
+Additionally:  Identify one point of common confusion across your group. Include this in
+  your write-up so that we can go over the most common ones during lecture on
+  Monday.
 
 ---

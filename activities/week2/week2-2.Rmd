@@ -1,5 +1,5 @@
 ---
-title: "Improving an App"
+title: "Wildfires"
 output: html_document
 ---
 
@@ -31,3 +31,4 @@ size.
 c. Introduce at least one other UI output. For example, print a table of the
 selected fires, interactively print summary statistics, or show a histogram
 of fire sizes. Sketch the reactivity graph associated with your application.
+https://uwmadison.box.com/shared/static/k5vvekf1bhh9e16qb9s66owygc70t7dm.csv

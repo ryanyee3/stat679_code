@@ -35,7 +35,7 @@ reset_selection <- function(x, brush) {
 ui <- fluidPage(
   fluidRow(
     column(
-      6, 
+      4, 
       plotOutput("h1", brush = brushOpts("plot_brush", direction = "x"), height = 200),
       plotOutput("h2", brush = brushOpts("plot_brush", direction = "x"), height = 200),
       plotOutput("h3", brush = brushOpts("plot_brush", direction = "x"), height = 200)
