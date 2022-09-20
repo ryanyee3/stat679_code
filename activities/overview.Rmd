@@ -430,6 +430,12 @@ whose interpretation might not be obvious at first.
 
 ---
 
+### Announcements
+
+* Project Milestone 0 (Forming Groups) is due on Friday.
+
+---
+
 ### Exercise Review
 
 A few common themes emerged across most submissions,
@@ -458,7 +464,7 @@ information could be quite different
 * This exercise uses reactive expressions to make messy (but still functional)
 Shiny apps more readable
 
-* I've uploaded a starter document here: https://tinyurl.com/
+* I've uploaded a starter document here: https://tinyurl.com/mw35y9ve
 
 ---
 
@@ -473,3 +479,116 @@ Shiny apps more readable
    * For part (b), consider how we shared filtered data across server elements
    in the penguin example today.
  
+ 
+---
+
+### September 22
+
+1. Exercise review
+1. Code demo [California Wildfires]
+1. [In-Class Exercise 2.2]
+
+---
+
+### Announcements
+
+1. For the exercises, know that there is already an Rmarkdown document that
+includes all problem descriptions. You don't need to copy and paste code from
+PDFs.
+
+---
+
+### Exercise Review
+
+This is an exercise in reactively updating data to feed into interactive
+visualizations. The reactive graph has this structure.
+
+### Exercise Review
+
+**Part (a)**: The following server code creates a "selected" column specifying
+whether the athlete competes in one of the selected sports.
+
+```{r}
+server <- function(input, output) {
+  current_data <- reactive({
+    olympics %>%
+      mutate(selected = Sports %in% input$dropdown)
+  })
+  
+  output$scatterplot <- scatterplot(current_data())
+}
+```
+
+---
+
+### Exercise Review
+
+<iframe src="https://data-viz.it.wisc.edu/content/5c919ba9-52e0-4f3a-ba35-47a58eed16fd" width=800 height=500/>
+
+---
+
+### Exercise Review
+
+**Part (b)**: We can introduce a `dataTableOutput` to print the selected athletes.
+
+```{r, eval = FALSE}
+ui <- fluidPage(
+  selectInput("dropdown", "Select a Sport", choices = unique(olympics$Sport), multiple = TRUE),
+  plotOutput("scatterplot"),
+  dataTableOutput("table")
+)
+    
+```
+
+---
+
+### Exercise Review
+
+We can use the same reactive as before to populate the table.
+
+```{r}
+server <- function(input, output) {
+  updated <- reactive({
+    olympics %>%
+      mutate(selected = Sport %in% input$dropdown)
+  })
+  
+  output$scatterplot <- renderPlot(scatterplot(updated()))
+  output$table <- renderDataTable(
+    updated %>% filter(selected)
+  )
+}
+```
+
+---
+
+### Exercise Review
+
+<iframe src="https://data-viz.it.wisc.edu/content/04140b59-14cd-4c04-91b2-a0c64e6ee29c" width=800 height=500/>
+
+---
+
+### Exercise Review
+
+.pull-left[
+* This is also our first visualization implementing something like a "Focus +
+Context Principle." 
+* We're able to zoom into a few elements of interest without
+losing the overall context.
+]
+
+.pull-right[
+<iframe src="https://player.vimeo.com/video/363453522?h=ea9887b2e6" width="610" height="330" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/363453522">[VIS19 Preview] Periphery Plots for Contextualizing Heterogeneous Time-Based Charts (short paper)</a></p>
+]
+
+---
+
+### Code Demo
+
+* This exercise uses reactive expressions to make messy (but still functional)
+Shiny apps more readable
+
+* I've uploaded a starter document here: https://tinyurl.com/mw35y9ve
+
+---
