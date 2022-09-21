@@ -482,7 +482,7 @@ Shiny apps more readable
  
 ---
 
-### September 22
+### September 21, 2022
 
 1. Exercise review
 1. Code demo [California Wildfires]
@@ -497,11 +497,6 @@ includes all problem descriptions. You don't need to copy and paste code from
 PDFs.
 
 ---
-
-### Exercise Review
-
-This is an exercise in reactively updating data to feed into interactive
-visualizations. The reactive graph has this structure.
 
 ### Exercise Review
 

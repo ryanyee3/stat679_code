@@ -11,11 +11,9 @@ scatterplot <- function(df) {
   ggplot(df) +
     geom_point(
       aes(Weight, `Height, cm`, 
-          alpha = as.numeric(selected),
-          size = as.numeric(selected))
-      ) +
-    scale_alpha(range = c(0.05, .8)) +
-    scale_size(range = c(0.1, 1))
+          col = as.factor(selected),
+      )) +
+    scale_color_manual(values = c("black", "red"))
 }
 
 ui <- fluidPage(
