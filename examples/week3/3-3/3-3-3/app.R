@@ -16,7 +16,7 @@ counts <- list(
 )
 
 bar_plot <- function(sub_flights, v, width = 100) {
-  ggplot(counts[[v]], aes_string(v, "n")) +
+  ggplot(counts[[v]], aes(.data[[v]], n)) +
     geom_bar(fill = "#d3d3d3", stat = "identity", width = width) +
     geom_bar(data = sub_flights, stat = "identity", width = width)
 }
@@ -29,7 +29,8 @@ plot_overlay <- function(selected_, v, width = 100) {
 }
 
 reset_selection <- function(x, brush) {
-  brushedPoints(x, brush, allRows = TRUE)$selected_
+  xvar <- str_match(brush$mapping$x, "dep_delay|sched_dep_time|distance")[1]
+  brushedPoints(x, brush, allRows = TRUE, xvar = xvar)$selected_
 }
 
 ui <- fluidPage(

@@ -22,9 +22,7 @@ output:
         whenever the `reactiveVal` is changed.
 
 2.  The first example implements linked brushing on the movie ratings
-    dataset presented
-    [earlier](https://krisrs1128.github.io/stat479_s22/posts/2022-02-10-week04-03/).
-    Before we had graphical queries, we used a slider to select movies
+    dataset presented earlier. Before we used a slider to select movies
     within a user-specified time range. Our graphical alternative is to
     allow selections over a histogram of movie release dates within the
     dataset. Specifically, we will create an interactive version of the
@@ -58,7 +56,7 @@ output:
     ![](/stat679_notes/assets/week3-3/unnamed-chunk-3-1.png)
 
 3.  Viewed more abstractly, we are going to use a brush to linking the
-    histogram and the scatterplot views. We will be able to evaluate the
+    histogram and scatterplot views. We will be able to evaluate the
     change in a visualization (the scatterplot) after “conditioning” on
     a subset defined by a complementary view (the histogram). This is
     analogous to the penguins dataset example – only the form of the
@@ -97,8 +95,8 @@ output:
 5.  We haven’t included the full code for `histogram`, `scatterplot`,
     and `data_table`, since they in and of themselves don’t require any
     logic for interactivity. You can try out the full code
-    [here](https://github.com/krisrs1128/stat479_s22/blob/main/_posts/2022-02-16-week05-03/apps/app1.R)
-    tinker with the interface below.
+    [here](https://github.com/krisrs1128/stat679_code/blob/main/examples/week3/3-3/3-3-1/app.R)
+    and tinker with the interface below.
 
     <iframe src="https://data-viz.it.wisc.edu/content/1014c0e9-cf88-4b8d-93a6-52fd77669c23/" allowfullscreen="" data-external="1" height=700 width=600></iframe>
 
@@ -162,7 +160,7 @@ output:
     ![](/stat679_notes/assets/week3-3/unnamed-chunk-6-1.png)
 
 9.  Combining these ideas leads to the app
-    [here](https://github.com/krisrs1128/stat479_s22/blob/main/_posts/2022-02-16-week05-03/apps/app2.R)
+    [here](https://github.com/krisrs1128/stat679_code/blob/main/examples/week3/3-3/3-3-2/app.R)
     and included below. Try brushing on both the scatterplot and the
     histogram. The especially interesting thing about this approach is
     that, without introducing any new screen elements, we’ve widened the
@@ -224,13 +222,13 @@ output:
     below. The `bar_plot` function draws two bar plots over one another,
     one referring to a global `counts` object of unchanging histogram
     bar heights. The second refers to the bar heights for the
-    continually updated overlays. Notice that we use `aes_string` to use
+    continually updated overlays. Notice that we use `.data[[v]]` to use
     variable names encoded in strings. The `plot_overlay` function
     provides the histogram bar heights for variable `v` after brushing
-    over the movies in `selected_`.
+    over the flights in `selected_`.
 
         bar_plot <- function(sub_flights, v) {
-          ggplot(counts[[v]], aes_string(v, "n")) +
+          ggplot(counts[[v]], aes(.data[[v]], n)) +
             geom_bar(fill = "#d3d3d3", stat = "identity") +
             geom_bar(data = sub_flights, stat = "identity")
         }
@@ -243,7 +241,7 @@ output:
         }
 
 14. Code for the full application is linked
-    [here](https://github.com/krisrs1128/stat479_s22/blob/main/_posts/2022-02-16-week05-03/apps/app3.R).
+    [here](https://github.com/krisrs1128/stat679_code/blob/main/examples/week3/3-3/3-3-3/app.R).
     Thanks to shiny’s `reactiveVal` and `brushedPoints` definitions,
     implementing interactivity only requires about 20 lines (starting
     from `ui <- ...` to the end). The rest of the code is used to draw

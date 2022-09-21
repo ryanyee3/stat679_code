@@ -5,9 +5,9 @@ account: ksankaran
 server: data-viz.it.wisc.edu
 hostUrl: https://data-viz.it.wisc.edu/__api__
 appId: 418
-bundleId: 2251
+bundleId: 2267
 url: https://data-viz.it.wisc.edu/content/8942c629-fad1-433d-a124-cb56f09b21db/
-when: 1663711574.09344
-lastSyncTime: 1663711574.09346
+when: 1663800087.93407
+lastSyncTime: 1663800087.93408
 asMultiple: FALSE
 asStatic: FALSE
