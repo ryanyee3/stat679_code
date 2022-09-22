@@ -6,7 +6,9 @@ output:
     preserve_yaml: true
 ---
 
-__An introduction to brush events in Shiny__
+_An introduction to brush events in Shiny_
+
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd), [Recording]()
 
 [Recording](),  [Rmarkdown](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd)
 

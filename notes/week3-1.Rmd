@@ -8,7 +8,7 @@ output:
 
 _An introduction to click events in Shiny_
 
-[Recording](),  [Rmarkdown](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-1.Rmd)
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week+3+-+1A+Graphical+Queries+-+Click+Events/1_9zrb0tjb)
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -134,7 +134,7 @@ of `renderPlot`. Let's look at the full application in action. It makes a
 scatterplot using the cars dataset and resizes points every time the plot is
 clicked.
 
-    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-01/apps/app1.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-01/apps/app1.R"), eval = FALSE}
     ```
     
     <iframe src="https://data-viz.it.wisc.edu/content/17a54e4c-5237-4018-b6fe-20c1555cf337/" allowfullscreen="" data-external="1" height=400 width=600></iframe>

@@ -8,6 +8,9 @@ output:
 
 *Custom styling in Shiny.*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-4.Rmd),
+[Recording]()
+
 1.  Even if each of its component visualizations were beautifully
     designed, if we stick to using the default Shiny styling, it is hard
     to make our work look professional. In this set of notes, we’ll

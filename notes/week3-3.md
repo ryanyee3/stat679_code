@@ -8,6 +8,7 @@ output:
 
 *More examples defining brush queries using Shiny and `ggplot2`.*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-3.Rmd),
 [Recording]()
 
 1.  These notes provide more realistic examples of linked brushing.

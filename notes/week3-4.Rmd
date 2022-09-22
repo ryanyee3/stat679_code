@@ -8,6 +8,8 @@ output:
 
 _Custom styling in Shiny._
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-4.Rmd), [Recording]()
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")

@@ -8,6 +8,9 @@ output:
 
 *An introduction to click events in Shiny*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-1.Rmd),
+[Recording](https://mediaspace.wisc.edu/media/Week+3+-+1A+Graphical+Queries+-+Click+Events/1_9zrb0tjb)
+
 1.  Some of the most sophisticated interactive data visualizations are
     based on the idea that user queries can themselves be defined
     visually. For example, to select a date range, we could directly
@@ -147,8 +150,6 @@ output:
 
         shinyApp(ui, server)
 
-    ![](/stat679_notes/assets/week3-1/unnamed-chunk-8-1.png)
-
     <iframe src="https://data-viz.it.wisc.edu/content/17a54e4c-5237-4018-b6fe-20c1555cf337/" allowfullscreen="" data-external="1" height=400 width=600></iframe>
 
 9.  The `reset_dist` function uses `nearPoints` to compute the distance
@@ -199,6 +200,6 @@ output:
 
         shinyApp(ui, server)
 
-    ![](/stat679_notes/assets/week3-1/unnamed-chunk-9-1.png)
+    <div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
 
     <iframe src="https://data-viz.it.wisc.edu/content/9fcf3583-a74f-4d84-8d7c-68ac3595bf6b/" allowfullscreen="" data-external="1" height=750 width=800></iframe>
