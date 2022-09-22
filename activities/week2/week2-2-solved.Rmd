@@ -18,15 +18,9 @@ theme_set(theme_bw())
 fires <- read_csv("https://uwmadison.box.com/shared/static/k5vvekf1bhh9e16qb9s66owygc70t7dm.csv")
 ```
 
-    
 a. (Static) Plot the day of the year that each fire started against the
 county within which it was located. Use the size of the mark to encode the
 number of acres burned in each fire.
-
-```{r}
-ggplot(fires) +
-  geom_point(aes(day_of_year, reorder(Counties, AcresBurned), size = AcresBurned), col = "orange")
-```
 
 b. (Interactive) Provide a way for the viewer to interactively highlight or
 reveal details about subsets of fires. For example, introduce a slider to
@@ -39,19 +33,23 @@ library(shiny)
 
 dotplot <- function(df) {
   ggplot(df) +
-    geom_point(aes(day_of_year, reorder(Counties, AcresBurned), size = AcresBurned), col = "orange")
+    geom_point(aes(day_of_year, Counties, size = AcresBurned, col = selected)) +
+    scale_color_manual(values = c("orange", "#e3e3e3"))
 }
 
 
 ui <- fluidPage(
-  sliderInput("year", "Year", 2013, 2019, 2013),
+  sliderInput("year", "Year", 2013, 2019, c(2013, 2019), sep = ""),
   plotOutput("dotplot")
 )
 
 server <- function(input, output) {
   current_data <- reactive({
     fires %>%
-      filter(year == input$year)
+      mutate(
+        selected = year >= input$year[1] & year <= input$year[2],
+        selected = factor(selected, levels = c("TRUE", "FALSE"))
+      )
   })
   output$dotplot <- renderPlot(dotplot(current_data()))
 }
@@ -62,31 +60,31 @@ shinyApp(ui, server)
 ```{r}
 library(shiny)
 
-county_order <- fires %>%
-  group_by(Counties) %>%
-  summarize(total = sum(AcresBurned)) %>%
-  arrange(total) %>% 
-  pull(Counties)
-
 fires <- fires %>%
-  mutate(Counties = factor(Counties, levels = county_order))
+  mutate(quantile = rank(AcresBurned) / n())
 
 dotplot <- function(df) {
   ggplot(df) +
     geom_point(aes(day_of_year, Counties, size = AcresBurned, col = selected)) +
-    scale_color_manual(values = c("#e3e3e3", "orange"))
+    scale_color_manual(values = c("orange", "#e3e3e3"))
 }
 
-
 ui <- fluidPage(
-  sliderInput("year", "Year", 2013, 2019, 2013, sep = ""),
+  sliderInput("year", "Year", 2013, 2019, c(2013, 2019), sep = ""),
+  sliderInput("quantile", "Quantile", 0, 1, c(0, 1), 0.01),
   plotOutput("dotplot")
 )
 
 server <- function(input, output) {
   current_data <- reactive({
     fires %>%
-      mutate(selected = year == input$year)
+      mutate(
+        selected = year >= input$year[1] & 
+          year <= input$year[2] &
+          quantile >= input$quantile[1] &
+          quantile <= input$quantile[2],
+        selected = factor(selected, levels = c("TRUE", "FALSE"))
+      )
   })
   output$dotplot <- renderPlot(dotplot(current_data()))
 }
@@ -95,8 +93,7 @@ shinyApp(ui, server)
 ```
 
 
-
 c. Introduce at least one other UI output. For example, print a table of the
 selected fires, interactively print summary statistics, or show a histogram
 of fire sizes. Sketch the reactivity graph associated with your application.
-
+https://uwmadison.box.com/shared/static/k5vvekf1bhh9e16qb9s66owygc70t7dm.csv
