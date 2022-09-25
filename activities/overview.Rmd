@@ -621,18 +621,14 @@ demo. Their approach is in the posted rmarkdown.
 
 ### Points of Confusion
 
-1. New inputs / outputs we didn't cover in class (e.g., `eventReaction()`)
+1. Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
 1. What is the difference between a reactive expression and a function?
 
 ---
 
 ### Points of Confusion
 
-Q: New inputs / outputs we didn't cover in class (e.g., `eventReaction()`)
- 
-  1. The best places to find documentation: 
-  1. Users can contribute their own inputs / outputs. Increases complexity, but
-  also can come in handy.
+Q: Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
 
 ---
 
@@ -682,3 +678,9 @@ Questions,
 Take 7 minutes to discuss with a neighbor, then we will regroup and share ideas.
 
 ---
+
+### In-Class Exercise
+
+Birds Brushed Scatterplot - Only part (a)
+
+Hint: This problem is similar to the example in Week 3 - 2: Brush Inputs.

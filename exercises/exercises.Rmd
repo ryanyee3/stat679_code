@@ -954,6 +954,31 @@ process of building this visualization.
     
     d. Comment on the resulting visualization(s). If you had a friend who was
     interested in renting an Airbnb in NYC, what would you tell them?
+    
+1. [Birds Brushed Scatterplot]. The `birds` and `bird_summaries` datasets
+defined below give characteristics of the eggs laid by different species of
+birds. In this problem, you will build an interactive app to compare egg
+`Asymmetry` and `Ellipticity` across species and genera.
+
+    ```{r}
+    birds <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/exercises/data/birds.csv") %>%
+      separate(Species, c("genus", "species2"))
+    
+    bird_summaries <- birds %>%
+      group_by(genus) %>%
+      summarise(across(c("Asymmetry", "Ellipticity", "AvgLength (cm)", "Number of images", "Number of eggs"), list(MEAN = mean, STANDARD_DEVIATION = sd))) %>%
+      arrange(-Ellipticity_MEAN)
+    ```
+
+  a. Create a scatterplot of `Asymmetry` vs. `Ellipticity` which supports
+  brushing. Specifically, whenever the user brushes over a set of points in the
+  scatterplot, they should be shown a table of the selected species. Also,
+  change the color of the currently brushed points, so that they stand out more
+  clearly.
+  
+  b. Design and implement an additional genus-level graphical input using the
+  `bird_summaries` data. For example, you could allow the user to highlight
+  species belonging to taxa with high average egg asymmetry.
 
 1. [Shiny free exploration] Pick one of the following datasets, or propose one of your own interest: [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l), [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv), [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv), [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv).
   
