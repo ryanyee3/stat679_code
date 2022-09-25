@@ -148,7 +148,7 @@ encoded using size in the downstream ggplot2 figure.
 original dataset. Using the same `dist()` call, we can sort the table by
 distance each time the plot is clicked.
 
-    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-01/apps/app2.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-01/apps/app2.R"), eval = FALSE}
     ```
     
     <iframe src="https://data-viz.it.wisc.edu/content/9fcf3583-a74f-4d84-8d7c-68ac3595bf6b/" allowfullscreen="" data-external="1" height=750 width=800></iframe>

@@ -9,7 +9,7 @@ output:
 *Custom styling in Shiny.*
 
 [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-4.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week+3+-+4A+Shiny+Themes/1_9ra67tir)
 
 1.  Even if each of its component visualizations were beautifully
     designed, if we stick to using the default Shiny styling, it is hard

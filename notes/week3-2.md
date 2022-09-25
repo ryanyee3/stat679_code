@@ -9,10 +9,7 @@ output:
 *An introduction to brush events in Shiny*
 
 [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd),
-[Recording]()
-
-[Recording](),
-[Rmarkdown](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd)
+[Recording](https://mediaspace.wisc.edu/media/Week%203%20-%202%3A%20Graphical%20Queries%20-%20Brush%20Events/1_y2dyjzbd)
 
 1.  Click events are useful for referring to individual samples.
     However, they are not ideal for referring to groups of samples. In
@@ -82,8 +79,6 @@ output:
 
         shinyApp(ui, server)
 
-    <div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
-
     <iframe src="https://data-viz.it.wisc.edu/content/a651bc7b-6773-445d-8bc6-22084155e21a/" allowfullscreen="" data-external="1" height=700 width=600></iframe>
 
 4.  It is often useful to combine multi-view composition (*i.e.*,
@@ -143,8 +138,6 @@ output:
         }
 
         shinyApp(ui, server)
-
-    <div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
 
     <iframe src="https://data-viz.it.wisc.edu/content/8e4b07a5-d671-40cb-9d57-22d25533b8fe/" allowfullscreen="" data-external="1" height=800 width=600></iframe>
 

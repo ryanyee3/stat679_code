@@ -8,9 +8,7 @@ output:
 
 _An introduction to brush events in Shiny_
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd), [Recording]()
-
-[Recording](),  [Rmarkdown](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd)
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-2.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%203%20-%202%3A%20Graphical%20Queries%20-%20Brush%20Events/1_y2dyjzbd)
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -61,7 +59,7 @@ define a new brush input, we can set the `brush` argument to `plotOutput`.
 notes. Instead of sorting points by proximity to the click, though, prints the
 subset of rows that have been currently brushed.
 
-    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-02/apps/app3.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-02/apps/app3.R"), eval = FALSE}
     ```
     
     <iframe src="https://data-viz.it.wisc.edu/content/a651bc7b-6773-445d-8bc6-22084155e21a/" allowfullscreen="" data-external="1" height=700 width=600></iframe>
@@ -78,7 +76,7 @@ structure beyond two dimensions. The implementation is similar to the brushing
 above, except that the reactive value `selected()` is called in two `renderPlot`
 contexts, leading to changes in both plots every time the brush is moved.
 
-    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-02/apps/app4.R")}
+    ```{r code=readLines("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_posts/2022-02-16-week05-02/apps/app4.R"), eval = FALSE}
     ```
     
     <iframe src="https://data-viz.it.wisc.edu/content/8e4b07a5-d671-40cb-9d57-22d25533b8fe/" allowfullscreen="" data-external="1" height=800 width=600></iframe>

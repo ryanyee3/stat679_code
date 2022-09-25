@@ -9,7 +9,7 @@ output:
 *More examples defining brush queries using Shiny and `ggplot2`.*
 
 [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-3.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%203%20-%203%3A%20Linked%20Brushing/1_jdtr6xg6)
 
 1.  These notes provide more realistic examples of linked brushing.
     Though the visual design problems they address are more complex,
@@ -56,7 +56,7 @@ output:
 
     ![](/stat679_notes/assets/week3-3/unnamed-chunk-3-1.png)
 
-3.  Viewed more abstractly, we are going to use a brush to linking the
+3.  Viewed more abstractly, we are going to use a brush to link the
     histogram and scatterplot views. We will be able to evaluate the
     change in a visualization (the scatterplot) after “conditioning” on
     a subset defined by a complementary view (the histogram). This is

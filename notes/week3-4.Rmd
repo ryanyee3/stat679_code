@@ -8,7 +8,7 @@ output:
 
 _Custom styling in Shiny._
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-4.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-4.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week+3+-+4A+Shiny+Themes/1_9ra67tir)
 
 ```{r, echo = FALSE}
 library(knitr)

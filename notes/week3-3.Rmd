@@ -8,7 +8,7 @@ output:
 
 _More examples defining brush queries using Shiny and `ggplot2`._
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-3.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-3.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%203%20-%203%3A%20Linked%20Brushing/1_jdtr6xg6)
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -66,7 +66,7 @@ create an interactive version of the histogram below,
       geom_point(aes(Rotten_Tomatoes_Rating, IMDB_Rating))
     ```
     
-1. Viewed more abstractly, we are going to use a brush to linking the histogram
+1. Viewed more abstractly, we are going to use a brush to link the histogram
 and scatterplot views. We will be able to evaluate the change in a
 visualization (the scatterplot) after "conditioning" on a subset defined by a
 complementary view (the histogram). This is analogous to the penguins dataset
