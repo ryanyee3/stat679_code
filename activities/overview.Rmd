@@ -602,3 +602,83 @@ Additionally:  Identify one point of common confusion across your group. Include
   Monday.
 
 ---
+
+### September 26, 2022
+
+1. Exercise review
+1. Code demo [Wildfires - Part (c)]
+1. [In-Class Exercise 3.1]
+
+---
+
+### Announcements
+
+1. Problem Set 1 is due on Friday (9/30)
+1. Thank you to the students who helped fix the `quantile` input in the in-class
+demo. Their approach is in the posted rmarkdown.
+
+---
+
+### Points of Confusion
+
+1. New inputs / outputs we didn't cover in class (e.g., `eventReaction()`)
+1. What is the difference between a reactive expression and a function?
+
+---
+
+### Points of Confusion
+
+Q: New inputs / outputs we didn't cover in class (e.g., `eventReaction()`)
+ 
+  1. The best places to find documentation: 
+  1. Users can contribute their own inputs / outputs. Increases complexity, but
+  also can come in handy.
+
+---
+
+### Points of Confusion  
+
+Q: What is the difference between a reactive expression and a function?
+
+1. A reactive expression is like a function that can depend on `input` elements
+1. Using a function within a server outside of a `render` or `reactive` context will fail
+
+
+```{r, eval = FALSE}
+f <- function(x) {
+  x ^ 2
+}
+
+## DOES NOT WORK
+server <- function(input, output) {
+  f(input$x)
+  ...
+}
+```
+
+---
+
+### In-Class Demo
+
+* This exercise uses extends our earlier wildfires app to use graphical inputs
+
+* I've uploaded a starter document here: https://tinyurl.com/mw35y9ve
+
+---
+
+### In-Class Demo
+
+Right now, the dotplot responds to the brushed histogram. However,
+
+  * The dotplot does not allow any user inputs.
+  * The histogram does not reflect year or user selections.
+
+Questions,
+
+  * Can you imagine alternatives that would convey more information?
+  * How would you begin implementing this? Which examples from the notes may be
+  relevant?
+
+Take 7 minutes to discuss with a neighbor, then we will regroup and share ideas.
+
+---
