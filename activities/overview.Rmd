@@ -619,16 +619,88 @@ demo. Their approach is in the posted rmarkdown.
 
 ---
 
-### Points of Confusion
+### Shiny Apps in Problem Sets
 
-1. Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
-1. What is the difference between a reactive expression and a function?
+If you tried compiling a Shiny app within an rmarkdown document, you probably
+saw a message like the one below,
+
+<img src="figures/shiny_rmarkdown.png"/>
+
+You did not make a mistake! Shiny doesn't allow you to host an app within an
+Rmarkdown document, unfortunately.
+
+---
+
+### Shiny Apps in Problem Sets
+
+To let us grade your Shiny apps within the problem sets, you have three options,
+
+1. Release the code in a way that allows us to run it (for example, make sure
+you don't refer to any file paths on your computer). Upload both your compiled
+document and the original `.Rmd` source.
+
+1. Include a screen recording of your app along with the code you used to create
+it. If you do this, you do not need to make sure other computers can run your
+code -- we will just read it.
+
+1. You could try hosting your app on a public site. UW Madison has an Rstudio
+Connect account, which lets you host apps for free. You can sign up
+[here](https://it.wisc.edu/news/rstudio-team-pilot/).
 
 ---
 
 ### Points of Confusion
 
-Q: Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
+1. Where do events (e.g., button clicks) go in the reactive graph?
+1. What is the difference between a reactive expression and a function?
+1. Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
+
+---
+
+### Points of Confusion
+
+Q: Where do events (e.g., button clicks) go in the reactive graph?
+
+These kinds of events actually live "outside" the reactive graph. There is
+actually a chapter about this in the [Mastering Shiny
+book](https://mastering-shiny.org/reactivity-components.html). Don't worry if
+you created a node for this -- we hadn't covered this in class.
+
+<img src="figures/observe_graph.png"/>
+
+---
+
+### Points of Confusion
+
+Q: Where do events (e.g., button clicks) go in the reactive graph?
+
+Here is an example from the book,
+
+```{r, eval = FALSE}
+ui <- fluidPage(
+  textInput("nm", "name"),
+  actionButton("clr", "Clear"),
+  textOutput("hi")
+)
+server <- function(input, output) {
+  hi <- reactive(paste0("Hi ", input$nm))
+  output$hi <- renderText(hi())
+  observeEvent(input$clr, {
+    updateTextInput(inputId = "nm", value = "")
+  })
+}
+
+shinyApp(ui, server)
+```
+
+---
+
+### Points of Confusion
+
+Q: Where do events (e.g., button clicks) go in the reactive graph?
+
+<img src="figures/invalidate-1.png"/>
+
 
 ---
 
@@ -653,6 +725,13 @@ server <- function(input, output) {
 ```
 
 ---
+
+### Points of Confusion
+
+Q: Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
+
+---
+
 
 ### In-Class Demo
 
@@ -681,6 +760,6 @@ Take 7 minutes to discuss with a neighbor, then we will regroup and share ideas.
 
 ### In-Class Exercise
 
-Birds Brushed Scatterplot - Only part (a)
+[Birds Brushed Scatterplot] - Only part (a)
 
 Hint: This problem is similar to the example in Week 3 - 2: Brush Inputs.

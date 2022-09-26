@@ -64,3 +64,36 @@ selected fires, interactively print summary statistics, or show a histogram
 of fire sizes. Sketch the reactivity graph associated with your application.
 https://uwmadison.box.com/shared/static/k5vvekf1bhh9e16qb9s66owygc70t7dm.csv
 
+```{r}
+ui <- fluidPage(
+  sliderInput("year", "Year", 2013, 2019, c(2013, 2019), sep = ""),
+  fluidRow(
+    column(8, plotOutput("dotplot")),
+    column(4, plotOutput("histogram", brush = brushOpts("fire_size", direction = "x")))
+  )
+)
+
+server <- function(input, output) {
+  histogram_selection <- reactiveVal(rep(TRUE, nrow(fires)))
+  observeEvent(
+    input$fire_size,
+    histogram_selection(brushedPoints(fires, input$fire_size, allRows = TRUE)$selected_)
+  )
+  
+  output$dotplot <- renderPlot({
+    fires %>%
+      mutate(
+        selected = histogram_selection() & year >= input$year[1] & year <= input$year[2],
+        selected = factor(selected, levels = c("TRUE", "FALSE"))
+        ) %>%
+      dotplot()
+  })
+  output$histogram <- renderPlot({
+    ggplot(fires) +
+      geom_histogram(aes(AcresBurned)) +
+      scale_x_log10()
+  })
+}
+
+shinyApp(ui, server)
+```
