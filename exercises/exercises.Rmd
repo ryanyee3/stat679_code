@@ -969,29 +969,28 @@ birds. In this problem, you will build an interactive app to compare egg
       summarise(across(c("Asymmetry", "Ellipticity", "AvgLength (cm)", "Number of images", "Number of eggs"), list(MEAN = mean, STANDARD_DEVIATION = sd))) %>%
       arrange(-Ellipticity_MEAN)
     ```
-
-  a. Create a scatterplot of `Asymmetry` vs. `Ellipticity` which supports
-  brushing. Specifically, whenever the user brushes over a set of points in the
-  scatterplot, they should be shown a table of the selected species. Also,
-  change the color of the currently brushed points, so that they stand out more
-  clearly.
   
-  b. Design and implement an additional genus-level graphical input using the
-  `bird_summaries` data. For example, you could allow the user to highlight
-  species belonging to taxa with high average egg asymmetry.
-
+    a. Create a scatterplot of `Asymmetry` vs. `Ellipticity` which supports
+    brushing. Specifically, whenever the user brushes over a set of points in the
+    scatterplot, they should be shown a table of the selected species. Also,
+    change the color of the currently brushed points, so that they stand out more
+    clearly.
+    
+    b. Design and implement an additional genus-level graphical input using the
+    `bird_summaries` data. For example, you could allow the user to highlight
+    species belonging to taxa with high average egg asymmetry.
+  
 1. [Shiny free exploration] Pick one of the following datasets, or propose one of your own interest: [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l), [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv), [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv), [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv).
   
-  a. Based on your understanding of how the data were collected and what they
-  represent, prepare four questions that you are interested in. Choose questions
-  that reflect different aspects of the data and whose answers will require more
-  nuanced analysis.
-	
-	b. Design and implement a Shiny app whose interactivity helps to answer the
-	questions you identified in (a).
-	
-	c. Sketch the reactivity graph of your app’s final implementation.
+    a. Based on your understanding of how the data were collected and what they
+    represent, prepare four questions that you are interested in. Choose questions
+    that reflect different aspects of the data and whose answers will require more
+    nuanced analysis.
     
+    b. Design and implement a Shiny app whose interactivity helps to answer the questions you identified in (a).
+    
+    c. Sketch the reactivity graph of your app’s final implementation.
+      
 1. [Reactivity Discussion] Consider the `reactive()` and `observeEvent()`
 functions implemented by the `shiny` package. What are common use cases for the
 two functions? Be as specific as possible.

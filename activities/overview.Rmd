@@ -613,9 +613,10 @@ Additionally:  Identify one point of common confusion across your group. Include
 
 ### Announcements
 
-1. Problem Set 1 is due on Friday (9/30)
+1. Issue with group submission for Exercise 2.2 - we will manage it
+1. Problem Set 1 is due on Friday (9/30) at 11:59pm
 1. Thank you to the students who helped fix the `quantile` input in the in-class
-demo. Their approach is in the posted rmarkdown.
+demo. Their approach is in the In-Class Demo 2.2 link.
 
 ---
 
@@ -653,7 +654,7 @@ Connect account, which lets you host apps for free. You can sign up
 
 1. Where do events (e.g., button clicks) go in the reactive graph?
 1. What is the difference between a reactive expression and a function?
-1. Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
+1. Subtleties between outputs we didn't cover in class -- `eventReactive()` and `observeEvent`
 
 ---
 
@@ -661,8 +662,8 @@ Connect account, which lets you host apps for free. You can sign up
 
 Q: Where do events (e.g., button clicks) go in the reactive graph?
 
-These kinds of events actually live "outside" the reactive graph. There is
-actually a chapter about this in the [Mastering Shiny
+These kinds of events actually live "outside" the reactive graph. There is a
+chapter about this in the [Mastering Shiny
 book](https://mastering-shiny.org/reactivity-components.html). Don't worry if
 you created a node for this -- we hadn't covered this in class.
 
@@ -708,8 +709,10 @@ Q: Where do events (e.g., button clicks) go in the reactive graph?
 
 Q: What is the difference between a reactive expression and a function?
 
-1. A reactive expression is like a function that can depend on `input` elements
-1. Using a function within a server outside of a `render` or `reactive` context will fail
+1. A reactive expression is like a function that can depend on `input` elements,
+and which reruns each time an input is changed
+1. Using a function within a server, but outside of a `render` or `reactive`
+context, will fail
 
 
 ```{r, eval = FALSE}
@@ -728,7 +731,11 @@ server <- function(input, output) {
 
 ### Points of Confusion
 
-Q: Subtleties between outputs we didn't cover in class -- `eventReaction()` and `observeEvent`
+Q: Subtleties between outputs we didn't cover in class -- `eventReactive()` and
+`observeEvent()`
+
+An observer does not store any value. An `eventReactive()` can store an
+intermediate value that appears in a later `render*` expression.
 
 ---
 
@@ -737,7 +744,7 @@ Q: Subtleties between outputs we didn't cover in class -- `eventReaction()` and 
 
 * This exercise uses extends our earlier wildfires app to use graphical inputs
 
-* I've uploaded a starter document here: https://tinyurl.com/mw35y9ve
+* I've uploaded a starter document here: https://tinyurl.com/nhb6kt46
 
 ---
 
@@ -748,13 +755,12 @@ Right now, the dotplot responds to the brushed histogram. However,
   * The dotplot does not allow any user inputs.
   * The histogram does not reflect year or user selections.
 
-Questions,
+Imagine someone came to your statistical consulting hours with this application.
+They want your expertise to improve the app so that it conveys more information.
+How would you approach this? What might be some first steps towards
+implementation?
 
-  * Can you imagine alternatives that would convey more information?
-  * How would you begin implementing this? Which examples from the notes may be
-  relevant?
-
-Take 7 minutes to discuss with a neighbor, then we will regroup and share ideas.
+Take 7 minutes to discuss with a neighbor, then we will regroup and share.
 
 ---
 
@@ -763,3 +769,54 @@ Take 7 minutes to discuss with a neighbor, then we will regroup and share ideas.
 [Birds Brushed Scatterplot] - Only part (a)
 
 Hint: This problem is similar to the example in Week 3 - 2: Brush Inputs.
+
+---
+
+### September 28, 2022
+
+1. Exercise review
+1. Code demo []
+1. Discussion []
+1. [In-Class Exercise 3.2]
+
+---
+
+### Exercise Review
+
+```{r, eval = FALSE}
+library(shiny)
+ui <- fluidPage(
+  fluidRow(
+    column(8, plotOutput("plot", brush = "plot_brush")),
+    column(4, dataTableOutput("table"))
+  )
+)
+```
+
+---
+
+### Exercise Review
+
+The full app code can be found here.
+
+```{r, eval = FALSE}
+server <- function(input, output) {
+  selected <- reactiveVal(rep(TRUE, nrow(birds)))
+  observeEvent(
+    input$plot_brush,
+    selected(brushedPoints(birds, input$plot_brush, allRows = TRUE)$selected_)
+  )
+
+  output$plot <- renderPlot(scatter(birds, selected()))
+  output$table <- renderDataTable(
+    filtered_table(birds, selected()),
+    options = list(pageLength = 5)
+  )
+}
+```
+
+---
+
+<iframe src="https://data-viz.it.wisc.edu/content/0592d810-d75c-43f4-8d27-817e1276ac8c"/>
+
+---
