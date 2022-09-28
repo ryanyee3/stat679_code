@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 #fancyheader {
-  stroke: "red";
-  font: 'Press Start 2P'
+  color: #ff4500;
+  font-family: "Press Start 2P";
 }
