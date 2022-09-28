@@ -7,7 +7,7 @@ birds <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat479_s22/main
     
 ui <- fluidPage(
   fluidRow(
-    column(8, plotOutput("plot", brush = "plot_brush")),
+    column(6, plotOutput("plot", brush = "plot_brush")),
     column(4, dataTableOutput("table"))
   )
 )
@@ -17,7 +17,8 @@ scatter <- function(x, selected_) {
     mutate(selected_ = factor(selected_, levels = c("FALSE", "TRUE"))) %>%
     ggplot() +
     geom_point(aes(Ellipticity, Asymmetry, col = selected_)) +
-    scale_color_manual(values = c("black", "red"))
+    scale_color_manual(values = c("black", "red")) +
+    theme(legend.position = "none")
 }
 
 filtered_table <- function(birds, selected) {
@@ -25,6 +26,7 @@ filtered_table <- function(birds, selected) {
     select(Order, Family, MVZDatabase) %>% 
     filter(selected)
 }
+
 server <- function(input, output) {
   selected <- reactiveVal(rep(TRUE, nrow(birds)))
   observeEvent(

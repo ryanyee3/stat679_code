@@ -775,19 +775,30 @@ Hint: This problem is similar to the example in Week 3 - 2: Brush Inputs.
 ### September 28, 2022
 
 1. Exercise review
-1. Code demo []
-1. Discussion []
+1. Project Strategies + Q&A
 1. [In-Class Exercise 3.2]
+
+---
+
+### Announcements
+
+1. This Friday's Office Hours rescheduled to 2 - 3pm (not 11am - 12pm).
+1. We will be moving on to Module 2 (Visualization with D3) starting
+next week. If you have questions about ggplot2 or shiny visualization, it is
+best to reach out soon.
 
 ---
 
 ### Exercise Review
 
+This is an exercise in using `reactiveVal` and `observeEvent` to support a brush
+query within Shiny.
+
 ```{r, eval = FALSE}
 library(shiny)
 ui <- fluidPage(
   fluidRow(
-    column(8, plotOutput("plot", brush = "plot_brush")),
+    column(6, plotOutput("plot", brush = "plot_brush")),
     column(4, dataTableOutput("table"))
   )
 )
@@ -797,7 +808,7 @@ ui <- fluidPage(
 
 ### Exercise Review
 
-The full app code can be found here.
+The server uses a `reactiveVal` + `observeEvent` pattern.
 
 ```{r, eval = FALSE}
 server <- function(input, output) {
@@ -817,6 +828,115 @@ server <- function(input, output) {
 
 ---
 
-<iframe src="https://data-viz.it.wisc.edu/content/0592d810-d75c-43f4-8d27-817e1276ac8c"/>
+### Exercise Review
+
+These functions update the table and scatterplot based on the selection.
+
+```{r}
+scatter <- function(x, selected_) {
+  x %>%
+    mutate(selected_ = factor(selected_, levels = c("FALSE", "TRUE"))) %>%
+    ggplot() +
+    geom_point(aes(Ellipticity, Asymmetry, col = selected_)) +
+    scale_color_manual(values = c("black", "red")) +
+    theme(legend.position = "none")
+}
+
+filtered_table <- function(birds, selected_) {
+  birds %>% 
+    select(Order, Family, MVZDatabase) %>% 
+    filter(selected_)
+}
+```
 
 ---
+
+<iframe src="https://data-viz.it.wisc.edu/content/0592d810-d75c-43f4-8d27-817e1276ac8c" width = 900 height = 500/>
+
+---
+
+### Project Reflections
+
+1. How should you approach your course project?
+1. Hopefully, these reflections will be useful for your future projects too
+1. Please ask questions, this will work better as a discussion
+
+---
+
+### Conceptualization: Storytelling
+
+The most compelling projects are structured like stories.
+
+Opening: What is the setting? Who are the main characters?
+
+Conflict: How is the state of the world unsatisfactory?
+
+Action: How was the conflict resolved?
+
+Resolution: What have we learned more generally?
+
+---
+
+### Conceptualization: Community
+
+1. In the area that you choose to study, who are your intellectual peers?
+1. A common problem in data science projects are that they become too abstract /
+have no clear intended audience.
+1. The project should be interesting because of what it says about real world
+phenomena which are interseting within your community -- don't talk about data
+without context.
+
+---
+
+### Conceptualization: Synthesis
+
+1. No problems are solved in a vacuum. What ideas are you building from?
+1. The most creative projects draw from sources that were not obviously relevant, but which later turn out to be.
+
+---
+
+### Implementation: Reading
+
+1. For both community and synthesis, it is very helpful to read extensively
+1. This helps you understand the standards of the community (or communities) you
+are working in.
+1. It also provides source material for problem solving.
+1. Today's in-class exercise provides more concrete suggestions for how to go
+about identifying reading material
+
+---
+
+### Implementation: Prototyping
+
+1. It is much better to explore a variety of designs before committing to one
+specific approach.
+1. This is one of the reasons why having a well-defined problem is important --
+it creates a center around which many approaches can be explored
+
+.center[
+<img src="figures/design-space.png" width=800/>
+]
+
+---
+
+### Implementation: Feedback
+
+1. Some of the most important data you can get during a project is feedback from
+your peers
+1. Their responses may reveal unwarranted assumptions you have made or point you
+towards a previously unnoticed path forward
+
+---
+
+### Reflection and Questions
+
+With your project group, take 5 minutes to brainstorm a list of conceptual or
+logistical questions you have related to the project. We will discuss these as a
+group.
+
+---
+
+### Exercise 3.2
+
+With your project team, work through [Guided Literature Search] in the exercises
+sheet.
