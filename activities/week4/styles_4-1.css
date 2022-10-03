@@ -1,0 +1,18 @@
+
+.base {
+  fill: yellow;
+  stroke: black;
+}
+
+.eyes { }
+
+.mouth {
+  fill: black;
+  stroke: black;
+  stroke-width: 1px;
+}
+
+.mouth2 {
+  fill: black;
+  stroke: none;
+}
