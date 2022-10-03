@@ -1,15 +1,23 @@
 
-let initial = d3.select("#initial")
-initial.clone(true).attrs({ transform: "translate(100, 0)" })
+let centers = [];
+let u = d3.randomUniform();
 
-let unif = d3.randomUniform(0, 500);
-let centers = d3.range(50).map(d => { return {x: unif(), y: unif()} });
-
-for (let i = 0; i < centers.length; i++) {
-  initial.clone(true)
-    .transition()
-    .duration(1000)
-    .attrs({
-      transform: d => "translate(" + centers[i].x + "," + centers[i].y + ")"
-    })
+for (let i = 0; i < 50; i++) {
+  centers.push({
+    x: 900 * u(),
+    y: 500 * u()
+  })
 }
+
+console.log(centers)
+
+let initial = d3.select("#initial")
+for (let i = 0; i < 50; i++ ){
+  initial.clone(true).attrs({
+      id: "smiley" + i,
+      transform: "translate(" + centers[i].x + "," + centers[i].y + ")"
+    })
+
+}
+
+d3.mean()
