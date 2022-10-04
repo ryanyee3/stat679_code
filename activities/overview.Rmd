@@ -1180,11 +1180,11 @@ JS files. Any discussion can go in JS comments or HTML paragraphs.
 
 ### In-Class Demo [4.2]
 
-* We will work through [D3 Selections II] together
+* We will work through [Modifying Selections] together
 
 ---
 
 ### In-Class Exercise [4.2]
 
-* Work through [Debugging JS Code] parts (a), (c), and (e) in the exercises
-sheet. Discuss with your team, but submit individually.
+* Work through [Debugging JS Code] parts (b - d) in the exercises sheet. Discuss
+with your team, but submit individually.
