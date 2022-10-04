@@ -34,18 +34,5 @@ d3.select("#squares")
     y: d => d.y,
     width: d => 3 + Math.abs(10 * generator()),
     height: d => 3 + Math.abs(10 * generator()),
-    class: "part_d"
-  })
-
-squares = d3.range(10).map(d => { return {x: 400 + 90 * generator(), y: 300 + 20 * generator()} })
-d3.select("svg#squares")
-  .selectAll("rect")
-  .data(squares).enter()
-  .append("rect")
-  .attrs({
-    x: d => d.x,
-    y: d => d.y,
-    width: d => 3 + Math.abs(10 * generator()),
-    height: d => 3 + Math.abs(10 * generator()),
-    class: "other_squares"
+    class: (d, i) => i < 20 ? "part_d" : "other"
   })
