@@ -1091,35 +1091,57 @@ according to different classes and IDs.
 
     a. Draw the HTML tree structure of the provided page.
     b. Using a CSS rule, change all circles to blue.
-    c. Using a D3, move the circle with the ID “part_b” to location (100, 100)
-    d. Using D3, change all the squares of class “part_c” to red.
-    e. Using CSS or D3, change all circles of class “part_d” to red, but only if
-    they are contained within the group with label “group_part_d”
+    c. Using D3, move the circle with the ID `part_c` to location (100, 100)
+    d. Using D3, change all the squares of class `part_d` to red.
+    e. Using CSS or D3, change all circles of class `part_e` to red, but only if
+    they are contained within the group with label `group_part_e`.
     
 1. [Debugging JS Code] Imagine that you are helping your colleagues debug their
-javascript programs. They have explained their implementation goals and
+javascript programs. They have explained their implementation goals and the
 difficulties they have encountered. Your job is to both help them resolve their
-specific bug and to briefly explain the data structure or control flow concepts
-that will help them avoid these issues in the future. Specifically, for each
-part, explain propose a solution to your colleague’s problem and briefly explain
-the concept that will help avoid similar bugs.
+specific bug and to briefly explain the concepts that will help them avoid these
+issues in the future. Specifically, for each part, explain propose a solution to
+your colleague’s problem and briefly explain the concept that will help avoid
+similar bugs.
 
-    a. Goal: I want to try to get the “height” array out of “mountains” below.
-    Attempt: Here is my HTML and JS file. This is the part that I think is
+    a. Goal: I want to try to get the average of the “temp_max” array in
+    “forecast” below.
+    
+    Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2a.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2a.js) file. This is the part that I think is
     relevant,
+    ```{r, eval = FALSE}
+    let forecast = {temp_max: [22, 24, 28, 21], temp_min: [15, 14, 21, 24]}
+    d3.mean(forecast[0])
+    ```
     Problem: The console prints the error message,
-    b. Goal: I want to change the color of all the circles to blue.
-    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
-    Problem: Only the color of the first circle is changing.
-    c. Goal: I want to change the color of all the class “highlighted” elements.
-    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
-    Problem: Only the color of the first circle is changing.
-    d. Goal: I want to change the color of all the class “highlighted” squares.
-    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
+    ```
+     Uncaught TypeError: t is not iterable at t.mean (d3-array@3:2:13861) at in_class4-2a.js:3:4 
+    ```
+    b. Goal: I want to change the color of all the circles on my [HTML page](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.html) to blue. 
+    
+    Attempt:
+    Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.js) file. This is the part that I think is relevant,
+    ```{r, eval = FALSE}
+    d3.select("circle")
+      .attr("fill", "blue")
+    ```
+    Problem: Only the color of the one circle [is changing](https://github.com/krisrs1128/stat679_code/blob/main/exercises/figure/d3_bugs.png).
+    c. Goal: I want to change the color of all the class “highlighted” squares.
+    
+    Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2c.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2c.js) file. This is the part that I think is relevant,
+    ```{r, eval = FALSE}
+    d3.selectAll("highlighted")
+      .attr("fill", "red")
+    ```
     Problem: Nothing is changing.
-    e. Goal: I want to move the circle to location 100, 200 on the SVG canvas.
-    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
-    Problem: Nothing is changing.
+    d. Goal: I want to move the circle to location 100, 200 on the SVG canvas.
+    
+    Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) file. This is the part that I think is relevant,
+    ```{r, eval = FALSE}
+    d3.select("#my_circle")
+      .attrs({ x: 100, y: 200 })
+    ```
+    Problem: It is not moving.
   
 1. [Random Point Transitions] This exercise will give practice implementing
 transitions on simulated data. The code below generates a random set of 10
