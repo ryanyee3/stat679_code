@@ -1083,6 +1083,44 @@ from scratch and styling them.
     function](https://github.com/d3/d3-selection#selection_clone), create 50
     copies of your smiley face, located at random locations on the SVG canvas.
   
+
+1. [Modifying Selections] This exercise gives practice making selections on an
+HTML page and applying changes using either CSS or D3. We will work with this
+HTML page, which contains a variety of SVG elements grouped and labeled
+according to different classes and IDs.
+
+    a. Draw the HTML tree structure of the provided page.
+    b. Using a CSS rule, change all circles to blue.
+    c. Using a D3, move the circle with the ID “part_b” to location (100, 100)
+    d. Using D3, change all the squares of class “part_c” to red.
+    e. Using CSS or D3, change all circles of class “part_d” to red, but only if
+    they are contained within the group with label “group_part_d”
+    
+1. [Debugging JS Code] Imagine that you are helping your colleagues debug their
+javascript programs. They have explained their implementation goals and
+difficulties they have encountered. Your job is to both help them resolve their
+specific bug and to briefly explain the data structure or control flow concepts
+that will help them avoid these issues in the future. Specifically, for each
+part, explain propose a solution to your colleague’s problem and briefly explain
+the concept that will help avoid similar bugs.
+
+    a. Goal: I want to try to get the “height” array out of “mountains” below.
+    Attempt: Here is my HTML and JS file. This is the part that I think is
+    relevant,
+    Problem: The console prints the error message,
+    b. Goal: I want to change the color of all the circles to blue.
+    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
+    Problem: Only the color of the first circle is changing.
+    c. Goal: I want to change the color of all the class “highlighted” elements.
+    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
+    Problem: Only the color of the first circle is changing.
+    d. Goal: I want to change the color of all the class “highlighted” squares.
+    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
+    Problem: Nothing is changing.
+    e. Goal: I want to move the circle to location 100, 200 on the SVG canvas.
+    Attempt: Here is my HTML and JS file. This is the part that I think is relevant,
+    Problem: Nothing is changing.
+  
 1. [Random Point Transitions] This exercise will give practice implementing
 transitions on simulated data. The code below generates a random set of 10
 numbers,

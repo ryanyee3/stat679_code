@@ -1081,3 +1081,110 @@ the code. Alternatively, you can submit a Word document or an Observable
 Notebook.
 * Hint: For part (b), refer to the example in Notes 4 - 2. For part (c), a one
 line solution is possible using `map()`.
+
+---
+
+### October 5, 2022
+
+1. In-Class Demo 4.2
+1. In-Class Exercise 4.2
+
+---
+
+### Announcements
+
+1. Problem set 1 solutions are online, and problem set 2 is posted.
+
+---
+
+### Exercise Review
+
+For each of `penguins` and `penguins2`, describe whether the data structure is
+(i) an object of arrays, (ii) an array of objects, or (iii) neither. In case
+(iii), specify the structure.
+
+* `penguins` is an array of objects. Each object corresponds to one row
+(sample), and the array gives the full dataset.
+
+```{r, eval = FALSE}
+let penguins = [{"species":"Adelie","island":"Torgersen",...},{"species":"Adelie","island":"Torgersen",...}, ...]
+```
+
+---
+
+### Exercise Review
+
+For each of `penguins` and `penguins2`, describe whether the data structure is
+(i) an object of arrays, (ii) an array of objects, or (iii) neither. In case
+(iii), specify the structure.
+
+* `penguins2` is an object of arrays. Each key of the object corresponds to one
+column, and the associated array gives all penguins' measurements for that
+column.
+
+```{r, eval = FALSE}
+let penguins2 = {"species":["Adelie","Adelie",...],"island":["Torgersen","Torgersen",...],...}
+```
+
+
+---
+
+### Exercise Review
+
+Using `penguins2`, compute the mean flipper length.
+
+For this part, we need to (i) extract the array within the object containing flipper length, and (ii) compute its mean.
+
+```{r eval = FALSE}
+d3.mean(penguins2["flipper_length_mm"])
+```
+
+---
+
+### Exercise Review
+
+Using `penguins`, define a new array whose elements are `true` or `false`
+depending on whether flipper length is larger than 187.
+
+We can accomplish this using a for loop.
+
+```{r, eval = FALSE}
+let result = [];
+for (let i = 0; i < penguins.length; i++) {
+  result.push(penguins[i].flipper_length_mm > 187)
+}
+```
+
+---
+
+### Exercise Review
+
+Using `penguins`, define a new array whose elements are `true` or `false`
+depending on whether flipper length is larger than 187.
+
+An even more concise solution uses `map`.
+
+```{r, eval = FALSE}
+result = penguins.map(d => d.flipper_length_mm > 187)
+```
+
+---
+
+### Exercise Review
+
+* This is how the solution looks like in a single javascript file
+* For in-class exercises like this, it is enough to submit your HTML, CSS, and
+JS files. Any discussion can go in JS comments or HTML paragraphs.
+
+---
+
+### In-Class Demo [4.2]
+
+* We will work through [D3 Selections II] together
+
+---
+
+### In-Class Exercise [4.2]
+
+* Work through [Debugging JS Code] parts (a), (c), and (e) in the exercises
+sheet. Discuss with your team, but submit individually.
