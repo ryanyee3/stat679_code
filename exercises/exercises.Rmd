@@ -135,6 +135,45 @@ dataset of your choice.
   	and how was it gathered / generated?
   	c. Generate a version of the visualization from (a) to the dataset from (b).
   	Interpret the result in context.
+  	
+1. [Transition Taxonomy] In "Animated Transitions in Statistical Graphics," Heer
+and Robertson introduce a taxonomy of visualizations transitions. These include,
+    * View Transformation: We can move the "camera view" associated with a fixed
+    visualization. This includes panning and zooming, for example.
+    * Filtering: These transitions remove elements based on a user selection.
+    For example, we may smoothly remove points in a scatterplot based on a
+    dropdown menu selection.
+    * Substrate Transformation: This changes the background context on which
+    points lie. For example, we may choose to rescale the axis in a scatterplot
+    to show a larger range.
+    * Ordering: These transitions change the ordering of an ordinal variable.
+    For example, we may transition between sorting rows of a heatmap
+    alphabetically vs. by their row average.
+    * Timestep: These transitions smoothly vary one plot to the corresponding
+    plot at a different timestep. For example, we might show "slide" a time
+    series to the left to introduce data for the most recent year.
+    * Visualization Change: We may change the visual encoding used for a fixed
+    dataset. For example, we may smoothly transition from a bar chart to a pie
+    chart.
+    * Data Scheme Change: This changes the features that are displayed. For
+    example, we may smoothly turn a 1D point plot into a 2D scatterplot by
+    introducing a new variable.
+  In this problem, we will explore how these transitions arise in practice and
+  explore how they may be implemented. 
+    a. Pick any visualization from the New York Times Upshot, Washington Post
+    Visual Stories, the BBC Interactives and Graphics, or the Guardian
+    Interactives pages. Describe two transitions that it implements. Of the 7
+    transition types given above, which is each one most similar to? Explain
+    your choice.
+    b. For any transition (which may or may not be one of those you chose in
+    (a)), identify the types of graphical marks used to represent the data. How
+    would you create this type of mark in SVG?
+    c. To achieve the transition effect, how do you expect that the SVG elements
+    would be modified / added / removed? Specifically, if elements are modified,
+    what SVG `attrs` would be changed, and if elements are added or removed, how
+    would the enter-exit-update pattern apply? You do not need to look at the
+    code implementing the actual visualization, but you should give a plausible
+    description of how the transition could be implemented in D3.
 
 1. [Dissecting a visualization] Pick two static views of visualizations from any
 of the following sites: 1, 2, 3. For each view, answer the questions below,
@@ -987,7 +1026,8 @@ birds. In this problem, you will build an interactive app to compare egg
     that reflect different aspects of the data and whose answers will require more
     nuanced analysis.
     
-    b. Design and implement a Shiny app whose interactivity helps to answer the questions you identified in (a).
+    b. Design and implement a Shiny app whose interactivity helps to answer the
+    questions you identified in (a).
     
     c. Sketch the reactivity graph of your app’s final implementation.
       
@@ -1031,19 +1071,6 @@ of the penguins dataset, but in slightly different formats.
     depending on whether flipper length is larger than 187.
     d. Create a new array containing all information from just two penguins: The
     ones with the smallest and largest flipper lengths.
-  
-1. [Simple bar chart] Consider the following list of numbers,
-    ```{d3, eval = FALSE}
-    let generator = d3.random();
-    x = generator(20);
-    ```
-    
-  	a. Create a bar chart that has one bar per number, with the height of that
-  	bar determined by the value in the array. There is no need to add labels or
-  	axes.
-	
-  	b. Turn the bar chart from (a) on its side. The horizontal length of each bar
-  	should now encode each of the original numbers.
 
 1. [Draw a Smiley Face] This exercise gives practice in drawing SVG elements
 from scratch and styling them.
@@ -1056,7 +1083,37 @@ from scratch and styling them.
     function](https://github.com/d3/d3-selection#selection_clone), create 50
     copies of your smiley face, located at random locations on the SVG canvas.
   
-1. [Bar chart transitions] This problem continues [Simple bar chart] above. We
+1. [Random Point Transitions] This exercise will give practice implementing
+transitions on simulated data. The code below generates a random set of 10
+numbers,
+    ```{d3, eval = FALSE}
+    let generator = d3.random();
+    let x = generator(10);
+    ```
+    a. Encode the data in `x` using the x-coordinate positions of 10 circles.
+    b. Animate the circles. Specifically, at fixed time intervals, generate a
+    new set of 10 numbers, and smoothly transition the original set of circles
+    to locations corresponding to these new numbers.
+    c. Extend your animation so that at least one other attribute is changed at
+    each time step. For example, you may consider changing the
+    color or the size of the circles. Make sure that transitions remain smooth
+    (e.g., if transitioning size, gradually increase or decrease the circles'
+    radii).
+    
+1. [Simple Bar Chart] Consider the following list of numbers,
+    ```{d3, eval = FALSE}
+    let generator = d3.random();
+    let x = generator(20);
+    ```
+    
+  	a. Create a bar chart that has one bar per number, with the height of that
+  	bar determined by the value in the array. There is no need to add labels or
+  	axes.
+	
+  	b. Turn the bar chart from (a) on its side. The horizontal length of each bar
+  	should now encode each of the original numbers.
+
+1. [Bar Chart Transitions] This problem continues [Simple bar chart] above. We
 will create a bar chart that adds and removes one bar each time a button is
 clicked. Specifically, the function below takes an initial array `x` and creates
 a new array that removes the first element and adds a new one to the end. Using
@@ -1171,6 +1228,26 @@ University of Washington.]
   	When a selection is made, apply a smooth transition to the heights of the
   	bars.
   	
+1. [Icelandic Population Analysis] In this problem, we will analyze the design
+and implementation of this [interactive
+visualization](https://observablehq.com/@mbostock/icelandic-population-by-age-1841-2019)
+of Iceland's population.
+    a. Explain how to read this visualization. What are two potential insights a
+    reader could takeaway from this visualization?
+    b. The implementation uses the following data join,
+    ```{r, eval = FALSE}
+    rect = rect
+      .data(data.filter(d => d.year === year), d => `${d.sex}:${d.year - d.age}`)
+    ```
+      What does this code do? What purpose does it serve within the larger
+      visualization?
+    c. When the bars are entered at `Age = 0`, they seem to "pop up," rather
+    than simply being appended to the end of the bar chart. How is this effect
+    implemented?
+    d. Suppose that you had comparable population-by-age data for two countries.
+    What queries would be interesting to support? How would you generalize the
+    current visualization's design to support those queries?
+  
 1. [D3 free exploration] Pick one of the following datasets, or propose one of your own interest: [London Olympics](https://uwmadison.box.com/s/rzw8h2x6dp5693gdbpgxaf2koqijo12l), [Pokemon](https://uwmadison.box.com/shared/static/hf5cmx3ew3ch0v6t0c2x56838er1lt2c.csv), [Chicago Traffic Accidents](https://raw.githubusercontent.com/krisrs1128/stat479_s22/main/_slides/week9/exercises/chicago_crashes.csv), [Australian Pharmaceuticals](https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv).
   
 	a. Based on your understanding of how the data were collected and what they
@@ -1224,6 +1301,29 @@ traffic volumes across a set of cities. The data are read in below,
     c. Propose an alternative encoding of the same data. What are the strengths
     of the second approach? What are the strengths of the original approach?
 
+1. [Interactive German Traffic] This problem will revisit the previous problem
+from an interactive point of view. We will build a visualization that helps
+users explore daily traffic patterns across multiple German cities, using
+interactivity to help users navigate the collection. We will need additional
+features related to the day of the week for each timepoint, created by the
+`wday` function below,
+    ```{r}
+    library(lubridate)
+    traffic <- read_csv("https://uwmadison.box.com/shared/static/x0mp3rhhic78vufsxtgrwencchmghbdf.csv") %>%
+     mutate(day_of_week = wday(date))
+    ```
+
+    a. Design and implement a Shiny app that allows users to visualize traffic
+    over time across selected subsets of cities. Make sure that it is possible
+    to view data from more than one city at a time. It is not necessary to label
+    the cities within the associated figure.
+    b. Introduce new inputs to allow users to select a contiguous range of days
+    of the week. For example, the user should have a way of zooming into the
+    samples taken within the Monday - Wednesday range.
+    c. Propose, but do not implement, at least one alternative strategy for
+    supporting user queries from either part (a) or (b). What are the tradeoffs
+    between the different approaches in terms of visual effectiveness and
+    implementation complexity?
   
 1. [Spotify Time Series]  In this problem, we will study music streaming on
 Spotify in 2017. We'll start by looking at some characteristics of the most
