@@ -26,10 +26,11 @@ function update_vis() {
 
   circ.enter()
     .append("circle")
-    .attrs({ cx: d => d.x,  cy: d.y})
+    .attrs({ cx: d => d.x,  cy: d => d.y})
   circ.attr("r", d => d.r)
   circ.exit().remove();
 }
 
 let id = 0;
+let rain = [];
 d3.interval(update_vis, 100);
