@@ -23,12 +23,12 @@ function update_vis() {
   let circ = d3.select("svg")
     .selectAll("circle")
     .data(rain, d => d.id)
-
-  circ.enter()
-    .append("circle")
-    .attrs({ cx: d => d.x,  cy: d => d.y})
-  circ.attr("r", d => d.r)
-  circ.exit().remove();
+    .join(
+      enter => enter.append("circle")
+        .attrs({ cx: d => d.x, cy: d => d.y }),
+      update => update.attr("r", d => d.r),
+      exit => exit.remove()
+    )
 }
 
 let id = 0;
