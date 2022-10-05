@@ -1136,7 +1136,7 @@ similar bugs.
     Problem: Nothing is changing.
     d. Goal: I want to move the circle to location 100, 200 on the SVG canvas.
     
-    Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) file. This is the part that I think is relevant,
+    Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.js) file. This is the part that I think is relevant,
     ```{r, eval = FALSE}
     d3.select("#my_circle")
       .attrs({ x: 100, y: 200 })

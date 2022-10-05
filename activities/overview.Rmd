@@ -1086,7 +1086,9 @@ line solution is possible using `map()`.
 
 ### October 5, 2022
 
+1. Exercise review 4.1
 1. In-Class Demo 4.2
+1. Discussion
 1. In-Class Exercise 4.2
 
 ---
@@ -1094,6 +1096,8 @@ line solution is possible using `map()`.
 ### Announcements
 
 1. Problem set 1 solutions are online, and problem set 2 is posted.
+1. I will clap three times when I need the discussions to end / attention to
+return to lecture.
 
 ---
 
@@ -1181,6 +1185,19 @@ JS files. Any discussion can go in JS comments or HTML paragraphs.
 ### In-Class Demo [4.2]
 
 * We will work through [Modifying Selections] together
+
+* I've uploaded a starter document here: https://tinyurl.com/4sampdzj
+
+---
+
+### Discussion
+
+With others at your table, discuss any (or all) of the following prompts for
+6 - 8 minutes.
+
+* What originally motivated you to learn data visualization?
+* Which of your personal values are reflected in your visualization interests?
+* How might learning javascript or D3 relate to these original motivations / values?
 
 ---
 
