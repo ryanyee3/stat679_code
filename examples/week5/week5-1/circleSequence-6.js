@@ -8,15 +8,13 @@ d3.select("svg")
   .attrs({
     r: 10,
     cx: d => (d + 1) * 50,
-    cy: 100,
+    cy: 100
   })
 
 circles = circles.concat([10, 11, 12])
-let circ = d3.select("svg")
+d3.select("svg")
   .selectAll("circle")
-  .data(circles)
-
-circ.enter()
+  .data(circles).enter()
   .append("circle")
   .attrs({
     cx: d => (d + 1) * 50,
@@ -25,4 +23,6 @@ circ.enter()
     fill: "red"
   })
 
-circ.attrs({ fill: "red" })
+d3.select("svg")
+  .selectAll("circle")
+  .attrs({ fill: "red" })
