@@ -7,8 +7,7 @@ function visualize(data) {
 }
 
 function initialize(data, scales) {
-  d3.select("svg")
-    .selectAll("circle")
+  d3.select("svg").selectAll("circle")
     .data(data, d => d.country).enter()
     .append("circle")
     .attrs({
@@ -68,17 +67,7 @@ function make_scales(data) {
   }
 }
 
-function parse_row(d) {
-  return {
-    country: d.country,
-    continent: d.continent,
-    year: +d.year,
-    lpop: +d.lpop,
-    life_expectancy: +d.life_expectancy
-  }
-}
-
 let year = 1965,
   continents = ["Americas", "Europe", "Africa", "Asia", "Oceania"];
-d3.csv("gapminder.csv", parse_row)
+d3.csv("gapminder.csv", d3.autoType)
   .then(visualize);
