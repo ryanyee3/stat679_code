@@ -20,7 +20,8 @@ d3.select("svg")
       .attrs({
         r: 10,
         cx: d => (d + 1) * 50,
-        cy: 100
+        cy: 100,
+        fill: "red"
       }),
     update => update.attr("fill", "blue")
   )
