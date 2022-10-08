@@ -43,7 +43,7 @@ function make_scales(data) {
   return {
     y: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.life_expectancy)))
-         .range([0, 500]),
+         .range([500, 0]),
     x: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.lpop)))
          .range([0, 700]),

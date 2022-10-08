@@ -60,7 +60,7 @@ function make_scales(data) {
          .range([0, 700]),
     y: d3.scaleLinear()
          .domain(d3.extent(data.map(d => d.life_expectancy)))
-         .range([0, 500]),
+         .range([500, 0]),
     fill: d3.scaleOrdinal()
       .domain([... new Set(data.map(d => d.continent))])
       .range(d3.schemeSet2)
