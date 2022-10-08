@@ -17,26 +17,25 @@ function initialize(data, scales) {
       cy: d => scales.y(d.Rotten_Tomatoes_Rating),
       fill: d => scales.fill(d.genre)
     })
-    .on("mouseover", (ev, d) => mouseover(ev, d))
-    .on("mouseout", (ev, d) => mouseout(ev, d))
 
-  let voronoi = d3.Delaunay
-    .from(data, d => scales.x(d.IMDB_Rating), d => scales.y(d.Rotten_Tomatoes_Rating))
-    .voronoi([0, 0, 900, 500]);
+  let delaunay = d3.Delaunay.from(data, d => scales.x(d.IMDB_Rating), d => scales.y(d.Rotten_Tomatoes_Rating)),
+    voronoi = delaunay.voronoi([0, 0, 900, 500]);
 
   d3.select("#voronoi")
     .append("path")
-    .attr("d", voronoi.render());
+    .attr("d", voronoi.render())
+    .on("mousemove", (ev) => mouseover(ev, data, delaunay, scales))
 
   d3.select("#tooltip").append("text")
   annotations(scales)
 }
 
-function mouseover(ev, d) {
+function mouseover(ev, data, delaunay, scales) {
+  let ix = delaunay.find(ev.pageX, ev.pageY);
   d3.select("#tooltip")
-    .attr("transform", `translate(${ev.pageX}, ${ev.pageY})`)
+    .attr("transform", `translate(${scales.x(data[ix].IMDB_Rating)}, ${scales.y(data[ix].Rotten_Tomatoes_Rating)})`)
     .select("text")
-    .text(d.title)
+    .text(data[ix].Title);
 
   d3.select(ev.target).attr("class", "highlighted")
 }
