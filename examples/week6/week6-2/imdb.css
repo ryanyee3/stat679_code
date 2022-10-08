@@ -34,6 +34,11 @@
   font-family: "Nanum Gothic";
 }
 
+#voronoi path {
+  stroke-width: 1px;
+  stroke: #d8d8d8;
+}
+
 .tg  {table-layout: fixed; width: 500px;}
 .tg td{border-color:black;border-style:solid;font-family:Arial, sans-serif;font-size:14px;
   overflow:hidden;padding:10px 5px;word-break:normal;}

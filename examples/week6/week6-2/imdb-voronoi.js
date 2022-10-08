@@ -1,5 +1,6 @@
 
 function visualize(data) {
+  console.log(data)
   data = data.filter(d => d.IMDB_Rating > 0 & d.Rotten_Tomatoes_Rating > 0);
   let scales = make_scales(data)
   initialize(data, scales);
@@ -18,6 +19,14 @@ function initialize(data, scales) {
     })
     .on("mouseover", (ev, d) => mouseover(ev, d))
     .on("mouseout", (ev, d) => mouseout(ev, d))
+
+  let voronoi = d3.Delaunay
+    .from(data, d => scales.x(d.IMDB_Rating), d => scales.y(d.Rotten_Tomatoes_Rating))
+    .voronoi([0, 0, 900, 500]);
+
+  d3.select("#voronoi")
+    .append("path")
+    .attr("d", voronoi.render());
 
   d3.select("#tooltip").append("text")
   annotations(scales)
@@ -78,5 +87,5 @@ let width = 700,
   height = 500,
   genres = ["Drama"]
   margins = {left: 60, right: 60, top: 60, bottom: 60};
-d3.csv("movies.csv", parse_row)
+d3.csv("movies.csv", d3.autoType)
   .then(visualize);
