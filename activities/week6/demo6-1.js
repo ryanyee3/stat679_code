@@ -7,6 +7,7 @@ function update() {
   circle_ages.push({age: 0, id: id});
   circle_ages = circle_ages.filter(d => d.age < 5)
   id += 1;
+  console.log(circle_ages)
 
   let selection = d3.select("svg")
     .selectAll("circle")
