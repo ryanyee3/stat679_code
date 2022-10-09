@@ -1179,35 +1179,38 @@ clicked. Specifically, the function below takes an initial array `x` and creates
 a new array that removes the first element and adds a new one to the end. Using
 D3’s generate update pattern, write a function that updates the visualization
 from [Simple bar chart] every time that `update_data()` is called. New bars
-should be entered from the left of the Canvas, and all bars should move to the
-right to make space for them. Once a bar can no longer be displayed on the page,
-it should be removed.
+should be entered from the left, exited from the right, and transitioned after
+each click. Your solution should look (roughly) like [this
+example](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/simple_bars_example.mov?raw=true).
 
     ```{d3, eval = FALSE}
-    let generator = d3.random();
-    let x = generator(20);
-    
-    function update_data(x) {
-      x.push(generator()) // add new element to end
-      return x.slice(1) // remove first one
+    let bar_ages = [],
+    generator = d3.randomUniform(0, 500),
+    id = 0;
+  
+    function update() {
+      bar_ages = bar_ages.map(d => { return {id: d.id, age: d.age + 1, height: d.height }})
+      bar_ages.push({age: 0, height: generator(), id: id});
+      bar_ages = bar_ages.filter(d => d.age < 5)
+      id += 1;
     }
     ```
     
 1. [Marching Circles] This problem gives practice using D3's general update
-pattern. The code at [this link](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-1-starter.js)
+pattern. The code at [this
+link](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-1-starter.js)
 updates an array of objects each time a button is clicked. You will build a
 visualization that draws circles whose positions are updated each time the
 underlying data changes.
-
-  a. What does the `update` function do? Give a brief explanation of each line.
-  b. Using the general update pattern, create a drawing of circles where the
-  x-coordinate position encodes the age (in terms of button clicks) of each
-  circle. Older circles should be on the right.
-  c. Exit all circles whose age is larger than 5.
-  d. Modify your implementation so that circles enter from the top left corner
-  and exit to the bottom right.
-  e. Modify your implementation so that the y-coordinate positions of the
-  circles move along a sine curve.
+    a. What does the `update` function do? Give a brief explanation of each line.
+    b. Using the general update pattern, create a drawing of circles where the
+    x-coordinate position encodes the age (in terms of button clicks) of each
+    circle. Older circles should be on the right.
+    c. Exit all circles whose age is larger than 5.
+    d. Modify your implementation so that circles enter from the top left corner
+    and exit to the bottom right.
+    e. Modify your implementation so that the y-coordinate positions of the
+    circles move along a sine curve.
 
 1. [Colorful squares] The code below draws a square on an otherwise blank
 canvas.
@@ -1287,16 +1290,15 @@ goal in this exercise is to provide a version that responds to user queries.
     your submission, include a short video of the interactivity, the code you
     used, and a brief explanation of the logic behind your implementation.
   
-1. [General Update Pattern] The general update pattern is one of the central,
-but also most complex, concepts relevant to D3 programming. This exercise asks
-you to reflect on your understanding of this concept.
-  
-  a. Explain one situation where the general update pattern might be used. Your
-  application may be to an animation or interactive visualization, for example.
-  Be as specific as possible.
-  b. Sketch the pseudocode that implements a version of the general update pattern
-  that could potentially be used in the example you outlined in part (a). Give
-  an explanation of the main parts of your pseudocode.
+1. [General Update Pattern Reflection] The general update pattern is one of the
+central, but also most complex, concepts relevant to D3 programming. This
+exercise asks you to reflect on your understanding of this concept.
+    a. Explain one situation where the general update pattern might be used.
+    Your application may be to an animation or interactive visualization, for
+    example. Be as specific as possible.
+    b. Sketch the pseudocode that implements a version of the general update
+    pattern that could potentially be used in the example you outlined in part
+    (a). Give an explanation of the main parts of your pseudocode.
   
 1. [Random Walk with Links] This problem gives practice with the general update
 pattern in an animation inspired by [this
@@ -1304,20 +1306,18 @@ example](https://observablehq.com/@mbostock/connected-particles-iii). The code
 at [this link](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-2-starter.js) creates a data structure that stores the locations and velocities
 of all the circles. You will add SVG circle and line elements that reflect
 updates to this data structure.
-
-  a. What does the `update()` function do? Be specific.
-  b. Append the circles in their initial state. The result should be a static
-  plot of circles at the `x` and `y` coordinate positions specified by
-  `circles`.
-  c. Animate the circles by calling the `update` function repeatedly. Their
-  locations should reflect the changes in the underlying `x` and `y` property
-  values.
-  d. Create links between pairs of circles that are within a prespecified
-  distance of one another. Make sure to enter, exit, and update the paths to
-  reflect the motion of the circles. Hint: For paths with only two endpoints,
-  you may use the [`line` SVG element](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line).
-  e. What would happen if you did not exit the lines when the circles drifted
-  too far apart? Try this in your visualization and explain what you see.
+    a. What does the `update()` function do? Be specific.
+    b. Append the circles in their initial state. The result should be a static
+    plot of circles at the `x` and `y` coordinate positions specified by
+    `circles`.
+    c. Animate the circles by calling the `update` function repeatedly. Their
+    locations should reflect the changes in the underlying `x` and `y` property
+    values.
+    d. Create links between pairs of circles that are within a prespecified
+    distance of one another. Make sure to enter, exit, and update the paths to
+    reflect the motion of the circles. Hint: For paths with only two endpoints, you may use the [`line` SVG element](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line).
+    e. What would happen if you did not exit the lines when the circles drifted
+    too far apart? Try this in your visualization and explain what you see.
   
 1. [Interactive Census] The code below creates a bar chart of US female
 population by age groups from the 1900 census. The x-axis is age group, and the
