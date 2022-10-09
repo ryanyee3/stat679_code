@@ -1205,3 +1205,174 @@ With others at your table, discuss any (or all) of the following prompts for
 
 * Work through [Debugging JS Code] parts (b - d) in the exercises sheet. Discuss
 with your team, but submit individually.
+
+---
+
+### October 10, 2022
+
+1. Exercise review 4.2
+1. In-Class Demo 5.1
+1. In-Class Exercise 5.1
+
+---
+
+### Announcements
+
+1. Project Milestone 1 is due on Friday (10/14)
+1. Midterm 2 will be held on 10/24. An example midterm + solutions from STAT 479
+has been posted. The content will be slightly different (to match our topics),
+but the format will be similar.
+
+---
+
+### Exercise Review 
+
+Goal: I want to try to get the average of the “temp_max” array in
+“forecast” below.
+
+Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2a.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2a.js) file. This is the part that I think is
+relevant,
+```{r, eval = FALSE}
+let forecast = {temp_max: [22, 24, 28, 21], temp_min: [15, 14, 21, 24]}
+d3.mean(forecast[0])
+```
+Problem: The console prints the error message,
+```
+ Uncaught TypeError: t is not iterable at t.mean (d3-array@3:2:13861) at in_class4-2a.js:3:4 
+```
+
+---
+
+### Exercise Review (part a, not required)
+
+Solution: To index into objects, we need to use a key.
+
+```{r, eval = FALSE}
+d3.mean(forecast["temp_max"])
+```
+
+---
+
+### Exercise Review (part b)
+
+b. Goal: I want to change the color of all the circles on my [HTML page](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.html) to blue. 
+
+Attempt:
+Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.js) file. This is the part that I think is relevant,
+```{r, eval = FALSE}
+d3.select("circle")
+  .attr("fill", "blue")
+```
+Problem: Only the color of the one circle [is changing](https://github.com/krisrs1128/stat679_code/blob/main/exercises/figure/d3_bugs.png).
+
+---
+
+### Exercise Review (part b)
+
+Solution: If there are multiple matches, `d3.select` will only select the first
+element. We need to use `d3.selectAll`.
+
+```{r, eval = FALSE}
+d3.selectAll("circle")
+  .attr("fill", "blue")
+```
+
+---
+
+### Exercise Review (part c)
+
+Goal: I want to change the color of all the class “highlighted” squares.
+
+Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2c.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2c.js) file. This is the part that I think is relevant,
+```{r, eval = FALSE}
+d3.selectAll("highlighted")
+  .attr("fill", "red")
+```
+Problem: Nothing is changing.
+
+---
+
+### Exercise Review (part c)
+
+Solution: Class selectors need to be preceded by a period. The code below would
+work,
+
+```{r, eval = FALSE}
+d3.selectAll(".highlighted")
+  .attr("fill", "red")
+```
+
+---
+
+### Exercise Review (part d)
+
+Goal: I want to move the circle to location 100, 200 on the SVG canvas.
+    
+Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.js) file. This is the part that I think is relevant,
+```{r, eval = FALSE}
+d3.select("#my_circle")
+  .attrs({ x: 100, y: 200 })
+```
+Problem: It is not moving.
+
+---
+
+### Exercise Review (part d)
+
+Solution: The position of SVG circles is set by attributes called `cx` and `cy`, not `x`
+and `y`.
+
+```{r, eval = FALSE}
+d3.select("#my_circle")
+  .attrs({ cx: 100, cy: 200 })
+```
+
+---
+
+### In-Class Demo [5.1]
+
+* We will work through [Marching Circles] together
+
+* I've uploaded a starter document here: https://tinyurl.com/5m6h6xch
+
+
+---
+
+### In-Class Exercise [5.1]
+
+* Work through [General Update Pattern Reflection] in the exercises sheet.
+Discuss with your team, but submit individually.
+
+---
+
+### October 12, 2022
+
+1. Exercise review 5.1
+1. In-Class Demo 5.2
+1. In-Class Exercise 5.2
+
+---
+
+### Announcements
+
+---
+
+### Exercise Review
+
+---
+
+### In-Class Demo [5.2]
+
+* We will work through [Random Walk with Links] together
+
+* I've uploaded a starter document here: https://tinyurl.com/rn9rpwkt
+
+
+---
+
+### In-Class Exercise [5.2]
+
+* Work through [Marching Circles] part (e) in the exercises sheet. Discuss with
+your team, but submit individually.
+
+---

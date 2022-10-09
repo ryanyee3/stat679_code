@@ -1209,8 +1209,9 @@ underlying data changes.
     c. Exit all circles whose age is larger than 5.
     d. Modify your implementation so that circles enter from the top left corner
     and exit to the bottom right.
-    e. Modify your implementation so that the y-coordinate positions of the
-    circles move along a sine curve.
+    e. Modify your implementation so that (i) circles are only exited after
+    their age exceeds 10 and (ii) the y-coordinate positions of the circles move
+    along a sine curve.
 
 1. [Colorful squares] The code below draws a square on an otherwise blank
 canvas.
@@ -1299,6 +1300,8 @@ exercise asks you to reflect on your understanding of this concept.
     b. Sketch the pseudocode that implements a version of the general update
     pattern that could potentially be used in the example you outlined in part
     (a). Give an explanation of the main parts of your pseudocode.
+    c. What is one aspect of D3's general update pattern that you think might be
+    most confusing to your peers?
   
 1. [Random Walk with Links] This problem gives practice with the general update
 pattern in an animation inspired by [this
