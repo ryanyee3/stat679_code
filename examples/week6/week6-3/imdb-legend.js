@@ -69,18 +69,9 @@ function make_scales(data) {
   }
 }
 
-function parse_row(d) {
-  return {
-    title: d.Title,
-    imdb: +d.IMDB_Rating,
-    rotten: +d.Rotten_Tomatoes_Rating,
-    genre: d.Genre_Group
-  }
-}
-
 let width = 700,
   height = 500,
   genres = ["Drama"]
   margins = {left: 60, right: 60, top: 60, bottom: 60};
-d3.csv("movies.csv", parse_row)
+d3.csv("movies.csv", d3.autoType)
   .then(visualize);

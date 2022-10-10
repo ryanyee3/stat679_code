@@ -9,7 +9,7 @@ function visualize(data) {
 function initialize(data, scales) {
   d3.select("#circles")
     .selectAll("circle")
-    .data(data, d => d.title).enter()
+    .data(data, d => d.Title).enter()
     .append("circle")
     .attrs({
       class: "plain",

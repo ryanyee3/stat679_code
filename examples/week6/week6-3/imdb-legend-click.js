@@ -1,6 +1,6 @@
 
 function visualize(data) {
-  data = data.filter(d => d.imdb > 0 & d.rotten > 0);
+  data = data.filter(d => d.IMDB_Rating > 0 & d.Rotten_Tomatoes_Rating > 0);
   let scales = make_scales(data)
   initialize(data, scales);
 }
@@ -8,14 +8,14 @@ function visualize(data) {
 function initialize(data, scales) {
   d3.select("#circles")
     .selectAll("circle")
-    .data(data, d => d.title).enter()
+    .data(data, d => d.Title).enter()
     .append("circle")
     .attrs({
       opacity: 1,
       r: 2,
-      cx: d => scales.x(d.imdb),
-      cy: d => scales.y(d.rotten),
-      fill: d => scales.fill(d.genre)
+      cx: d => scales.x(d.IMDB_Rating),
+      cy: d => scales.y(d.Rotten_Tomatoes_Rating),
+      fill: d => scales.fill(d.Genre)
     })
 
   annotations(scales)
@@ -52,8 +52,8 @@ function update_view() {
     .transition()
     .duration(500)
     .attrs({
-      opacity: d => selected.indexOf(d.genre) == -1 ? 0.4 : 1,
-      r: d => selected.indexOf(d.genre) == -1 ? 1 : 2
+      opacity: d => selected.indexOf(d.Genre) == -1 ? 0.4 : 1,
+      r: d => selected.indexOf(d.Genre) == -1 ? 1 : 2
     })
 
   d3.select(".legendCells")
@@ -90,23 +90,14 @@ function annotations(scales) {
 function make_scales(data) {
   return {
     x: d3.scaleLinear()
-         .domain(d3.extent(data.map(d => d.imdb)))
+         .domain(d3.extent(data.map(d => d.IMDB_Rating)))
          .range([margins.left, 0.7 * width - margins.right]),
     y: d3.scaleLinear()
-         .domain(d3.extent(data.map(d => d.rotten)))
+         .domain(d3.extent(data.map(d => d.Rotten_Tomatoes_Rating)))
          .range([height - margins.bottom, margins.top]),
     fill: d3.scaleOrdinal()
-      .domain([... new Set(data.map(d => d.genre))])
+      .domain([... new Set(data.map(d => d.Genre))])
       .range(d3.schemeSet3)
-  }
-}
-
-function parse_row(d) {
-  return {
-    title: d.Title,
-    imdb: +d.IMDB_Rating,
-    rotten: +d.Rotten_Tomatoes_Rating,
-    genre: d.Genre_Group
   }
 }
 
@@ -115,5 +106,5 @@ let width = 700,
   selected = ["Drama", "Other", "Musical", "Comedy", "Action", "Romantic Comedy",
               "Adventure", "Thriller/Suspense", "Horror"],
   margins = {left: 60, right: 60, top: 60, bottom: 60};
-d3.csv("movies.csv", parse_row)
+d3.csv("movies.csv", d3.autoType)
   .then(visualize);

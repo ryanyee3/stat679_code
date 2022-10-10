@@ -8,7 +8,7 @@ function visualize(data) {
 function initialize(data, scales) {
   d3.select("#circles")
     .selectAll("circle")
-    .data(data, d => d.title).enter()
+    .data(data, d => d.Title).enter()
     .append("circle")
     .attrs({
       class: "plain",
@@ -27,7 +27,7 @@ function mouseover(ev, d) {
   d3.select("#tooltip")
     .attr("transform", `translate(${ev.pageX}, ${ev.pageY})`)
     .select("text")
-    .text(d.title)
+    .text(d.Title)
 
   d3.select(ev.target).attr("class", "highlighted")
 }
