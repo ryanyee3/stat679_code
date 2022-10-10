@@ -1,7 +1,7 @@
 
 function visualize(data_list) {
   let [data, stats] = data_list;
-  data = data.filter(d => d.imdb > 0 & d.rotten > 0);
+  data = data.filter(d => d.IMDB_Rating > 0 & d.Rotten_Tomatoes_Rating > 0);
   let scales = make_scales(data, stats)
   initialize(data, stats, scales);
 }
@@ -9,14 +9,14 @@ function visualize(data_list) {
 function initialize(data, stats, scales) {
   d3.select("#circles")
     .selectAll("circle")
-    .data(data, d => d.title).enter()
+    .data(data, d => d.Title).enter()
     .append("circle")
     .attrs({
       opacity: 1,
       r: 2,
-      cx: d => scales.x1(d.imdb),
-      cy: d => scales.y1(d.rotten),
-      fill: d => scales.fill(d.genre)
+      cx: d => scales.x1(d.IMDB_Rating),
+      cy: d => scales.y1(d.Rotten_Tomatoes_Rating),
+      fill: d => scales.fill(d.Genre)
     })
 
   d3.select("#bars")
@@ -26,15 +26,15 @@ function initialize(data, stats, scales) {
     .attrs({
       x: width / 2 + margins.pad + margins.text_offset,
       width: d => scales.x2(d.n),
-      y: d => scales.y2(d.genre),
+      y: d => scales.y2(d.Genre),
       height: scales.y2.bandwidth(),
-      fill: d => scales.fill(d.genre)
+      fill: d => scales.fill(d.Genre)
     })
-    .on("click", (ev, d) => toggle_selection(ev, d.genre))
+    .on("click", (ev, d) => toggle_selection(ev, d.Genre))
 
   d3.select("#bar_labels")
     .selectAll("text")
-    .data(stats.map(d => d.genre)).enter()
+    .data(stats.map(d => d.Genre)).enter()
     .append("text")
     .attrs({
       x: width / 2 + margins.pad,
@@ -62,13 +62,13 @@ function update_view() {
     .transition()
     .duration(500)
     .attrs({
-      opacity: d => selected.indexOf(d.genre) == -1 ? 0.4 : 1,
-      r: d => selected.indexOf(d.genre) == -1 ? 1 : 2
+      opacity: d => selected.indexOf(d.Genre) == -1 ? 0.4 : 1,
+      r: d => selected.indexOf(d.Genre) == -1 ? 1 : 2
     })
 
   d3.select("#bars")
     .selectAll("rect")
-    .attr("fill-opacity", d => selected.indexOf(d.genre) == -1 ? 0.4 : 1)
+    .attr("fill-opacity", d => selected.indexOf(d.Genre) == -1 ? 0.4 : 1)
 
   d3.select("#bar_labels")
     .selectAll("text")
@@ -101,36 +101,22 @@ function annotations(scales) {
 function make_scales(data, stats) {
   return {
     x1: d3.scaleLinear()
-         .domain(d3.extent(data.map(d => d.imdb)))
+         .domain(d3.extent(data.map(d => d.IMDB_Rating)))
          .range([margins.left, 0.5 * width - margins.pad / 2]),
     y1: d3.scaleLinear()
-         .domain(d3.extent(data.map(d => d.rotten)))
+         .domain(d3.extent(data.map(d => d.Rotten_Tomatoes_Rating)))
          .range([height - margins.bottom, margins.top]),
     x2: d3.scaleLinear()
          .domain([0, d3.max(stats.map(d => d.n))])
          .range([0, .5 * width - margins.right - margins.text_offset]),
     y2: d3.scaleBand()
-          .domain([... new Set(stats.map(d => d.genre))])
+          .domain([... new Set(stats.map(d => d.Genre))])
           .range([height / 3, margins.top]),
     fill: d3.scaleOrdinal()
-      .domain([... new Set(data.map(d => d.genre))])
+      .domain([... new Set(data.map(d => d.Genre))])
       .range(d3.schemeSet3)
   }
 }
-
-function parse_movies(d) {
-  return {
-    title: d.Title,
-    imdb: +d.IMDB_Rating,
-    rotten: +d.Rotten_Tomatoes_Rating,
-    genre: d.Genre_Group
-  }
-}
-
-function parse_stats(d) {
-  return { genre: d.Genre_Group, n: +d.n }
-}
-
 
 let width = 700,
   height = 500,
@@ -139,6 +125,6 @@ let width = 700,
   margins = {left: 60, right: 60, top: 60, bottom: 60, pad: 60, text_offset: 5};
 
   Promise.all([
-      d3.csv("movies.csv", parse_movies),
-      d3.csv("stats.csv", parse_stats),
+      d3.csv("movies.csv", d3.autoType),
+      d3.csv("stats.csv", d3.autoType),
   ]).then(visualize)

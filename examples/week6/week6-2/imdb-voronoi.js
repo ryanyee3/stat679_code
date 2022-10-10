@@ -1,6 +1,5 @@
 
 function visualize(data) {
-  console.log(data)
   data = data.filter(d => d.IMDB_Rating > 0 & d.Rotten_Tomatoes_Rating > 0);
   let scales = make_scales(data)
   initialize(data, scales);
@@ -21,11 +20,13 @@ function initialize(data, scales) {
   let delaunay = d3.Delaunay.from(data, d => scales.x(d.IMDB_Rating), d => scales.y(d.Rotten_Tomatoes_Rating)),
     voronoi = delaunay.voronoi([0, 0, 900, 500]);
 
+  // this is just to draw the background neighborhood. We could remove it if we
+  // just want to implement the delaunay-based interactivity.
   d3.select("#voronoi")
     .append("path")
     .attr("d", voronoi.render())
-    .on("mousemove", (ev) => mouseover(ev, data, delaunay, scales))
 
+  d3.select("svg").on("mousemove", (ev) => mouseover(ev, data, delaunay, scales))
   d3.select("#tooltip").append("text")
   annotations(scales)
 }
@@ -37,12 +38,9 @@ function mouseover(ev, data, delaunay, scales) {
     .select("text")
     .text(data[ix].Title);
 
-  d3.select(ev.target).attr("class", "highlighted")
-}
-
-function mouseout(ev, d) {
-  d3.select("#tooltip").select("text").text("")
-  d3.select(ev.target).attr("class", "plain")
+  d3.select("#circles")
+    .selectAll("circle")
+    .attr("class", d => d.Title == data[ix].Title ? "highlighted" : "plain")
 }
 
 function annotations(scales) {

@@ -83,10 +83,6 @@ function initialize(data, scales) {
   }
 }
 
-function update_views() {
-
-}
-
 function make_scales(data) {
   return {
     x0: d3.scaleLinear()
@@ -107,16 +103,6 @@ function make_scales(data) {
   }
 }
 
-function parse_data(d) {
-  return {
-    species: d.species,
-    bill_depth: +d.bill_depth_mm,
-    bill_length: +d.bill_length_mm,
-    body_mass: +d.body_mass_g,
-    flipper_length: +d.flipper_length_mm,
-  }
-}
-
 function extent(data, variable) {
   return d3.extent(data.map(d => d[variable]))
 }
@@ -126,5 +112,5 @@ let height = 500,
     cur_samples = d3.range(333),
     brushes;
 
-d3.csv("penguins.csv", parse_data)
+d3.csv("penguins.csv", d3.autoType)
   .then(visualize)
