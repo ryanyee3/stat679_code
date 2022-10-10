@@ -14,7 +14,7 @@ opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/week-/"
+  fig.path = "stat679_notes/assets/week7-2/"
   )
 ```
 ```{r}
@@ -65,7 +65,7 @@ region_totals <- tourism %>%
   summarise(total = sum(Trips)) %>%
   arrange(-total)
 
-eutpoints <- seq(0, 1000, by = 101)
+cutpoints <- seq(0, 1000, by = 101)
 tourism %>%
   filter(Region %in% region_totals$Region[1:16]) %>%
   ggplot() +

@@ -14,7 +14,7 @@ opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/week-/"
+  fig.path = "stat679_notes/assets/week7-4/"
   )
 ```
 
@@ -125,7 +125,10 @@ map + inset_element(legend, 0, 0, .3, .3, align_to = "full")
 1. What if we have the spatial data measured over time? It is common to use
 faceting, with one facet per timepoint. However, this approach does not scale
 well when there are many timepoints of interest. Some have advocated for the use
-of “time cubes,” where a 2D map is repeated along a third time axis. In this
-class though, we will steer away from 3D visualization. Instead, we will focus
-on approaches that leverage interactivity, specifically using animation or
+of [time cubes](https://aviz.fr/~bbach/spacetimecubes/Bach2014spacetimecubes.pdf), where a 2D map is repeated along a third time axis. 
+
+<img src="https://github.com/krisrs1128/stat679_code/raw/main/examples/week7/week7-3/time_cube.png" width=500/>
+
+In this class though, we will steer away from 3D visualization. Instead, we will
+focus on approaches that leverage interactivity, specifically using animation or
 linked views. We’ll review some approaches next week.
