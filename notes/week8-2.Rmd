@@ -18,7 +18,7 @@ opts_chunk$set(
   )
 ```
 
-1. Temporal data often have an information density that makes interactivity
+1. Temporal data often have high information density, making interactivity
 worthwhile. In these notes, we’ll review some of the general principles of
 temporal interactivity discussed in the reading before illustrating with a few
 examples.
@@ -28,6 +28,8 @@ Norman’s “gulfs.” The gulf of interaction refers to the mental effort requ
 to go from a visual query (in our heads) to a physical interaction (on the
 screen). The gulf of evaluation refers to the reader’s attempt to understand
 what has happened when the interface has changed.
+
+  <img src="https://github.com/krisrs1128/stat679_code/raw/main/examples/week8/week8-2/normans_gulfs.png" width=700/>
 
 1. Users need to be able to traverse both gulfs easily. If there is too much
 difficulty in either defining the query or making sense of the result, the
@@ -52,12 +54,18 @@ context of the overall time series shape.
 
 	[Example with focus + context time series]
 	
-1. Finally, it is also common to use linked brushing to define queries based on
-attributes of the time series. For example, we can query time series based on
-their overall trend. The histogram below gives the slopes across all the series.
-Brushing the right hand side of the series highlights those with the largest
-increases in slope.
+1. It is also common to use linked brushing to define queries based on
+attributes of the time series. This was used in our earlier bike sharing
+example, where we linked daily bike demand with the day's weather..
+
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week6/week6-4/bike.html" width=700 height=320></iframe>
+
+1. Finally, we can query series based on summaries of each series. For example,
+we can query time series based on their overall trend. The histogram below gives
+the slopes across all the series. Brushing the right hand side of the series
+highlights those with the largest increases in slope.
 
 1. Slope is just one statistic that can be used to navigate a collection of time
-series. There is a small literature on summary statistics for time series. A
-useful R package for extracting these statistics is the “feasts” package.
+series. There is a small literature on summary statistics for time series.
+[`feasts`](https://feasts.tidyverts.org/) is a useful R package for extracting
+these kinds of statistics.
