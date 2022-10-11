@@ -22,41 +22,90 @@ opts_chunk$set(
 earlier notes on temporal visualization. For a pure static visualization, these
 methods are not necessary — the R approach can give satisfactory results more
 easily. However, if we ever want to customize the appearance or interactivity
-beyond what is possible in the R packages we discussed, then these examples can
-serve as a starting point.
+beyond what is possible in the R packages discussed earlier, then these examples
+can serve as a starting point.
 
-1. Let’s begin with the basic line plot. We had given an example in these notes,
-but we swept important details about d3’s path generators under the rug.
-
-1. Remember that in these notes, we had manually generated paths using strings
-like`M 20 20 L 5 5 L 10 10`. This means to start a path at pixel coordinates
-(20, 20), move to the right and down by 5 units, and then move in the same
-directions again by 10 units.
+1. Let’s begin with the basic line plot. We have had a few examples before [[1](https://krisrs1128.github.io/stat679_notes/2022/06/01/week4-3.html),
+[2](https://krisrs1128.github.io/stat679_notes/2022/06/01/week6-4.html)], but we swept important details about D3’s path generators under the rug.
+Remember that in the first of those examples, we had manually generated paths
+using strings like`M 100 100 L 200 105 L 300 115 `. This means to start a path at pixel
+coordinates (100, 100), move to the right and down by (200, 105) pixels, and so on.
 
 1. To map data to these types of coordinates, we can use an SVG path generator.
 This is a function that converts an array of javascript objects to SVG path
-strings like the one above. This is accomplished by using `d3.line()` and
-supplying functions that give the `x` and `y` pixel coordinates given a single
-object from the array. The `x` and `y` functions are usually light wrappers of
+strings like the one above. This is accomplished by giving `d3.line()` functions
+that output the `x` and `y` pixel coordinates from objects representing
+individual timepoints. The `x` and `y` functions are usually light wrappers of
 scales that map the raw data into pixel coordinates.
 
-1. For example, to regenerate the lynx plot, we can use the code below.
+    ```{r, eval = FALSE}
+    d3.line()
+      .x([helper to get x pixel coordinate])
+      .y([helper to get y pixel coordinate])
+    ```
 
+1. For example, to regenerate the lynx plot, we first store the time series data
+into an array of objects,
+
+    ```{r, eval = FALSE}
+    let data = [{Year: ..., Lynx: ...}, ...] 
+    ```
+    
+    define a temporal scale for the x-axis,
+    
+    ```{r, eval = FALSE}
+     d3.scaleTime()
+       .domain(x_extent)
+       .range([margins.left, width - margins.right]),
+    ```
+        
+    and finally apply a path generator defined usign `d3.line()`
+
+    ```{r, eval = FALSE}
+    function draw_line(data, scales) {
+      path_generator = d3.line()
+        .x(d => scales.x(d.Year))
+        .y(d => scales.y(d.Lynx));
+    
+      d3.select("#line")
+        .selectAll("path")
+        .data([data]).enter()
+        .append("path")
+        .attr("d", path_generator);
+    }
+    ```
+    which together with some axis annotation functions creates this figure,
+    
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-1/line.html" height=500 width=800></iframe>
+  
 1. If we want to draw a collection of paths, we can use an array of arrays. Each
 element of the outer collection provides a path; each element within the inner
-arrays gives one timepoint. For example, the code below generates the
-electricity visualization from before.
+arrays gives one timepoint.
+
+    ```{r, eval = FALSE}
+    [
+      [{t1, value1}, {t2, value2}, ...] // array for first line
+      [{t2, value2}, {t2, value2}, ...] // array for second line
+      ...
+    ]
+    ```
+
+1. For example, suppose we want to create a visualization of daily electricity
+demand over several months. We want each line to correspond to a single 24 hour
+period, and will have a few dozen lines.
+
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-1/electricity.html"></iframe>
 
 1. At this point, it’s not hard to add in tooltips using mouseovers.
 
-1. Path generators are just one example of a d3 function that maps raw data to
+1. Path generators are just one example of a D3 function that maps raw data to
 more complex visual marks. For example, to create a stacked time series
 visualization, we can use `d3.stackArea()`
 
 1. Using an alternative centering, the same area generator can be used to create
-a d3 streamgraph.
+a D3 streamgraph.
 
-1. Just to show how flexible d3 can be, let’s see how we can create two other
+1. Just to show how flexible D3 can be, let’s see how we can create two other
 types of temporal visualizations from scratch: gantt charts and bump charts.
 
 1. Gantt charts encode the start and end of discrete temporal events. They are

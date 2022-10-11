@@ -13,58 +13,105 @@ output:
     static visualization, these methods are not necessary — the R
     approach can give satisfactory results more easily. However, if we
     ever want to customize the appearance or interactivity beyond what
-    is possible in the R packages we discussed, then these examples can
-    serve as a starting point.
+    is possible in the R packages discussed earlier, then these examples
+    can serve as a starting point.
 
-2.  Let’s begin with the basic line plot. We had given an example in
-    these notes, but we swept important details about d3’s path
-    generators under the rug.
+2.  Let’s begin with the basic line plot. We have had a few examples
+    before
+    \[[1](https://krisrs1128.github.io/stat679_notes/2022/06/01/week4-3.html),
+    [2](https://krisrs1128.github.io/stat679_notes/2022/06/01/week6-4.html)\],
+    but we swept important details about D3’s path generators under the
+    rug. Remember that in the first of those examples, we had manually
+    generated paths using strings like`M 100 100 L 200 105 L 300 115`.
+    This means to start a path at pixel coordinates (100, 100), move to
+    the right and down by (200, 105) pixels, and so on.
 
-3.  Remember that in these notes, we had manually generated paths using
-    strings like`M 20 20 L 5 5 L 10 10`. This means to start a path at
-    pixel coordinates (20, 20), move to the right and down by 5 units,
-    and then move in the same directions again by 10 units.
-
-4.  To map data to these types of coordinates, we can use an SVG path
+3.  To map data to these types of coordinates, we can use an SVG path
     generator. This is a function that converts an array of javascript
     objects to SVG path strings like the one above. This is accomplished
-    by using `d3.line()` and supplying functions that give the `x` and
-    `y` pixel coordinates given a single object from the array. The `x`
+    by giving `d3.line()` functions that output the `x` and `y` pixel
+    coordinates from objects representing individual timepoints. The `x`
     and `y` functions are usually light wrappers of scales that map the
     raw data into pixel coordinates.
 
-5.  For example, to regenerate the lynx plot, we can use the code below.
+        d3.line()
+          .x([helper to get x pixel coordinate])
+          .y([helper to get y pixel coordinate])
 
-6.  If we want to draw a collection of paths, we can use an array of
+4.  For example, to regenerate the lynx plot, we first store the time
+    series data into an array of objects,
+
+        let data = [{Year: ..., Lynx: ...}, ...] 
+
+    define a temporal scale for the x-axis,
+
+           d3.scaleTime()
+             .domain(x_extent)
+             .range([margins.left, width - margins.right]),
+
+    and finally apply a path generator defined usign `d3.line()`
+
+        function draw_line(data, scales) {
+          path_generator = d3.line()
+            .x(d => scales.x(d.Year))
+            .y(d => scales.y(d.Lynx));
+
+          d3.select("#line")
+            .selectAll("path")
+            .data([data]).enter()
+            .append("path")
+            .attr("d", path_generator);
+        }
+
+    which together with some axis annotation functions creates this
+    figure,
+
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-1/line.html">
+</iframe>
+
+1.  If we want to draw a collection of paths, we can use an array of
     arrays. Each element of the outer collection provides a path; each
-    element within the inner arrays gives one timepoint. For example,
-    the code below generates the electricity visualization from before.
+    element within the inner arrays gives one timepoint.
 
-7.  At this point, it’s not hard to add in tooltips using mouseovers.
+        [
+          [{t1, value1}, {t2, value2}, ...] // first series array
+          [{t2, value2}, {t2, value2}, ...] // second series
+          ...
+        ]
 
-8.  Path generators are just one example of a d3 function that maps raw
+2.  For example, suppose we want to create a visualization of daily
+    electricity demand over several months. We want each line to
+    correspond to a single 24 hour period, and will have a few dozen
+    lines.
+
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-1/electricity.html">
+</iframe>
+
+1.  At this point, it’s not hard to add in tooltips using mouseovers.
+
+2.  Path generators are just one example of a D3 function that maps raw
     data to more complex visual marks. For example, to create a stacked
     time series visualization, we can use `d3.stackArea()`
 
-9.  Using an alternative centering, the same area generator can be used
-    to create a d3 streamgraph.
+3.  Using an alternative centering, the same area generator can be used
+    to create a D3 streamgraph.
 
-10. Just to show how flexible d3 can be, let’s see how we can create two
+4.  Just to show how flexible D3 can be, let’s see how we can create two
     other types of temporal visualizations from scratch: gantt charts
     and bump charts.
 
-11. Gantt charts encode the start and end of discrete temporal events.
+5.  Gantt charts encode the start and end of discrete temporal events.
     They are often used to organize projects. They can be generated by
     appending rectangles at the right task (y) and time (x) coordinates.
 
-12. Bump charts are line plots that show how ranks evolve over time. We
+6.  Bump charts are line plots that show how ranks evolve over time. We
     can create the smooth arcing lines using `.curve(d3.curveBumpX)`.
 
-13. We can customize the color depending on whether the rank has
+7.  We can customize the color depending on whether the rank has
     increased or decreased by storing the change in the data and
     encoding this using each path’s stroke attribute.
 
-14. You can see a full interactive version of this visualization at this
+8.  You can see a full interactive version of this visualization at this
     link — we’ll be discussing this in our next lecture. Notice the use
     of the voronoi mouseover, like the one used in our previous notes.
     We’ll discuss some more techniques for temporal interaction in the

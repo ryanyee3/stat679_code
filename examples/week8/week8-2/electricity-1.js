@@ -32,7 +32,6 @@ function visualize(data) {
 }
 
 function draw_scatter(data, scales) {
-  console.log(data);
   d3.select("#scatter")
     .selectAll("circle")
     .data(data).enter()
