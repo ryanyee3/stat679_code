@@ -16,7 +16,7 @@ function initialize(data, stats, scales) {
       r: 2,
       cx: d => scales.x1(d.IMDB_Rating),
       cy: d => scales.y1(d.Rotten_Tomatoes_Rating),
-      fill: d => scales.fill(d.Genre)
+      fill: d => scales.fill(d.Genre_Group)
     })
 
   d3.select("#bars")
@@ -26,15 +26,15 @@ function initialize(data, stats, scales) {
     .attrs({
       x: width / 2 + margins.pad + margins.text_offset,
       width: d => scales.x2(d.n),
-      y: d => scales.y2(d.Genre),
+      y: d => scales.y2(d.Genre_Group),
       height: scales.y2.bandwidth(),
-      fill: d => scales.fill(d.Genre)
+      fill: d => scales.fill(d.Genre_Group)
     })
-    .on("click", (ev, d) => toggle_selection(ev, d.Genre))
+    .on("click", (ev, d) => toggle_selection(ev, d.Genre_Group))
 
   d3.select("#bar_labels")
     .selectAll("text")
-    .data(stats.map(d => d.Genre)).enter()
+    .data(stats.map(d => d.Genre_Group)).enter()
     .append("text")
     .attrs({
       x: width / 2 + margins.pad,
@@ -62,13 +62,13 @@ function update_view() {
     .transition()
     .duration(500)
     .attrs({
-      opacity: d => selected.indexOf(d.Genre) == -1 ? 0.4 : 1,
-      r: d => selected.indexOf(d.Genre) == -1 ? 1 : 2
+      opacity: d => selected.indexOf(d.Genre_Group) == -1 ? 0.4 : 1,
+      r: d => selected.indexOf(d.Genre_Group) == -1 ? 1 : 2
     })
 
   d3.select("#bars")
     .selectAll("rect")
-    .attr("fill-opacity", d => selected.indexOf(d.Genre) == -1 ? 0.4 : 1)
+    .attr("fill-opacity", d => selected.indexOf(d.Genre_Group) == -1 ? 0.4 : 1)
 
   d3.select("#bar_labels")
     .selectAll("text")
@@ -89,7 +89,7 @@ function annotations(scales) {
   x_title.text("IMDB")
     .attrs({
       class: "label_title",
-      transform: `translate(${0.5 * width}, ${height - 0.25 * margins.bottom})`,
+      transform: `translate(${0.25 * width}, ${height - 0.25 * margins.bottom})`,
     })
   y_title.text("Rotten Tomatoes")
     .attrs({
@@ -110,10 +110,10 @@ function make_scales(data, stats) {
          .domain([0, d3.max(stats.map(d => d.n))])
          .range([0, .5 * width - margins.right - margins.text_offset]),
     y2: d3.scaleBand()
-          .domain([... new Set(stats.map(d => d.Genre))])
+          .domain([... new Set(stats.map(d => d.Genre_Group))])
           .range([height / 3, margins.top]),
     fill: d3.scaleOrdinal()
-      .domain([... new Set(data.map(d => d.Genre))])
+      .domain([... new Set(data.map(d => d.Genre_Group))])
       .range(d3.schemeSet3)
   }
 }

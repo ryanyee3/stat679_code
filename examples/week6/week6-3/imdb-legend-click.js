@@ -15,7 +15,7 @@ function initialize(data, scales) {
       r: 2,
       cx: d => scales.x(d.IMDB_Rating),
       cy: d => scales.y(d.Rotten_Tomatoes_Rating),
-      fill: d => scales.fill(d.Genre)
+      fill: d => scales.fill(d.Genre_Group)
     })
 
   annotations(scales)
@@ -52,8 +52,8 @@ function update_view() {
     .transition()
     .duration(500)
     .attrs({
-      opacity: d => selected.indexOf(d.Genre) == -1 ? 0.4 : 1,
-      r: d => selected.indexOf(d.Genre) == -1 ? 1 : 2
+      opacity: d => selected.indexOf(d.Genre_Group) == -1 ? 0.4 : 1,
+      r: d => selected.indexOf(d.Genre_Group) == -1 ? 1 : 2
     })
 
   d3.select(".legendCells")
@@ -96,7 +96,7 @@ function make_scales(data) {
          .domain(d3.extent(data.map(d => d.Rotten_Tomatoes_Rating)))
          .range([height - margins.bottom, margins.top]),
     fill: d3.scaleOrdinal()
-      .domain([... new Set(data.map(d => d.Genre))])
+      .domain([... new Set(data.map(d => d.Genre_Group))])
       .range(d3.schemeSet3)
   }
 }
