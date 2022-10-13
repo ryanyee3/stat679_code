@@ -25,4 +25,4 @@ d3.select("#circle3")
   .on("mousemove", f3)
 
 d3.select("#circle4")
-  .on("mousemove", e => f4(e))
+  .on("mousemove", f4)
