@@ -11,8 +11,8 @@ function initialize(data, scales) {
     .data(data).enter()
     .append("circle")
     .attrs({
-      cx: d => scales.x0(d.bill_depth),
-      cy: d => scales.y0(d.bill_length),
+      cx: d => scales.x0(d.bill_depth_mm),
+      cy: d => scales.y0(d.bill_length_mm),
       opacity: 1,
       r: 2,
       fill: d => scales.fill(d.species)
@@ -23,8 +23,8 @@ function initialize(data, scales) {
     .data(data).enter()
     .append("circle")
     .attrs({
-      cx: d => scales.x1(d.body_mass),
-      cy: d => scales.y1(d.flipper_length),
+      cx: d => scales.x1(d.body_mass_g),
+      cy: d => scales.y1(d.flipper_length_mm),
       opacity: 1,
       r: 2,
       fill: d => scales.fill(d.species)
@@ -59,9 +59,9 @@ function initialize(data, scales) {
     cur_samples = []
     for (let i = 0; i < data.length; i++) {
       let di = data[i]
-      if (b == 0 && x0 < di.bill_depth && x1 > di.bill_depth && y0 > di.bill_length && y1 < di.bill_length) {
+      if (b == 0 && x0 < di.bill_depth_mm && x1 > di.bill_depth_mm && y0 > di.bill_length_mm && y1 < di.bill_length_mm) {
         cur_samples.push(i)
-      } else if (b == 1 && x0 < di.body_mass && x1 > di.body_mass && y0 > di.flipper_length && y1 < di.flipper_length) {
+      } else if (b == 1 && x0 < di.body_mass_g && x1 > di.body_mass_g && y0 > di.flipper_length_mm && y1 < di.flipper_length_mm) {
         cur_samples.push(i)
       }
     }
@@ -86,16 +86,16 @@ function initialize(data, scales) {
 function make_scales(data) {
   return {
     x0: d3.scaleLinear()
-      .domain(extent(data, "bill_depth"))
+      .domain(extent(data, "bill_depth_mm"))
       .range([0, width / 2]),
     y0: d3.scaleLinear()
-      .domain(extent(data, "bill_length"))
+      .domain(extent(data, "bill_length_mm"))
       .range([height, 0]),
     x1: d3.scaleLinear()
-      .domain(extent(data, "body_mass"))
+      .domain(extent(data, "body_mass_g"))
       .range([0, width / 2]),
     y1: d3.scaleLinear()
-      .domain(extent(data, "flipper_length"))
+      .domain(extent(data, "flipper_length_mm"))
       .range([height, 0]),
     fill: d3.scaleOrdinal()
       .domain(extent(data, "species"))
