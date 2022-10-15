@@ -14,7 +14,7 @@ function initialize(data, scales) {
       class: "plain",
       cx: d => scales.x(d.IMDB_Rating),
       cy: d => scales.y(d.Rotten_Tomatoes_Rating),
-      fill: d => scales.fill(d.genre)
+      fill: d => scales.fill(d.Genre_Group)
     })
   annotations(scales)
 }
