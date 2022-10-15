@@ -1,6 +1,6 @@
 
 function visualize(data) {
-  data = data.filter(d => d.imdb > 0 & d.rotten > 0);
+  data = data.filter(d => d.IMDB_Rating > 0 & d.Rotten_Tomatoes_Rating > 0);
   let scales = make_scales(data)
   initialize(data, scales);
 }
@@ -8,13 +8,13 @@ function visualize(data) {
 function initialize(data, scales) {
   d3.select("#circles")
     .selectAll("circle")
-    .data(data, d => d.title).enter()
+    .data(data, d => d.Title).enter()
     .append("circle")
     .attrs({
       class: "plain",
-      cx: d => scales.x(d.imdb),
-      cy: d => scales.y(d.rotten),
-      fill: d => scales.fill(d.genre)
+      cx: d => scales.x(d.IMDB_Rating),
+      cy: d => scales.y(d.Rotten_Tomatoes_Rating),
+      fill: d => scales.fill(d.Genre_Group)
     })
 
   annotations(scales)
@@ -58,13 +58,13 @@ function annotations(scales) {
 function make_scales(data) {
   return {
     x: d3.scaleLinear()
-         .domain(d3.extent(data.map(d => d.imdb)))
+         .domain(d3.extent(data.map(d => d.IMDB_Rating)))
          .range([margins.left, 0.7 * width - margins.right]),
     y: d3.scaleLinear()
-         .domain(d3.extent(data.map(d => d.rotten)))
+         .domain(d3.extent(data.map(d => d.Rotten_Tomatoes_Rating)))
          .range([height - margins.bottom, margins.top]),
     fill: d3.scaleOrdinal()
-      .domain([... new Set(data.map(d => d.genre))])
+      .domain([... new Set(data.map(d => d.Genre_Group))])
       .range(d3.schemeSet2)
   }
 }
