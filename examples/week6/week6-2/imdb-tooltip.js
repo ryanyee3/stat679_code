@@ -24,8 +24,9 @@ function initialize(data, scales) {
 }
 
 function mouseover(ev, d) {
+  let loc = d3.pointer(ev)
   d3.select("#tooltip")
-    .attr("transform", `translate(${ev.pageX}, ${ev.pageY})`)
+    .attr("transform", `translate(${loc[0]}, ${loc[1]})`)
     .select("text")
     .text(d.Title)
 
