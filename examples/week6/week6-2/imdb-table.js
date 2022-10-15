@@ -26,8 +26,8 @@ function initialize(data, scales) {
 function mouseover(ev, d) {
   d3.select("#title").text(d.Title)
   d3.select("#genre").text(d.Genre_Group)
-  d3.select("#year").text(d.Year)
-  d3.select("#gross").text(d.Gross)
+  d3.select("#year").text(d.Release_Date)
+  d3.select("#gross").text(d.Worldwide_Gross)
   d3.select(ev.target).attr("class", "highlighted")
 }
 
