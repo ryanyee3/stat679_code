@@ -19,6 +19,10 @@
   font-family: "Open Sans";
 }
 
+#bars rect {
+  opacity: 0.8;
+}
+
 #slope_labels_2000 text {
   text-anchor: end;
 }

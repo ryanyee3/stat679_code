@@ -10,7 +10,6 @@ function make_scales() {
 let scales = make_scales();
 
 // create bars for each year
-d3.select("#bars")
-  .select("#bars_2010")
+d3.select("#bars_2010")
 
 // add the labels

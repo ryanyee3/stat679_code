@@ -221,6 +221,12 @@ to support the literature review for your course project.
 	description of each theme. How are the groups of papers similar / different
 	from one another?
   
+1. [Code Analysis] Pick one code example from this week's lecture notes. Provide
+a 3 - 4 sentence summary of the overall implementation strategy. Then, add
+comments every 10 - 15 lines describing what each section of code is doing. If
+there are parts that you do not understand, add a ??? next to it (we will review
+these in the next lecture).
+
 # Visualization with R
 
 1. [Ikea Furniture] The dataset below shows prices of pieces of Ikea furniture.
@@ -1321,6 +1327,28 @@ updates to this data structure.
     reflect the motion of the circles. Hint: For paths with only two endpoints, you may use the [`line` SVG element](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line).
     e. What would happen if you did not exit the lines when the circles drifted
     too far apart? Try this in your visualization and explain what you see.
+  
+1. [Urbanization Linked Plots I] In this problem, we will create a static
+version of the linked bar chart + slope graph visualization from Nadieh Bremer's
+Urbanization in East Asia
+[visualization](http://nbremer.github.io/urbanization/). Starter HTML, CSS, and
+JS code is available at these links [[1](https://github.com/krisrs1128/stat679_code/blob/main/activities/week6/demo6-1.html), [2](https://github.com/krisrs1128/stat679_code/blob/main/activities/week6/demo6-1-starter.js), [3](https://github.com/krisrs1128/stat679_code/blob/main/activities/week6/demo6-1.css)]. Note that the group elements for
+the slope graph and barchart have already been translated, so each individual
+component can assume that the x-axis starts at pixel 0.
+
+    a. Describe the structure of the data that are available for the
+    visualization. How will be able to create a set of bars for both 2000 and
+    2010?
+    b. What types of scales can be used to create the bar chart? Note that the
+    country-level population densities vary from 0 to 10000. Create these
+    scales.
+    c. Append the rectangles in the bar chart. The colors from the original
+    visualization are #858483 and #da6761 for 2000 and 2010, respectively.
+    d. Annotate the bar chart with country names.
+    e. What types of scales should be used for the slope graph? Note that the
+    city-level population densities vary from 0 to 35000. Create these scales.
+    f. Draw the circles and lines needed for the slope graph. Provide labels for
+    the cities whose 2010 population density is above 19600.
   
 1. [Interactive Census] The code below creates a bar chart of US female
 population by age groups from the 1900 census. The x-axis is age group, and the
