@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>activity_plans</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+# STAT 679 / 992: Statistical Data Visualization
+
+## Fall 2022
+
+
+
+---
+
+# September 7, 2022
+
+1. [Review syllabus](https://canvas.wisc.edu/courses/321152/files/27081478?module_item_id=5152442)
+1. Review class resources
+1. [In-Class Exercise 0.1](https://canvas.wisc.edu/courses/321152/assignments/1623480?module_item_id=5162096)
+
+---
+
+### Welcome!!
+
+I'm excited to share this course with you this semester. There are few
+activities that engage creative, quantitative, and critical thinking skills all
+at once, but data visualization is one of them.
+
+Nothing makes my day like a good data visualization, and I look forward to
+seeing those that you create.
+
+---
+
+### Syllabus
+
+* Learning outcomes
+* Teaching team and office hours
+* Assessments
+* Grading
+
+---
+
+### Learning Outcomes
+
+In this class, you will learn to...
+
+1. Draw from a **catalog of visual encodings** to support specific visual comparisons in temporal, geospatial, network, hierarchical, high-dimensional count, text, and uncertain data and demonstrate facility implementing them using the R and javascript programming languages.
+2.	Draw from a **catalog of interactivity patterns** to compose visualizations that
+respond to user’s dynamic queries.
+3.	Using the vocabulary of data visualization, **analyze and critique visual designs**.
+
+---
+
+### Learning Outcomes
+
+In this class, you will learn to...
+
+4.	Given a data analysis problem and initial design solution, iteratively **refine visual encodings and interactivity** idioms from across the design space until a satisfactory solution is discovered.
+5.	**Navigate the data visualization research literature**, summarize the contributions of a specific methodological proposal, and evaluate their applicability in specific problem contexts.
+
+---
+
+### Office Hours
+
+.pull-left[
+We will announce in-person and virtual office hours depending on the results of
+this poll: https://tinyurl.com/8wf4utsp
+]
+
+.pull-right[
+&lt;img src="figures/20210607_132459.jpg" width="400" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### Office Hours
+
+.pull-left[
+We will announce in-person and virtual office hours depending on the results of
+this poll: https://tinyurl.com/8wf4utsp
+]
+
+.pull-right[
+&lt;img src="figures/20210607_132612.jpg" width="690" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### Assessments
+
+* In-class exercises and discussions (graded {0, 50, 100%})
+* 4 problem sets 
+* 3 group project reports and 1 presentation
+  - Teams of 4 - 5 people
+* 1 midterm exam
+
+---
+
+### Grading
+
+* Problem Sets: 35%
+* Group Project: 25%
+* In-Class Exercises: 20%
+* Midterm: 20%
+
+---
+
+### Canvas Page Walkthrough
+
+&lt;img src="figures/canvas.png" width="650" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Class Resources
+
+1. [Canvas page](https://canvas.wisc.edu/courses/321152)
+  - Links to all other resources
+1. [Readings](https://drive.google.com/file/d/16jr5MlX8axfDVZ3kS4vZuWzqDOpj1Wng/view?usp=sharing)
+1. [Piazza](https://piazza.com/wisc/fall2022/stat679f22/home)
+1. [Exercises](https://canvas.wisc.edu/courses/321152/files/27094119?module_item_id=5161970)
+1. [Online notes](https://krisrs1128.github.io/stat679_notes/)
+1. [Online recordings](https://mediaspace.wisconsin.edu/) (also linked in notes)
+1. [Worked code examples](https://github.com/krisrs1128/stat679_code) (also linked in notes)
+
+---
+
+### Questions?
+
+Also feel free to speak with me after class.
+
+---
+
+### Exercise 0.1
+
+1. Introduce yourself to the people sitting at your table. Your name, program,
+and one thing most people don't know about you.
+
+1. Submit a response to [Formulating Questions] in the exercise sheet.
+
+1. Share your chosen datasets in groups of 2 - 3 people.
+
+[Formulating Questions] Pick a dataset from
+[TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets), [Data Is
+Plural](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit#gid=0),
+[Kaggle Datasets](https://www.kaggle.com/datasets), [Google Dataset
+Search](https://datasetsearch.research.google.com/), or your own personal
+studies that you would like to visualize this semester. What makes you
+interested in this dataset? Please provide a link, so we can use it to create
+future exercises.
+
+---
+
+# September 12, 2022
+
+1. Exercise review
+1. Code demo [City Temperatures]
+1. In-Class Exercise 1.1
+
+---
+
+### Announcements
+
+1. Office hours will be held 2 - 3pm Tuesdays and 11am - 12pm on Fridays. These
+sessions will be hybrid -- you can join in person at MSC 7225C or through Zoom.
+
+1. The description for how to form groups is in Project Milestone 0. If you do
+not form a team by the deadline, you will be randomly assigned one.
+
+1. Problem set 1 is online.
+---
+
+### Exercise Review
+
+* Let's analyze the exercise results together
+* I've uploaded a starter document here: https://tinyurl.com/37vn2ywb
+* It also includes the exercise we'll work on together afterwards
+
+---
+
+### Exercise 1.1
+
+The data below measures properties of various Antarctic penguins.
+
+
+```r
+penguins &lt;- read_csv("https://uwmadison.box.com/shared/static/ijh7iipc9ect1jf0z8qa2n3j7dgem1gh.csv")
+```
+
+Create a single plot that makes it easy to answer both of these questions,
+(i) How is bill length related to bill depth within and across species? (ii)
+On which islands are which species found?
+
+Read about [Simpson's
+paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox) and summarize it
+in your own words. Then, explain how part (i) provides a real-world example
+of this paradox.
+
+If you finish early -- can you think of an alternative encoding that
+visualizes the same information? How do the encodings compare and contrast
+with one another?
+
+---
+
+# September 14, 2022
+
+1. Exercise review
+1. Code demo [Plant growth]
+1. (If Time) Discussion [When2meet]
+1. [In-Class Exercise 1.2]
+
+---
+
+### Exercise Review
+
+This is an exercise in compactly encoding a mix of continuous (bill length and
+depth) and nominal (species and island) variables. There are several approaches
+possible, and there are trade-offs between them,
+
+  * Color and shape: It's convenient to place all data into the same space, but
+  shapes can be hard to read.
+  * Color combinations: It's easier to distinguish colors than shapes, but requires
+  continually looking up which color is which combination.
+  * Faceting: Easier to compare combination, but each panel gets less space.
+  
+---
+
+### Exercise Review
+
+
+```r
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species, shape = island))
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-5-1.png" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species, shape = island)) +
+  scale_color_brewer(palette = "Set2") +
+  scale_shape_manual(values = c(16, 0, 8)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-6-1.png" width="550" style="display: block; margin: auto;" /&gt;
+---
+
+
+```r
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = interaction(species, island))) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-7-1.png" width="550" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exercise Review
+
+
+```r
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  facet_wrap(~ island)
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-8-1.png" width="1000" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exercise Review
+
+
+```r
+ggplot(penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  facet_wrap(~ island) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-9-1.png" width="800" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exercise Review
+
+
+```r
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
+  geom_point(aes(col = species, shape = island)) +
+  stat_smooth(aes(col = species), method = "lm", se = FALSE) +
+  stat_smooth(method = "lm", se = FALSE, col = "#0c0c0c") +
+  scale_color_brewer(palette = "Set2") +
+  scale_shape_manual(values = c(16, 0, 8)) +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-10-1.png" width="320" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exercise Review
+
+
+```r
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
+  geom_point(aes(col = species)) +
+  stat_smooth(aes(col = species), method = "lm", se = FALSE) +
+  stat_smooth(method = "lm", se = FALSE, col = "#0c0c0c") +
+  facet_wrap(~ island) +
+  scale_color_brewer(palette = "Set2") +
+  theme(strip.text = element_text(size = 18)) +
+  labs(
+    x = "Bill Depth",
+    y = "Bill Length"
+  )
+```
+
+&lt;img src="overview_files/figure-html/unnamed-chunk-11-1.png" width="650" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Discussion [When2Meet]
+
+* With your neighbors, work through (a - c) of [When2Meet] on the exercise
+sheet
+* I will ask groups to share brief a summary of their discussions with the rest
+of the class
+* The question is included on the next slide
+
+---
+
+In addition to being a scheduling tool, When2Meet polls provide a heatmap
+visualization of respondent availability. In this exercise, use the results from
+our [office hour poll](https://www.when2meet.com/?16334941-sIMyb) to evaluate
+the properties of this visualization.
+
+  a. What are two concrete questions that the heatmap visualization is
+  effective at answering? Why do you think this?
+  
+  b. What are two concrete questions that the heatmap visualization is *not* 
+  effective at answering? Why do you think this?
+  
+  c. Describe an alternative static or interactive visual design that is
+  better suited to one of the questions you identified in (b).
+  
+  d. The dataset at [this link](https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week1/when2meet_679f22.csv) include responses from our poll. Columns 1 - 35 represent students, and 1/0
+  denotes whether the student is or is not available. Implement a version of
+  your proposed visual design from (c).
+
+---
+
+
+### Code Demo [Plant Growth]
+
+* This is a problem in reshaping data to support visualization.
+
+* I've uploaded a starter document here: https://tinyurl.com/5dzsx9ey
+
+---
+
+### Exercise 1.2
+
+20 minutes: In teams of 2 - 5 people, work through [Concept Map] in the exercise
+sheet.
+
+10 minutes: Share your concept map with a neighboring team. First, present your
+diagram -- you should recap the main points from the course in your own words.
+Then, compare and contrast the ways in which your groups organized or
+prioritized information.
+
+Note: You will have to form a team on the "People" page on Canvas. Have one
+person from your team submit a photo of your concept map and summarize the main
+points from your discussion.
+
+---
+
+### Exercise 1.2 [Concept Map]
+
+Prepare a concept map to summarize the last week of reading material. An
+effective submission will include a thorough coverage of both abstract concepts
+and practical examples, summarized concisely into short phrases. It will also
+include well-justified links between nodes, with text explanations for edges
+whose interpretation might not be obvious at first.
+
+---
+
+# September 19, 2022
+
+1. Exercise review
+1. Code demo [Improving an App]
+1. [In-Class Exercise 2.1]
+
+---
+
+### Announcements
+
+* Project Milestone 0 (Forming Groups) is due on Friday.
+
+---
+
+### Exercise Review
+
+A few common themes emerged across most submissions,
+
+* The distinctions between data, geometry, and encoding in ggplot2
+* Descriptions of what make an encoding / visualization effective
+  - Clear comparisons, overall readability, orientation around specific tasks
+* Description of the different ggplot2 geometry layers
+* Examples of faceting and when it can be helpful
+
+---
+
+### Optional: Share your concept map
+
+* I created a Piazza note where you can share your concept map with others in the
+class
+* Even though the content is similar across submissions, the ways of organizing
+information could be quite different
+  - If there is a style you like, it can be a nice exercise to try imitating it
+  in a future concept map
+
+---
+
+### In-Class Demo [Improving an App]
+
+* This exercise uses reactive expressions to make messy (but still functional)
+Shiny apps more readable
+
+* I've uploaded a starter document here: https://tinyurl.com/mw35y9ve
+
+---
+
+### Exercise 2.1
+
+[Olympics Interactive App] 
+ 
+ Hints:
+ 
+   *  For part (a), a `renderPlot()` server element needs to be rerun each time
+   the sports `selectInput` has been changed.
+   * For part (b), consider how we shared filtered data across server elements
+   in the penguin example today.
+ 
+ 
+---
+
+### September 21, 2022
+
+1. Exercise review
+1. Code demo [California Wildfires]
+1. [In-Class Exercise 2.2]
+
+---
+
+### Announcements
+
+1. For the exercises, know that there is already an Rmarkdown document that
+includes all problem descriptions. You don't need to copy and paste code from
+PDFs.
+
+---
+
+### Exercise Review
+
+**Part (a)**: The following server code creates a "selected" column specifying
+whether the athlete competes in one of the selected sports.
+
+
+```r
+server &lt;- function(input, output) {
+  current_data &lt;- reactive({
+    olympics %&gt;%
+      mutate(selected = Sports %in% input$dropdown)
+  })
+  
+  output$scatterplot &lt;- scatterplot(current_data())
+}
+```
+
+---
+
+### Exercise Review
+
+&lt;iframe src="https://data-viz.it.wisc.edu/content/5c919ba9-52e0-4f3a-ba35-47a58eed16fd" width=800 height=500/&gt;
+
+---
+
+### Exercise Review
+
+**Part (b)**: We can introduce a `dataTableOutput` to print the selected athletes.
+
+
+```r
+ui &lt;- fluidPage(
+  selectInput("dropdown", "Select a Sport", choices = unique(olympics$Sport), multiple = TRUE),
+  plotOutput("scatterplot"),
+  dataTableOutput("table")
+)
+```
+
+---
+
+### Exercise Review
+
+We can use the same reactive as before to populate the table.
+
+
+```r
+server &lt;- function(input, output) {
+  updated &lt;- reactive({
+    olympics %&gt;%
+      mutate(selected = Sport %in% input$dropdown)
+  })
+  
+  output$scatterplot &lt;- renderPlot(scatterplot(updated()))
+  output$table &lt;- renderDataTable(
+    updated %&gt;% filter(selected)
+  )
+}
+```
+
+---
+
+### Exercise Review
+
+&lt;iframe src="https://data-viz.it.wisc.edu/content/04140b59-14cd-4c04-91b2-a0c64e6ee29c" width=800 height=500/&gt;
+
+---
+
+### Exercise Review
+
+.pull-left[
+* This is also our first visualization implementing something like a "Focus +
+Context Principle." 
+* We're able to zoom into a few elements of interest without
+losing the overall context.
+]
+
+.pull-right[
+&lt;iframe src="https://player.vimeo.com/video/363453522?h=ea9887b2e6" width="610" height="330" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href="https://vimeo.com/363453522"&gt;[VIS19 Preview] Periphery Plots for Contextualizing Heterogeneous Time-Based Charts (short paper)&lt;/a&gt;&lt;/p&gt;
+]
+
+---
+
+### Code Demo
+
+* This exercise will give some more practice with Shiny visualization. We'll
+look at a dataset of California Wildfires between 2013 and 2019.
+
+* I've uploaded a starter document here: https://tinyurl.com/2p9dpux2
+
+---
+
+### In-Class Exercise
+
+In teams of 2 - 4 people, work through [Reactivity Graphs] in the exercise
+sheet.
+
+For submission, have one member of your team submit a short video of the
+original interactive visualization and a sketch of the reactive graph you
+derived from it. Work in the same teams that you used to submit exercise 1.2.
+
+Additionally:  Identify one point of common confusion across your group. Include this in
+  your write-up so that we can go over the most common ones during lecture on
+  Monday.
+
+---
+
+### September 26, 2022
+
+1. Exercise review
+1. Code demo [Wildfires - Part (c)]
+1. [In-Class Exercise 3.1]
+
+---
+
+### Announcements
+
+1. Issue with group submission for Exercise 2.2 - we will manage it
+1. Problem Set 1 is due on Friday (9/30) at 11:59pm
+1. Thank you to the students who helped fix the `quantile` input in the in-class
+demo. Their approach is in the In-Class Demo 2.2 link.
+
+---
+
+### Shiny Apps in Problem Sets
+
+If you tried compiling a Shiny app within an rmarkdown document, you probably
+saw a message like the one below,
+
+&lt;img src="figures/shiny_rmarkdown.png"/&gt;
+
+You did not make a mistake! Shiny doesn't allow you to host an app within an
+Rmarkdown document, unfortunately.
+
+---
+
+### Shiny Apps in Problem Sets
+
+To let us grade your Shiny apps within the problem sets, you have three options,
+
+1. Release the code in a way that allows us to run it (for example, make sure
+you don't refer to any file paths on your computer). Upload both your compiled
+document and the original `.Rmd` source.
+
+1. Include a screen recording of your app along with the code you used to create
+it. If you do this, you do not need to make sure other computers can run your
+code -- we will just read it.
+
+1. You could try hosting your app on a public site. UW Madison has an Rstudio
+Connect account, which lets you host apps for free. You can sign up
+[here](https://it.wisc.edu/news/rstudio-team-pilot/).
+
+---
+
+### Points of Confusion
+
+1. Where do events (e.g., button clicks) go in the reactive graph?
+1. What is the difference between a reactive expression and a function?
+1. Subtleties between outputs we didn't cover in class -- `eventReactive()` and `observeEvent`
+
+---
+
+### Points of Confusion
+
+Q: Where do events (e.g., button clicks) go in the reactive graph?
+
+These kinds of events actually live "outside" the reactive graph. There is a
+chapter about this in the [Mastering Shiny
+book](https://mastering-shiny.org/reactivity-components.html). Don't worry if
+you created a node for this -- we hadn't covered this in class.
+
+&lt;img src="figures/observe_graph.png"/&gt;
+
+---
+
+### Points of Confusion
+
+Q: Where do events (e.g., button clicks) go in the reactive graph?
+
+Here is an example from the book,
+
+
+```r
+ui &lt;- fluidPage(
+  textInput("nm", "name"),
+  actionButton("clr", "Clear"),
+  textOutput("hi")
+)
+server &lt;- function(input, output) {
+  hi &lt;- reactive(paste0("Hi ", input$nm))
+  output$hi &lt;- renderText(hi())
+  observeEvent(input$clr, {
+    updateTextInput(inputId = "nm", value = "")
+  })
+}
+
+shinyApp(ui, server)
+```
+
+---
+
+### Points of Confusion
+
+Q: Where do events (e.g., button clicks) go in the reactive graph?
+
+&lt;img src="figures/invalidate-1.png"/&gt;
+
+
+---
+
+### Points of Confusion  
+
+Q: What is the difference between a reactive expression and a function?
+
+1. A reactive expression is like a function that can depend on `input` elements,
+and which reruns each time an input is changed
+1. Using a function within a server, but outside of a `render` or `reactive`
+context, will fail
+
+
+
+```r
+f &lt;- function(x) {
+  x ^ 2
+}
+
+## DOES NOT WORK
+server &lt;- function(input, output) {
+  f(input$x)
+  ...
+}
+```
+
+---
+
+### Points of Confusion
+
+Q: Subtleties between outputs we didn't cover in class -- `eventReactive()` and
+`observeEvent()`
+
+An observer does not store any value. An `eventReactive()` can store an
+intermediate value that appears in a later `render*` expression.
+
+---
+
+
+### In-Class Demo
+
+* This exercise uses extends our earlier wildfires app to use graphical inputs
+
+* I've uploaded a starter document here: https://tinyurl.com/nhb6kt46
+
+---
+
+### In-Class Demo
+
+Right now, the dotplot responds to the brushed histogram. However,
+
+  * The dotplot does not allow any user inputs.
+  * The histogram does not reflect year or user selections.
+
+Imagine someone came to your statistical consulting hours with this application.
+They want your expertise to improve the app so that it conveys more information.
+How would you approach this? What might be some first steps towards
+implementation?
+
+Take 7 minutes to discuss with a neighbor, then we will regroup and share.
+
+---
+
+### In-Class Exercise
+
+[Birds Brushed Scatterplot] - Only part (a)
+
+Hint: This problem is similar to the example in Week 3 - 2: Brush Inputs.
+
+---
+
+### September 28, 2022
+
+1. Exercise review
+1. Project Strategies + Q&amp;A
+1. [In-Class Exercise 3.2]
+
+---
+
+### Announcements
+
+1. This Friday's Office Hours rescheduled to 2 - 3pm (not 11am - 12pm).
+1. We will be moving on to Module 2 (Visualization with D3) starting
+next week. If you have questions about ggplot2 or shiny visualization, it is
+best to reach out soon.
+
+---
+
+### Exercise Review
+
+This is an exercise in using `reactiveVal` and `observeEvent` to support a brush
+query within Shiny.
+
+
+```r
+library(shiny)
+ui &lt;- fluidPage(
+  fluidRow(
+    column(6, plotOutput("plot", brush = "plot_brush")),
+    column(4, dataTableOutput("table"))
+  )
+)
+```
+
+---
+
+### Exercise Review
+
+The server uses a `reactiveVal` + `observeEvent` pattern.
+
+
+```r
+server &lt;- function(input, output) {
+  selected &lt;- reactiveVal(rep(TRUE, nrow(birds)))
+  observeEvent(
+    input$plot_brush,
+    selected(brushedPoints(birds, input$plot_brush, allRows = TRUE)$selected_)
+  )
+
+  output$plot &lt;- renderPlot(scatter(birds, selected()))
+  output$table &lt;- renderDataTable(
+    filtered_table(birds, selected()),
+    options = list(pageLength = 5)
+  )
+}
+```
+
+---
+
+### Exercise Review
+
+These functions update the table and scatterplot based on the selection.
+
+
+```r
+scatter &lt;- function(x, selected_) {
+  x %&gt;%
+    mutate(selected_ = factor(selected_, levels = c("FALSE", "TRUE"))) %&gt;%
+    ggplot() +
+    geom_point(aes(Ellipticity, Asymmetry, col = selected_)) +
+    scale_color_manual(values = c("black", "red")) +
+    theme(legend.position = "none")
+}
+
+filtered_table &lt;- function(birds, selected_) {
+  birds %&gt;% 
+    select(Order, Family, MVZDatabase) %&gt;% 
+    filter(selected_)
+}
+```
+
+---
+
+&lt;iframe src="https://data-viz.it.wisc.edu/content/0592d810-d75c-43f4-8d27-817e1276ac8c" width = 900 height = 500/&gt;
+
+---
+
+### Project Reflections
+
+1. How should you approach your course project?
+1. Hopefully, these reflections will be useful for your future projects too
+1. Please ask questions, this will work better as a discussion
+
+---
+
+### Conceptualization: Storytelling
+
+The most compelling projects are structured like stories.
+
+Opening: What is the setting? Who are the main characters?
+
+Conflict: How is the state of the world unsatisfactory?
+
+Action: How was the conflict resolved?
+
+Resolution: What have we learned more generally?
+
+---
+
+### Conceptualization: Community
+
+1. In the area that you choose to study, who are your intellectual peers?
+1. A common problem in data science projects are that they become too abstract /
+have no clear intended audience.
+1. The project should be interesting because of what it says about real world
+phenomena which are interseting within your community -- don't talk about data
+without context.
+
+---
+
+### Conceptualization: Synthesis
+
+1. No problems are solved in a vacuum. What ideas are you building from?
+1. The most creative projects draw from sources that were not obviously
+relevant, but which later turn out to be.
+
+---
+
+### Implementation: Reading
+
+1. For both community and synthesis, it is very helpful to read extensively
+1. This helps you understand the standards of the community (or communities) you
+are working in.
+1. It also provides source material for problem solving.
+1. Today's in-class exercise provides more concrete suggestions for how to go
+about identifying reading material
+
+---
+
+### Implementation: Prototyping
+
+1. It is much better to explore a variety of designs before committing to one
+specific approach.
+1. This is one of the reasons why having a well-defined problem is important --
+it creates a center around which many approaches can be explored
+
+.center[
+&lt;img src="figures/design-space.png" width=800/&gt;
+]
+
+---
+
+### Implementation: Feedback
+
+1. Some of the most important data you can get during a project is feedback from
+your peers
+1. Their responses may reveal unwarranted assumptions you have made or point you
+towards a previously unnoticed path forward
+
+---
+
+### Reflection and Questions
+
+With your project group, take 5 minutes to brainstorm a list of conceptual or
+logistical questions you have related to the project. We will discuss these as a
+group.
+
+---
+
+### Exercise 3.2
+
+With your project team, work through [Guided Literature Search] in the exercises
+sheet.
+
+---
+
+### October 3, 2022
+
+1. Intro to D3 / Workflow Setup
+1. In-Class Demo 4.1
+1. In-Class Exercise 4.1
+
+---
+
+### Announcements
+
+1. Solutions to Problem Set 1 will be posted Wednesday (after the final deadline
+for late assignments). Consider reviewing even if you understood exercises --
+you might find alternative solutions or ways to improve the presentation of your
+submission.
+1. Problem Set 2 will be online before class Wednesday (Due 10/21)
+1. Nate Silver (from FiveThirtyEight) is giving a free, public talk on October 26. [Tickets go on sale today](https://lafollette.wisc.edu/event/nate-silver/).
+
+---
+
+### Introduction to D3
+
+1. D3 is a visualization library written in javascript.
+1. It operates at a much lower level than R / ggplot2. This both makes it much
+more flexible, but also requires more effort to work with.
+1. Unlike Shiny, it can modify visualizations in place, since it doesn't depend
+on transitions between static image views.
+
+---
+
+.pull-left[
+An example D3 visualization from Nadieh Bremer's [portfolio](https://www.visualcinnamon.com/portfolio/sciam-satellite-surge/).
+]
+
+&lt;img src="figures/sciam_satellites_detail_1.jpeg" width=460/&gt;
+
+---
+
+Smooth transitions in a barchart, from the D3 collection on [Observable](https://observablehq.com/@d3/bar-chart-transitions).
+
+&lt;iframe width="100%" height="550"
+  src="https://observablehq.com/embed/@d3/sortable-bar-chart?cell=viewof+order&amp;cell=chart"&gt;&lt;/iframe&gt;
+
+---
+
+A D3-based
+[animation](https://observablehq.com/@mbostock/connected-particles-iii) written
+by the original developer of D3, Mike Bostock.
+
+&lt;iframe width="100%" height="550" frameborder="0"
+  src="https://observablehq.com/embed/@mbostock/connected-particles-iii?cells=canvas%2Cn%2Cheight%2Cradius"&gt;&lt;/iframe&gt;
+
+---
+
+### Workflow Setup
+
+1. To build D3 visualizations, we will mainly be editing `.html`, `.css`, and
+`.js` files. This can be done in Rstudio, but other text editors work as well
+(e.g., VSCode, Atom, Emacs, ...).
+1. You will not need it this week, but starting next week, you will need to have
+a python installation on your computer. This will be used to start a server
+needed for loading data.
+1. It's possible to incorporate D3 visualizations into Rmarkdown reports and
+Shiny Apps. It is a somewhat more advanced topic, though, so reach out if you
+would like to try this.
+
+---
+
+### Workflow Setup
+
+Let's test our setup by editing a simple [HTML
+file](https://github.com/krisrs1128/stat679_code/raw/main/examples/week4/week4-1/example_headings.html).
+Work with your neighbors in case you have any difficulty.
+
+
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;This is a Header&lt;/h1&gt;
+    &lt;p&gt;This text is in a paragraph&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+---
+
+### Workflow Setup
+
+1. Let's make sure you can add a `.js` file to do some computation in the
+background.
+1. You'll also want to be able to use your browser's developer tools. 
+
+.pull-left[
+`example_headings.html`
+
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;This is a Header&lt;/h1&gt;
+    &lt;p&gt;This text is in a paragraph&lt;/p&gt;
+  &lt;/body&gt;
+  &lt;script src="example.js"&gt;&lt;/script&gt;
+&lt;/html&gt;
+```
+]
+
+.pull-right[
+`example.js`
+
+```js
+let x = [1, 2, 3];
+console.log(x);
+```
+
+
+&lt;script type="text/javascript"&gt;
+let x = [1, 2, 3];
+console.log(x);
+&lt;/script&gt;
+]
+
+---
+
+### Code Demo 4.1 [Draw a Smiley Face]
+
+* This is an exercise in manipulating SVGs to draw a custom shape.
+
+* I've uploaded a starter document here: https://tinyurl.com/7b5vr4xn
+
+---
+
+### In-Class Exercise 4.1 [Penguins Array Manipulation a - c]
+
+[Penguins Array Manipulation] - Only parts (a, b, c)
+
+* When you write your solution, you can still use `.Rmd` documents, but set
+`eval = FALSE` in any `js` code blocks so that Rstudio doesn't try to compile
+the code. Alternatively, you can submit a Word document or an Observable
+Notebook.
+* Hint: For part (b), refer to the example in Notes 4 - 2. For part (c), a one
+line solution is possible using `map()`.
+
+---
+
+### October 5, 2022
+
+1. Exercise review 4.1
+1. In-Class Demo 4.2
+1. Discussion
+1. In-Class Exercise 4.2
+
+---
+
+### Announcements
+
+1. Problem set 1 solutions are online, and problem set 2 is posted.
+1. I will clap three times when I need the discussions to end / attention to
+return to lecture.
+
+---
+
+### Exercise Review
+
+For each of `penguins` and `penguins2`, describe whether the data structure is
+(i) an object of arrays, (ii) an array of objects, or (iii) neither. In case
+(iii), specify the structure.
+
+* `penguins` is an array of objects. Each object corresponds to one row
+(sample), and the array gives the full dataset.
+
+
+```r
+let penguins = [{"species":"Adelie","island":"Torgersen",...},{"species":"Adelie","island":"Torgersen",...}, ...]
+```
+
+---
+
+### Exercise Review
+
+For each of `penguins` and `penguins2`, describe whether the data structure is
+(i) an object of arrays, (ii) an array of objects, or (iii) neither. In case
+(iii), specify the structure.
+
+* `penguins2` is an object of arrays. Each key of the object corresponds to one
+column, and the associated array gives all penguins' measurements for that
+column.
+
+
+```r
+let penguins2 = {"species":["Adelie","Adelie",...],"island":["Torgersen","Torgersen",...],...}
+```
+
+
+---
+
+### Exercise Review
+
+Using `penguins2`, compute the mean flipper length.
+
+For this part, we need to (i) extract the array within the object containing flipper length, and (ii) compute its mean.
+
+
+```r
+d3.mean(penguins2["flipper_length_mm"])
+```
+
+---
+
+### Exercise Review
+
+Using `penguins`, define a new array whose elements are `true` or `false`
+depending on whether flipper length is larger than 187.
+
+We can accomplish this using a for loop.
+
+
+```r
+let result = [];
+for (let i = 0; i &lt; penguins.length; i++) {
+  result.push(penguins[i].flipper_length_mm &gt; 187)
+}
+```
+
+---
+
+### Exercise Review
+
+Using `penguins`, define a new array whose elements are `true` or `false`
+depending on whether flipper length is larger than 187.
+
+An even more concise solution uses `map`.
+
+
+```r
+result = penguins.map(d =&gt; d.flipper_length_mm &gt; 187)
+```
+
+---
+
+### Exercise Review
+
+* This is how the solution looks like in a single javascript file
+* For in-class exercises like this, it is enough to submit your HTML, CSS, and
+JS files. Any discussion can go in JS comments or HTML paragraphs.
+
+---
+
+### In-Class Demo [4.2]
+
+* We will work through [Modifying Selections] together
+
+* I've uploaded a starter document here: https://tinyurl.com/4sampdzj
+
+---
+
+### Discussion
+
+With others at your table, discuss any (or all) of the following prompts for
+6 - 8 minutes.
+
+* What originally motivated you to learn data visualization?
+* Which of your personal values are reflected in your visualization interests?
+* How might learning javascript or D3 relate to these original motivations / values?
+
+---
+
+### In-Class Exercise [4.2]
+
+* Work through [Debugging JS Code] parts (b - d) in the exercises sheet. Discuss
+with your team, but submit individually.
+
+---
+
+### October 10, 2022
+
+1. Exercise review 4.2
+1. In-Class Demo 5.1
+1. In-Class Exercise 5.1
+
+---
+
+### Announcements
+
+1. Project Milestone 1 is due on Friday (10/14)
+1. Midterm 2 will be held on 10/24. 
+    * An example midterm + solutions from STAT 479 has been posted. 
+    * The content will be slightly different (no patchwork package, add D3
+    material), but the format will be similar (multiple T/F, pseudocode writing,
+    and discussion).
+    * The instructions will be the same. E.g., you may use a one page cheat
+    sheet.
+
+---
+
+### Exercise Review 
+
+Goal: I want to try to get the average of the “temp_max” array in
+“forecast” below.
+
+Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2a.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2a.js) file. This is the part that I think is
+relevant,
+
+```r
+let forecast = {temp_max: [22, 24, 28, 21], temp_min: [15, 14, 21, 24]}
+d3.mean(forecast[0])
+```
+Problem: The console prints the error message,
+```
+ Uncaught TypeError: t is not iterable at t.mean (d3-array@3:2:13861) at in_class4-2a.js:3:4 
+```
+
+---
+
+### Exercise Review (part a, not required)
+
+Solution: To index into objects, we need to use a key.
+
+
+```r
+d3.mean(forecast["temp_max"])
+```
+
+---
+
+### Exercise Review (part b)
+
+b. Goal: I want to change the color of all the circles on my [HTML page](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.html) to blue. 
+
+Attempt:
+Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2b.js) file. This is the part that I think is relevant,
+
+```r
+d3.select("circle")
+  .attr("fill", "blue")
+```
+Problem: Only the color of the one circle [is changing](https://github.com/krisrs1128/stat679_code/blob/main/exercises/figure/d3_bugs.png).
+
+---
+
+### Exercise Review (part b)
+
+Solution: If there are multiple matches, `d3.select` will only select the first
+element. We need to use `d3.selectAll`.
+
+
+```r
+d3.selectAll("circle")
+  .attr("fill", "blue")
+```
+
+---
+
+### Exercise Review (part c)
+
+Goal: I want to change the color of all the class “highlighted” squares.
+
+Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2c.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2c.js) file. This is the part that I think is relevant,
+
+```r
+d3.selectAll("highlighted")
+  .attr("fill", "red")
+```
+Problem: Nothing is changing.
+
+---
+
+### Exercise Review (part c)
+
+Solution: Class selectors need to be preceded by a period. The code below would
+work,
+
+
+```r
+d3.selectAll(".highlighted")
+  .attr("fill", "red")
+```
+
+---
+
+### Exercise Review (part d)
+
+Goal: I want to move the circle to location 100, 200 on the SVG canvas.
+    
+Attempt: Here is my [HTML](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.html) and [JS](https://github.com/krisrs1128/stat679_code/blob/main/activities/week4/in_class4-2d.js) file. This is the part that I think is relevant,
+
+```r
+d3.select("#my_circle")
+  .attrs({ x: 100, y: 200 })
+```
+Problem: It is not moving.
+
+---
+
+### Exercise Review (part d)
+
+Solution: The position of SVG circles is set by attributes called `cx` and `cy`, not `x`
+and `y`.
+
+
+```r
+d3.select("#my_circle")
+  .attrs({ cx: 100, cy: 200 })
+```
+
+---
+
+### In-Class Demo [5.1]
+
+* We will work through [Marching Circles] together
+
+* I've uploaded a starter document here: https://tinyurl.com/5m6h6xch
+
+
+---
+
+### In-Class Exercise [5.1]
+
+* Work through [General Update Pattern Reflection] in the exercises sheet.
+Discuss with your team, but submit individually.
+
+---
+
+### October 12, 2022
+
+1. Exercise review 5.1
+1. In-Class Demo 5.2
+1. In-Class Exercise 5.2
+
+---
+
+### Announcements
+
+* Next week's Friday (10/21) office hours rescheduled to Wednesday (10/19) from
+12:30 - 1:30pm
+* Project Milestone 1 due on Friday 10/14
+* Problem Set 2 is due on Friday 10/21
+* Midterm 1 is on 10/24 and will include material up to content of Week 5 - 4
+notes.
+
+---
+
+### Exercise Review
+
+* You only had to write pseudocode for this exercise
+* Most hypothetical examples had an emphasis on animation or interactivity, both
+of which are appropriate use cases for the general update pattern
+* Common points of confusion,
+  - Subtleties with interactivity and transitions
+  - Behavior of HTML enters / exits
+  - Application to real (not just simulated) data
+  
+---
+  
+### Exercise Review
+
+Subtleties with interactivity and transitions,
+  
+* The button `update()` was in the HTML, not the JS file.
+    - We could have alternatively included the update within the JS code by
+    adding an event listener
+    - See this implementation [[1](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-1-jschange.html), [2](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-1-jschange.js)]
+* The notes for Week 6-1 are dedicated to interactivity
+    
+
+```r
+d3.select("body")
+  .select("#my_button")
+  .on("mousedown", update)
+```
+
+---
+
+### Exercise Review
+    
+Subtleties with interactivity and transitions,
+
+* How can we use multiple transitions simultaneously? 
+.pull-left[
+
+```r
+d3.select("svg")
+  .select("#my_circle")
+  .transition()
+  .duration(1000)
+  .attrs({  cx: 10, cy: 10, r: 10 })
+  .transition()
+  .duration(1000)
+  .attrs({  cx: 250,  cy: 50,  r: 50,  fill: "red" })
+```
+]
+
+.pull-right[
+&lt;iframe src="https://krisrs1128.github.io/stat679_code/activities/week5/transitions.html" width=500 height=600&gt;&lt;/iframe&gt;
+]
+
+---
+
+### Exercise Review
+    
+
+"You need to schedule your later transitions to take place only after the first transition is finished." -- From the blog post, [_Simple examples with transition chaining_](https://tomroth.com.au/transitions/)
+
+.pull-left[
+
+```r
+// does not work
+d3.select("svg")
+  .select("#my_circle")
+  .transition()
+  .duration(1000)
+  .attrs({ cx: 10, cy: 10, r: 10 })
+
+d3.select("svg")
+  .select("#my_circle")
+  .transition()
+  .duration(1000)
+  .attrs({ cx: 250, cy: 50, r: 50, fill: "red"})
+```
+]
+
+.pull-right[
+&lt;iframe src="https://krisrs1128.github.io/stat679_code/activities/week5/transitions2.html" width=500 height=600&gt;&lt;/iframe&gt;
+]
+
+---
+
+### Exercise Review
+
+Data Structure vs. HTML Changes
+
+1. D3 stands for "Data-Driven Documents." The general update pattern is a way to
+have HTML tags reflect changes in underlying data structures.
+1. When we bind a data array and append new HTML elements, we are associating
+each element with a data item.
+1. D3 uses either array index or ID functions to make that association.
+1. Objects in new data binds can be compared with existing HTML-data
+associations
+
+---
+
+### Exercise Review
+
+This all seems fine for made up data, but how will we manage all this on real
+datasets?
+
+1. Next week's notes introduce visualizations with real datasets.
+1. Real applications are generally going to be based on,
+  - Filtering arrays that are no longer of interest
+  - Checking whether an object's attributes make it worth highlighting
+  - Changing the attributes that are used to define the encoding
+  which I think you will find similar to what we have seen with toy data.
+1. Right now we are still in the foundations. We'll use D3 on real data
+throughout the second half of the course.
+
+---
+
+### In-Class Demo [5.2]
+
+* We will work through [Random Walk with Links] together
+
+* I've uploaded a starter document here: https://tinyurl.com/rn9rpwkt
+
+---
+
+### In-Class Exercise [5.2]
+
+With your group, prepare one practice midterm problem and solution. 
+* Potential question types: Multiple TRUE / FALSE, writing psueodocode, discussion / critique
+* Potential question sources: Course readings, course notes, past in-class
+exercises or problem sets
+
+* Share your team's work on [this link](https://tinyurl.com/4rcszpms) (https://tinyurl.com/4rcszpms) so that others can use your question to study from
+* Also upload your slide to Canvas
+
+---
+
+### October 17, 2022
+
+1. In-Class Demo 6.1
+1. Discussion
+1. In-Class Exercise 6.1
+
+---
+
+### Announcements
+
+* Friday (10/21) office hours rescheduled to Wednesday (10/19) from 12:30 -
+1:30pm
+* Problem Set 2 is due on Friday 10/21
+* Midterm 1 is on 10/24 and will include material up to content of Week 5 - 4
+* We will be experimenting with alternative in-class exercise formats. Please be
+patient, and write if there's a format you find especially useful.
+
+---
+
+### In-Class Demo [6.1]
+
+* We will work through [Urbanization Linked Plots I] together
+
+* The starter HTML, JS, and CSS are available at https://tinyurl.com/wyy4uyph.
+
+---
+
+### Discussion
+
+What are some technical or analytical skills you feel (i) you have improved in
+or (ii) you would like to develop further? What kinds of practice might help
+with (ii)?
+
+* Please write your thoughts on this Google doc (https://tinyurl.com/bdf7wesw). 
+* If someone writes something you also felt, add a +1 (or +2, ...)
+* I will ask teams to share their thoughts.
+
+---
+
+### In-Class Exercise [6.1]
+
+Work through [Code Analysis] in the exercises sheet (also copied below).
+
+[Code Analysis] Pick one code example from this week's lecture notes. Provide a 3 - 4 sentence summary of the overall implementation strategy. Then, add comments every 10 - 15 lines describing what each section of code is doing. If there are parts that you do not understand, add a ??? next to it (we will review these in the next lecture).
+
+
+---
+
+### October 19, 2022
+
+1. Review Exercise 6.1
+1. In-Class Demo 6.2
+1. Discussion - Problem set resources
+
+---
+
+### Announcements
+
+* Friday (10/21) office hours rescheduled to Wednesday (today) from 12:30 -
+1:30pm
+* Problem Set 2 is due on Friday 10/21
+* Midterm 1 is on 10/24 and will include material up to content of Week 5 - 4
+
+---
+
+### Exercise Review
+
+We'll discuss some of the common questions from three of the examples,
+
+* `rain.js`
+* `gapminder-update2.js`
+* `zoom.js`
+
+---
+
+### Exercise Review - `rain.js`
+
+.center[
+&lt;iframe src="https://krisrs1128.github.io/stat679_code/examples/week5/week5-2/rain.html" width=800 height=200/&gt;
+]
+
+---
+
+
+### Exercise Review - `rain.js`
+
+What is the `map` doing?
+
+It multiplies the radius of each existing circle by `d.rate`.
+
+
+```r
+function update_data(rain) {
+      rain = rain.concat(new_point(900, 200, 50))
+      rain = rain.map(d =&gt; { d.r *= d.rate; return d})
+```
+
+---
+
+### Exercise Review - `rain.js`
+
+What is the `map` doing?
+
+This is an equivalent way to write the map.
+
+
+```r
+function update_data(rain) {
+      rain = rain.concat(new_point(900, 200, 50))
+      
+      for (let i = 0; i &lt; rain.length; i++ ) {
+        rain[i].r = rain[i].r * rain[i].rate
+      }
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+.center[
+&lt;iframe src="https://krisrs1128.github.io/stat679_code/examples/week5/week5-4/gapminder-update2.html" height=500, width=900/&gt;
+]
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+What is `ev`?
+
+
+```r
+function update_continents(ev, data, scales) {
+  continents = $(ev.target).val()
+  let subset = data.filter(d =&gt; continents.indexOf(d.continent) != -1 &amp; d.year == year);
+  ...
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+`ev` is a variable representing the input click event
+
+
+```r
+function setup_inputs(data, scales) {
+  d3.select("#country_select")
+  .on("change", (ev) =&gt; update_continents(ev, data, scales))
+  ...  
+
+function update_continents(ev, data, scales) {
+  continents = $(ev.target).val()
+  let subset = data.filter(d =&gt; continents.indexOf(d.continent) != -1 &amp; d.year == year);
+  ...
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+* `ev.target` specifies the HTML tag associated with the selection menu
+* `$(ev.target).val()` returns an array of the currently selected continents
+
+
+```r
+function setup_inputs(data, scales) {
+  d3.select("#country_select")
+  .on("change", (ev) =&gt; update_continents(ev, data, scales))
+  ...  
+  
+function update_continents(ev, data, scales) {
+  continents = $(ev.target).val()
+  let subset = data.filter(d =&gt; continents.indexOf(d.continent) != -1 &amp; d.year == year);
+  ...  
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+What does this first line do?
+
+* For a slider input, `ev.target.value` returns the current value for the slider
+* By default it is a string. `+ev.target.value` converts it to a numerical variable
+
+
+```r
+function update_year(ev, data, scales) {
+  year = +ev.target.value
+  ...
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+Why does a version of this code appear in both the initialization and update
+functions?
+
+* We need to re-append circles on every update
+* If we only had it in initialize, new countries could never get added in
+* If we only had it in update, the scatterplot would be empty until one of the
+inputs is changed
+
+
+```r
+let selection = d3.select("svg").selectAll("circle")
+  .data(subset, d =&gt; d.country)
+selection.enter()
+  .append("circle")
+  .attrs({
+    cx: d =&gt; scales.x(d.lpop),
+    cy: d =&gt; scales.y(d.life_expectancy),
+    fill: d =&gt; scales.fill(d.continent),
+  })
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+.center[
+&lt;iframe src="https://krisrs1128.github.io/stat679_code/examples/week6/week6-4/zoom.html" width=800 height=500/&gt;
+]
+
+---
+
+### Exercise Review - `zoom.js`
+
+How exactly does the setup function work?
+
+
+```r
+function setup_brushes(data, scales) {
+  let brush = d3.brush()
+    .extent([[width - 100, 0], [width, 100]])
+    .on("brush", ev =&gt; brush_update(ev, scales));
+
+  d3.select("#context")
+    .append("g")
+    .attr("class", "brush")
+    .call(brush)
+}
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+* This creates a brush object, but limited to the top right corner
+* It also says to run the `brush_update` function every time the brush is moved
+
+
+```r
+let brush = d3.brush()
+  .extent([[width - 100, 0], [width, 100]])
+  .on("brush", ev =&gt; brush_update(ev, scales));
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+* This "calls" the brush object onto an empty `&lt;g id="context"&gt;` element
+* When the call occurs, many small HTML tags are automatically appended (it's
+the same mechanism used for axes)
+
+
+```r
+d3.select("#context")
+  .append("g")
+  .attr("class", "brush")
+  .call(brush)
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+The update function wasn't clear.
+
+
+```r
+function brush_update(ev, scales) {
+  let [[x0, y0], [x1, y1]] = ev.selection;
+  x0 = scales.x_zoom.invert(x0)
+  y0 = scales.y_zoom.invert(y0)
+  x1 = scales.x_zoom.invert(x1)
+  y1 = scales.y_zoom.invert(y1)
+
+  let new_scale = make_scales([[x0, y0], [x1, y1]])
+  update(new_scale)
+}
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+
+```r
+// Gets brush coordinates in pixel coordinates
+let [[x0, y0], [x1, y1]] = ev.selection; 
+
+// Gets brush coordinates in original data coordinates
+x0 = scales.x_zoom.invert(x0)
+y0 = scales.y_zoom.invert(y0)
+x1 = scales.x_zoom.invert(x1)
+y1 = scales.y_zoom.invert(y1)
+```
+
+---
+
+### In-Class Demo [6.2]
+
+* We will work through [Urbanization Linked Plots II] together
+
+* The starter HTML, JS, and CSS are available at https://tinyurl.com/wyy4uyph
+
+---
+
+### Problem Set Resources
+
+https://tinyurl.com/rmttsbs8
+
+What resources have you found helpful for working through Problem Set 2? This
+discussion question lets you share these resources with others in the class.
+Feel free to draw from,
+
+* Course materials (notes, code examples, demos, ...)
+* Readings or documentation pages
+* Public code examples
+
+---
+
+### Problem Set Resources
+
+https://tinyurl.com/rmttsbs8
+
+When you add these to the discussion document, include,
+
+  * A link to the resource
+  * A brief description of the resource
+  * An explanation of why the resource is relevant for the problem
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
