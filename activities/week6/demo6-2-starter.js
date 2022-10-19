@@ -18,97 +18,87 @@ function make_scales() {
     }
 }
 
-let scales = make_scales()
-
 // create the barchart
-d3.select("#bars_2000")
-  .selectAll("rect")
-  .data(countries).enter()
-  .append("rect")
-  .attrs({
-    y: d => scales.bar_y(d.rank_density),
-    width: d => scales.bar_x(d.density_2000),
-    height: 0.9 * scales.bar_y.bandwidth(),
-    fill: "#858483"
-  })
+function initialize_bars(countries, scales, tag, variable, fill_color) {
+  d3.select(tag)
+    .selectAll("rect")
+    .data(countries).enter()
+    .append("rect")
+    .attrs({
+      x: 0,
+      y: d => scales.bar_y(d.rank_density),
+      width: d => scales.bar_x(d[variable]),
+      height: 20,
+      fill: fill_color
+    })
+}
 
-d3.select("#bars_2010")
-  .selectAll("rect")
-  .data(countries).enter()
-  .append("rect")
-  .attrs({
-    y: d => scales.bar_y(d.rank_density),
-    width: d => scales.bar_x(d.density_2010),
-    height: 0.9 * scales.bar_y.bandwidth(),
-    fill: "#da6761"
-  })
+function bar_annotation(countries, scales) {
+  d3.select("#bar_labels")
+    .selectAll("text")
+    .data(countries).enter()
+    .append("text")
+    .attrs({
+      x: -10,
+      y: d => scales.bar_y(d.rank_density) + 0.5 * scales.bar_y.bandwidth()
+    })
+    .text(d => d.country)
 
-// create the barchart country labels
-d3.select("#bar_labels")
-  .selectAll("text")
-  .data(countries).enter()
-  .append("text")
-  .attrs({
-    x: -10,
-    y: d => scales.bar_y(d.rank_density) + 0.5 * scales.bar_y.bandwidth()
-  })
-  .text(d => d.country)
+  let x_axis = d3.axisBottom(scales.bar_x).ticks(4)
+  d3.select("#bar_axes")
+    .attr("transform", "translate(0, 400)")
+    .call(x_axis);
+}
 
-// create the scatterplot
-d3.select("#circles_2000")
-  .selectAll("circle")
-  .data(data).enter()
-  .append("circle")
-  .attrs({
-    cx: 0,
-    cy: d => scales.slope_y(d.density_2000),
-    r: 3,
-    fill: "#858483"
-  })
+function initialize_circles(data, scales, tag, variable, fill_color, x_coord) {
+  d3.select(tag)
+    .selectAll("circle")
+    .data(data).enter()
+    .append("circle")
+    .attrs({
+      cx: x_coord,
+      cy: d => scales.slope_y(d[variable]),
+      r: 3,
+      fill: fill_color
+    })
+}
 
-d3.select("#circles_2010")
-  .selectAll("circle")
-  .data(data).enter()
-  .append("circle")
-  .attrs({
-    cx: 200,
-    cy: d => scales.slope_y(d.density_2010),
-    r: 3,
-    fill: "#da6761"
-  })
+function initialize_links(data, scales, x_min, x_max) {
+  d3.select("#connections")
+    .selectAll("line")
+    .data(data).enter()
+    .append("line")
+    .attrs({
+      x1: x_min,
+      x2: x_max,
+      y1: d => scales.slope_y(d.density_2000),
+      y2: d => scales.slope_y(d.density_2010)
+    })
+}
 
-d3.select("#connections")
-  .selectAll("line")
-  .data(data).enter()
-  .append("line")
-  .attrs({
-    x1: 0,
-    x2: 200,
-    y1: d => scales.slope_y(d.density_2000),
-    y2: d => scales.slope_y(d.density_2010)
-  })
+function initialize_slope_labels(data, scales, tag, variable, x_coord) {
+  d3.select(tag)
+    .selectAll("text")
+    .data(label_data).enter()
+    .append("text")
+    .attrs({
+      x: x_coord,
+      y: d => scales.slope_y(d["density_2000"])
+    })
+    .text(d => `${Math.round(d["density_2000"] / 10) / 100} | ${d.city}, ${d.country}`)
+}
+
+let scales = make_scales()
+initialize_bars(countries, scales, "#bars_2010", "density_2010", "#da6761")
+initialize_bars(countries, scales, "#bars_2000", "density_2000", "#858483")
+bar_annotation(countries, scales)
+initialize_circles(data, scales, "#circles_2010", "density_2010", "#da6761", 200)
+initialize_circles(data, scales, "#circles_2000", "density_2000", "#858483", 0)
+initialize_links(data, scales, 0, 200)
 
 let label_data = data.filter(d => d.density_2010 > 19600)
-
-d3.select("#slope_labels_2000")
-  .selectAll("text")
-  .data(label_data).enter()
-  .append("text")
-  .attrs({
-    x: -10,
-    y: d => scales.slope_y(d.density_2000)
-  })
-  .text(d => `${Math.round(d.density_2000 / 10) / 100} | ${d.city}, ${d.country}`)
-
-d3.select("#slope_labels_2010")
-  .selectAll("text")
-  .data(label_data).enter()
-  .append("text")
-  .attrs({
-    x: 210,
-    y: d => scales.slope_y(d.density_2010)
-  })
-  .text(d => `${Math.round(d.density_2010 / 10) / 100} | ${d.city}, ${d.country}`)
+initialize_slope_labels(label_data, scales, "#slope_labels_2010", "density_2000", 210)
+initialize_slope_labels(label_data, scales, "#slope_labels_2000", "density_2000", -10)
 
 // create annotation
 d3.select("#title")
