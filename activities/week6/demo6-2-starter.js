@@ -83,9 +83,9 @@ function initialize_slope_labels(data, scales, tag, variable, x_coord) {
     .append("text")
     .attrs({
       x: x_coord,
-      y: d => scales.slope_y(d["density_2000"])
+      y: d => scales.slope_y(d[variable])
     })
-    .text(d => `${Math.round(d["density_2000"] / 10) / 100} | ${d.city}, ${d.country}`)
+    .text(d => `${Math.round(d[variable] / 10) / 100} | ${d.city}, ${d.country}`)
 }
 
 let scales = make_scales()
@@ -97,7 +97,7 @@ initialize_circles(data, scales, "#circles_2000", "density_2000", "#858483", 0)
 initialize_links(data, scales, 0, 200)
 
 let label_data = data.filter(d => d.density_2010 > 19600)
-initialize_slope_labels(label_data, scales, "#slope_labels_2010", "density_2000", 210)
+initialize_slope_labels(label_data, scales, "#slope_labels_2010", "density_2010", 210)
 initialize_slope_labels(label_data, scales, "#slope_labels_2000", "density_2000", -10)
 
 // create annotation
