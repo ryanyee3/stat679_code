@@ -1219,9 +1219,13 @@ with your team, but submit individually.
 ### Announcements
 
 1. Project Milestone 1 is due on Friday (10/14)
-1. Midterm 2 will be held on 10/24. An example midterm + solutions from STAT 479
-has been posted. The content will be slightly different (to match our topics),
-but the format will be similar.
+1. Midterm 2 will be held on 10/24. 
+    * An example midterm + solutions from STAT 479 has been posted. 
+    * The content will be slightly different (no patchwork package, add D3
+    material), but the format will be similar (multiple T/F, pseudocode writing,
+    and discussion).
+    * The instructions will be the same. E.g., you may use a one page cheat
+    sheet.
 
 ---
 
@@ -1355,9 +1359,124 @@ Discuss with your team, but submit individually.
 
 ### Announcements
 
+* Next week's Friday (10/21) office hours rescheduled to Wednesday (10/19) from
+12:30 - 1:30pm
+* Project Milestone 1 due on Friday 10/14
+* Problem Set 2 is due on Friday 10/21
+* Midterm 1 is on 10/24 and will include material up to content of Week 5 - 4
+notes.
+
 ---
 
 ### Exercise Review
+
+* You only had to write pseudocode for this exercise
+* Most hypothetical examples had an emphasis on animation or interactivity, both
+of which are appropriate use cases for the general update pattern
+* Common points of confusion,
+  - Subtleties with interactivity and transitions
+  - Behavior of HTML enters / exits
+  - Application to real (not just simulated) data
+  
+---
+  
+### Exercise Review
+
+Subtleties with interactivity and transitions,
+  
+* The button `update()` was in the HTML, not the JS file.
+    - We could have alternatively included the update within the JS code by
+    adding an event listener
+    - See this implementation [[1](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-1-jschange.html), [2](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/demo5-1-jschange.js)]
+* The notes for Week 6-1 are dedicated to interactivity
+    
+```{r, eval = FALSE}
+d3.select("body")
+  .select("#my_button")
+  .on("mousedown", update)
+```
+
+---
+
+### Exercise Review
+    
+Subtleties with interactivity and transitions,
+
+* How can we use multiple transitions simultaneously? 
+.pull-left[
+```{r, eval = FALSE}
+d3.select("svg")
+  .select("#my_circle")
+  .transition()
+  .duration(1000)
+  .attrs({  cx: 10, cy: 10, r: 10 })
+  .transition()
+  .duration(1000)
+  .attrs({  cx: 250,  cy: 50,  r: 50,  fill: "red" })
+```
+]
+
+.pull-right[
+<iframe src="https://krisrs1128.github.io/stat679_code/activities/week5/transitions.html" width=500 height=600></iframe>
+]
+
+---
+
+### Exercise Review
+    
+
+"You need to schedule your later transitions to take place only after the first transition is finished." -- From the blog post, [_Simple examples with transition chaining_](https://tomroth.com.au/transitions/)
+
+.pull-left[
+```{r, eval = FALSE}
+// does not work
+d3.select("svg")
+  .select("#my_circle")
+  .transition()
+  .duration(1000)
+  .attrs({ cx: 10, cy: 10, r: 10 })
+
+d3.select("svg")
+  .select("#my_circle")
+  .transition()
+  .duration(1000)
+  .attrs({ cx: 250, cy: 50, r: 50, fill: "red"})
+```
+]
+
+.pull-right[
+<iframe src="https://krisrs1128.github.io/stat679_code/activities/week5/transitions2.html" width=500 height=600></iframe>
+]
+
+---
+
+### Exercise Review
+
+Data Structure vs. HTML Changes
+
+1. D3 stands for "Data-Driven Documents." The general update pattern is a way to
+have HTML tags reflect changes in underlying data structures.
+1. When we bind a data array and append new HTML elements, we are associating
+each element with a data item.
+1. D3 uses either array index or ID functions to make that association.
+1. Objects in new data binds can be compared with existing HTML-data
+associations
+
+---
+
+### Exercise Review
+
+This all seems fine for made up data, but how will we manage all this on real
+datasets?
+
+1. Next week's notes introduce visualizations with real datasets.
+1. Real applications are generally going to be based on,
+  - Filtering arrays that are no longer of interest
+  - Checking whether an object's attributes make it worth highlighting
+  - Changing the attributes that are used to define the encoding
+  which I think you will find similar to what we have seen with toy data.
+1. Right now we are still in the foundations. We'll use D3 on real data
+throughout the second half of the course.
 
 ---
 
@@ -1367,12 +1486,351 @@ Discuss with your team, but submit individually.
 
 * I've uploaded a starter document here: https://tinyurl.com/rn9rpwkt
 
-
 ---
 
 ### In-Class Exercise [5.2]
 
-* Work through [Marching Circles] part (e) in the exercises sheet. Discuss with
-your team, but submit individually.
+With your group, prepare one practice midterm problem and solution. 
+* Potential question types: Multiple TRUE / FALSE, writing psueodocode, discussion / critique
+* Potential question sources: Course readings, course notes, past in-class
+exercises or problem sets
+
+* Share your team's work on [this link](https://tinyurl.com/4rcszpms) (https://tinyurl.com/4rcszpms) so that others can use your question to study from
+* Also upload your slide to Canvas
+
+---
+
+### October 17, 2022
+
+1. In-Class Demo 6.1
+1. Discussion
+1. In-Class Exercise 6.1
+
+---
+
+### Announcements
+
+* Friday (10/21) office hours rescheduled to Wednesday (10/19) from 12:30 -
+1:30pm
+* Problem Set 2 is due on Friday 10/21
+* Midterm 1 is on 10/24 and will include material up to content of Week 5 - 4
+* We will be experimenting with alternative in-class exercise formats. Please be
+patient, and write if there's a format you find especially useful.
+
+---
+
+### In-Class Demo [6.1]
+
+* We will work through [Urbanization Linked Plots I] together
+
+* The starter HTML, JS, and CSS are available at https://tinyurl.com/wyy4uyph.
+
+---
+
+### Discussion
+
+What are some technical or analytical skills you feel (i) you have improved in
+or (ii) you would like to develop further? What kinds of practice might help
+with (ii)?
+
+* Please write your thoughts on this Google doc (https://tinyurl.com/bdf7wesw). 
+* If someone writes something you also felt, add a +1 (or +2, ...)
+* I will ask teams to share their thoughts.
+
+---
+
+### In-Class Exercise [6.1]
+
+Work through [Code Analysis] in the exercises sheet (also copied below).
+
+[Code Analysis] Pick one code example from this week's lecture notes. Provide a 3 - 4 sentence summary of the overall implementation strategy. Then, add comments every 10 - 15 lines describing what each section of code is doing. If there are parts that you do not understand, add a ??? next to it (we will review these in the next lecture).
+
+
+---
+
+### October 19, 2022
+
+1. Review Exercise 6.1
+1. In-Class Demo 6.2
+1. Discussion - Problem set resources
+
+---
+
+### Announcements
+
+* Friday (10/21) office hours rescheduled to Wednesday (today) from 12:30 -
+1:30pm
+* Problem Set 2 is due on Friday 10/21
+* Midterm 1 is on 10/24 and will include material up to content of Week 5 - 4
+
+---
+
+### Exercise Review
+
+We'll discuss some of the common questions from three of the examples,
+
+* `rain.js`
+* `gapminder-update2.js`
+* `zoom.js`
+
+---
+
+### Exercise Review - `rain.js`
+
+.center[
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week5/week5-2/rain.html" width=800 height=200/>
+]
+
+---
+
+
+### Exercise Review - `rain.js`
+
+What is the `map` doing?
+
+It multiplies the radius of each existing circle by `d.rate`.
+
+```{r, eval = FALSE}
+function update_data(rain) {
+      rain = rain.concat(new_point(900, 200, 50))
+      rain = rain.map(d => { d.r *= d.rate; return d})
+```
+
+---
+
+### Exercise Review - `rain.js`
+
+What is the `map` doing?
+
+This is an equivalent way to write the map.
+
+```{r, eval = FALSE}
+function update_data(rain) {
+      rain = rain.concat(new_point(900, 200, 50))
+      
+      for (let i = 0; i < rain.length; i++ ) {
+        rain[i].r = rain[i].r * rain[i].rate
+      }
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+.center[
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week5/week5-4/gapminder-update2.html" height=500, width=900/>
+]
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+What is `ev`?
+
+```{r, eval = FALSE}
+function update_continents(ev, data, scales) {
+  continents = $(ev.target).val()
+  let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
+  ...
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+`ev` is a variable representing the input click event
+
+```{r, eval = FALSE}
+function setup_inputs(data, scales) {
+  d3.select("#country_select")
+  .on("change", (ev) => update_continents(ev, data, scales))
+  ...  
+
+function update_continents(ev, data, scales) {
+  continents = $(ev.target).val()
+  let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
+  ...
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+* `ev.target` specifies the HTML tag associated with the selection menu
+* `$(ev.target).val()` returns an array of the currently selected continents
+
+```{r, eval = FALSE}
+function setup_inputs(data, scales) {
+  d3.select("#country_select")
+  .on("change", (ev) => update_continents(ev, data, scales))
+  ...  
+  
+function update_continents(ev, data, scales) {
+  continents = $(ev.target).val()
+  let subset = data.filter(d => continents.indexOf(d.continent) != -1 & d.year == year);
+  ...  
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+What does this first line do?
+
+* For a slider input, `ev.target.value` returns the current value for the slider
+* By default it is a string. `+ev.target.value` converts it to a numerical variable
+
+```{r, eval = FALSE}
+function update_year(ev, data, scales) {
+  year = +ev.target.value
+  ...
+```
+
+---
+
+### Exercise Review - `gapminder-update2.js`
+
+Why does a version of this code appear in both the initialization and update
+functions?
+
+* We need to re-append circles on every update
+* If we only had it in initialize, new countries could never get added in
+* If we only had it in update, the scatterplot would be empty until one of the
+inputs is changed
+
+```{r, eval = FALSE}
+let selection = d3.select("svg").selectAll("circle")
+  .data(subset, d => d.country)
+selection.enter()
+  .append("circle")
+  .attrs({
+    cx: d => scales.x(d.lpop),
+    cy: d => scales.y(d.life_expectancy),
+    fill: d => scales.fill(d.continent),
+  })
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+.center[
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week6/week6-4/zoom.html" width=800 height=500/>
+]
+
+---
+
+### Exercise Review - `zoom.js`
+
+How exactly does the setup function work?
+
+```{r, eval = F}
+function setup_brushes(data, scales) {
+  let brush = d3.brush()
+    .extent([[width - 100, 0], [width, 100]])
+    .on("brush", ev => brush_update(ev, scales));
+
+  d3.select("#context")
+    .append("g")
+    .attr("class", "brush")
+    .call(brush)
+}
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+* This creates a brush object, but limited to the top right corner
+* It also says to run the `brush_update` function every time the brush is moved
+
+```{r, eval = F}
+let brush = d3.brush()
+  .extent([[width - 100, 0], [width, 100]])
+  .on("brush", ev => brush_update(ev, scales));
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+* This "calls" the brush object onto an empty `<g id="context">` element
+* When the call occurs, many small HTML tags are automatically appended (it's
+the same mechanism used for axes)
+
+```{r, eval = FALSE}
+d3.select("#context")
+  .append("g")
+  .attr("class", "brush")
+  .call(brush)
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+The update function wasn't clear.
+
+```{r, eval = FALSE}
+function brush_update(ev, scales) {
+  let [[x0, y0], [x1, y1]] = ev.selection;
+  x0 = scales.x_zoom.invert(x0)
+  y0 = scales.y_zoom.invert(y0)
+  x1 = scales.x_zoom.invert(x1)
+  y1 = scales.y_zoom.invert(y1)
+
+  let new_scale = make_scales([[x0, y0], [x1, y1]])
+  update(new_scale)
+}
+```
+
+---
+
+### Exercise Review - `zoom.js`
+
+```{r, eval = FALSE}
+// Gets brush coordinates in pixel coordinates
+let [[x0, y0], [x1, y1]] = ev.selection; 
+
+// Gets brush coordinates in original data coordinates
+x0 = scales.x_zoom.invert(x0)
+y0 = scales.y_zoom.invert(y0)
+x1 = scales.x_zoom.invert(x1)
+y1 = scales.y_zoom.invert(y1)
+```
+
+---
+
+### In-Class Demo [6.2]
+
+* We will work through [Urbanization Linked Plots II] together
+
+* The starter HTML, JS, and CSS are available at https://tinyurl.com/wyy4uyph
+
+---
+
+### Problem Set Resources
+
+https://tinyurl.com/rmttsbs8
+
+What resources have you found helpful for working through Problem Set 2? This
+discussion question lets you share these resources with others in the class.
+Feel free to draw from,
+
+* Course materials (notes, code examples, demos, ...)
+* Readings or documentation pages
+* Public code examples
+
+---
+
+### Problem Set Resources
+
+https://tinyurl.com/rmttsbs8
+
+When you add these to the discussion document, include,
+
+  * A link to the resource
+  * A brief description of the resource
+  * An explanation of why the resource is relevant for the problem
 
 ---

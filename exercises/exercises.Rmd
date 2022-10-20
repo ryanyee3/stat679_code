@@ -1349,7 +1349,22 @@ component can assume that the x-axis starts at pixel 0.
     city-level population densities vary from 0 to 35000. Create these scales.
     f. Draw the circles and lines needed for the slope graph. Provide labels for
     the cities whose 2010 population density is above 19600.
-  
+    
+1. [Urbanization Linked Plots II] This problem continues [Urbanization Linked
+Plots I], adding interactivity to the scaffolding from the previous version. Starter HTML, CSS, and
+JS code is available at these links [[1](https://github.com/krisrs1128/stat679_code/blob/main/activities/week6/demo6-2.html), [2](https://github.com/krisrs1128/stat679_code/blob/main/activities/week6/demo6-2-starter.js), [3](https://github.com/krisrs1128/stat679_code/blob/main/activities/week6/demo6-2.css)]. This provides a static visualization over which we will add our interactivity.
+
+    a. Add an event listener to the rectangles in the bar chart. Print the name
+    of the currently hovered country every time a new bar is hovered.
+    b. Update the slope graph based on bar chart interaction. Specifically, show
+    only cities within the currently hovered country. You do not need to return
+    to displaying all cities when the mouse moves off of a country.
+    c. Add an event listener to the lines and circles in the slope graph. Print the name of the currently hovered city every time a new slope is hovered.
+    d. Update the appearance of the slope graph depending on user interactions.
+    Specifically, if the user has hovered over either the line or the circle
+    associated with a city, highlight that city and make the rest more
+    transparent.
+
 1. [Interactive Census] The code below creates a bar chart of US female
 population by age groups from the 1900 census. The x-axis is age group, and the
 y-axis is number of people. We will create an interactive version of this
