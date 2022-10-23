@@ -8,6 +8,8 @@ output:
 
 _Specialized representations for time series problems_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-2.Rmd), [Recording](https://krisrs1128.github.io/stat679_notes/2022/06/01/week7-2.html)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
@@ -18,24 +20,24 @@ opts_chunk$set(
   )
 ```
 
-    ```{r}
-    library(tidyverse)
-    library(tsibble)
-    library(tsibbledata)
-    library(ggHoriPlot)
-    library(ggstream)
-    library(colorspace)
-    library(ggalluvial)
-    library(scales)
-    
-    theme679 <- theme_bw() +
-      theme(
-        panel.background = element_rect(fill = "#f7f7f7"),
-        panel.grid.minor = element_blank()
-      )
-    theme_set(theme679)
-    ```
-    
+```{r}
+library(tidyverse)
+library(tsibble)
+library(tsibbledata)
+library(ggHoriPlot)
+library(ggstream)
+library(colorspace)
+library(ggalluvial)
+library(scales)
+
+theme679 <- theme_bw() +
+  theme(
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.grid.minor = element_blank()
+  )
+theme_set(theme679)
+```
+  
 
 1. In these notes, we continue our tour of static time series visualization
 techniques, with a special emphasis on collections of time series.

@@ -8,6 +8,8 @@ output:
 
 _An introduction to visualizing geospatial data_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-3.Rmd), [Recording](https://krisrs1128.github.io/stat679_notes/2022/06/01/week7-3.html)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
@@ -18,14 +20,13 @@ opts_chunk$set(
 )
 ```
 
-    ```{r}
-    library(sf)
-    library(tmap)
-    library(terra)
-    library(ceramic)
-    library(tidyverse)
-    ```
-
+```{r}
+library(sf)
+library(tmap)
+library(terra)
+library(ceramic)
+library(tidyverse)
+```
 
 1. In the same way that time plays a central role in analysis of time series
 datasets, space / location is often a central element in geographic data
@@ -152,7 +153,7 @@ the satellite image, we can use `sf`’s `st_crop` command.
 1. We can also zoom into the raster data using `terra`’s crop function. We crop
 both datasets again to get a high-resolution view of this region.
     
-    ```{r, eval = FALSE}
+    ```{r}
     e <- ext(80.7, 81, 29.9, 30)
     im_crop <- crop(im, e)
     glaciers_crop <- st_crop(glaciers, e)

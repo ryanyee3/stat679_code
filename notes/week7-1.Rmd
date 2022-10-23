@@ -8,6 +8,8 @@ output:
 
 _Basic tasks and visual strategies for temporal data_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-1.Rmd), [Recording](https://krisrs1128.github.io/stat679_notes/2022/06/01/week7-1.html)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
