@@ -1482,7 +1482,7 @@ features related to the day of the week for each timepoint, created by the
     between the different approaches in terms of visual effectiveness and
     implementation complexity?
   
-1. [Spotify Time Series]  In this problem, we will study music streaming on
+1. [Spotify Time Series I]  In this problem, we will study music streaming on
 Spotify in 2017. We'll start by looking at some characteristics of the most
 streamed song, and then will practice how to extract features from across the
 collection of most streamed songs.
@@ -1520,6 +1520,34 @@ collection of most streamed songs.
     time series. Provide a non-technical explanation about what songs with high
     values of this feature would potentially look like.
     
+    
+1. [Spotify Time Series II] The code below provides the number of Spotify
+streams for the 40 tracks with the highest stream count in the Spotify 100
+dataset for 2017. This problem will ask you to explore a few different
+strategies that can be used to visualize this time series collection.
+
+    ```{r}
+    spotify_full <- read_csv("https://uwmadison.box.com/shared/static/xj4vupjbicw6c8tbhuynw0pll6yh1w0d.csv")
+    top_songs <- spotify_full %>%
+      group_by(track_name) %>%
+      summarise(total = sum(streams)) %>%
+      slice_max(total, n = 40) %>%
+      pull(track_name)
+    
+    spotify <- spotify_full %>%
+      filter(region == "global", track_name %in% top_songs)
+    ```
+    
+    a. Design and implement a line-based visualization of these data.
+  
+    b. Design and implement a horizon plot visualization of these data.
+  
+    c. Building from the static views from (a - b), propose, but do not implement,
+  a visualization of this dataset that makes use of dynamic queries. What would
+  be the structure of interaction, and how would the display update when the
+  user provides a cue? Explain how you would use one type of D3 selection or
+  mouse event to implement this hypothetical interactivity.
+
 1. [Bike Demand] This problem asks you to visualize a [dataset](https://uwmadison.box.com/shared/static/f16jmkkskylfl1hnd5rpslzduja929g2.csv) of hourly bikeshare demand. Provide your code and make sure it is readable.
 
     a. Make a line plot of bike demand (`count`) by hour, faceted out across the 7 days of the week (`weekday`).
@@ -1528,7 +1556,7 @@ collection of most streamed songs.
     d. Provide a brief description of some takeaways from the final
     visualization.
     
-1. [Australian Pharmaceuticals] The PBS dataset contains the number of orders
+1. [Australian Pharmaceuticals I] The PBS dataset contains the number of orders
 filed every month for different classes of pharmaceutical drugs, as tracked by
 the Australian Pharmaceutical Benefits Scheme. It is read in below,
     
@@ -1550,6 +1578,32 @@ the Australian Pharmaceutical Benefits Scheme. It is read in below,
     each component, and order the features according to the magnitude of their
     contribution. Provide a brief interpretation of the second principal
     component direction.
+
+1. [Australian Pharmaceuticals II] The code below takes the full PBS dataset
+from the previous problem and filters down to the 10 most commonly prescribed
+pharmaceutical types. This problem will ask you to implement and compare two
+approaches to visualizing this dataset.
+
+    ```{r}
+    pbs_full <- read_csv("https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv") %>%
+        mutate(Month = as.Date(Month))
+    
+    top_atcs <- pbs_full %>%
+      group_by(ATC2_desc) %>%
+      summarise(total = sum(Scripts)) %>%
+      slice_max(total, n = 10) %>%
+      pull(ATC2_desc)
+    
+    pbs <- pbs_full %>%
+      filter(ATC2_desc %in% top_atcs, Month > "2007-01-01")
+    ```
+  
+    a. Implement a stacked area visualization of these data.
+  
+    b. Implement an alluvial visualization of these data.
+  
+    c. Compare and contrast the strengths and weaknesses of these two visualization strategies. Which user queries are easier to answer using one approach vs. the other?
+
 
 1. [Polio incidence] In this problem, we will use a heatmap to visualize a large
 collection of time series. The
@@ -1670,7 +1724,7 @@ containing Landsat 7 satellite imagery of a Himalayan glacier system.
     
     c. Make a plot of the slopes associated with each pixel within this region.
   
-1. [CalFresh Enrollment] In this problem, we will investigate spatial and
+1. [CalFresh Enrollment I] In this problem, we will investigate spatial and
 temporal aspects of enrollment in CalFresh, a nutritional assistance program in
 California.
     
@@ -1704,6 +1758,21 @@ California.
     of dynamic queries. What questions would the visualization answer? What would be
     the structure of interaction, and how would the display update when the user
     provides a cue?
+    
+1. [CalFresh Enrollment II] In this problem, we will develop an interactively
+linked spatial and temporal visualization of enrollment data from CalFresh, a
+nutritional assistance program in California. We will use D3 in this problem.
+
+    a. Using a line generator, create a static line plot that visualizes change in
+  enrollment for every county in California.
+    b. On the same page as part (a), create a choropleth map of California, shaded
+  in by the average enrollment for that county over the full time window of the
+  dataset.
+    c. Propose one interactive, graphical query the links the combined spatial +
+    temporal view from (a - b). For example, you may consider highlighting time
+    series when a county is hovered, highlighting counties when specific series
+    are brushed, or updating choropleth colors when a subsetted time range is selected.
+    d. Implement your proposal from part (c).
 
 1. [Geospatial Datasets] For each of the datasets below, specify whether it is in a vector or raster
 data format. If it is in a vector data format, explain which types of geometries
@@ -1732,6 +1801,16 @@ use case for the function.
     d. `geom_sf`
     
     e. `coord_sf`
+    
+1. [Temporal and Geospatial Commands] For each of the commands below, explain
+what role it serves in temporal or spatial data visualization. Describe a
+specific (if hypothetical) situation within which you could imagine using the
+function.
+
+    a. `geom_stream`
+    b. `tm_lines`
+    c. `rast`
+    d. `geom_horizon`
 
 1. [Glacial Lakes]. The data at this [link](https://github.com/krisrs1128/stat479_s22/tree/main/_slides/week7/exercises/data/glacial_lakes) contain labels of glacial lakes the
 Hindu Kush Himalaya, created during an ecological survey in 2015 by the
@@ -1740,11 +1819,15 @@ International Centre for Integrated Mountain Development.
     a. How many lakes are in this dataset? What are the latitude / longitude
     coordinates of the largest lakes in each Sub-basin?
     
-    b. Plot the polygons associated with each of the lakes identified in step (a).
-    _Hint: To make the polygons legible, use `wrap_plots` in the `patchwork` package to combine separate plots for each lake._
+    b. Plot the polygons associated with each of the lakes identified in step
+    (a). _Hint: You may find it useful to split lakes across panels using the
+    `tmap_facets` function. If you use this approach, make sure to include a
+    scale with `tm_scale_bar()`, so that it is clear that lakes have different
+    sizes.
     
-    c. Visualize the lakes with latitude between 28.2 and 28.4 and with longitude
-    between 85.8 and 86. Optionally, add a basemap associated with each lake.
+    c. Visualize all lakes with latitude between 28.2 and 28.4 and with
+    longitude between 85.8 and 86. Optionally, add a basemap associated with
+    each lake.
     
 1. [Population Density] The problem below visualizes [population
 data](https://github.com/krisrs1128/stat479_s22/blob/main/_slides/week7/exercises/data/afripop2020.tif?raw=true)
@@ -1798,6 +1881,23 @@ interactive map of the [NYC Trees Dataset](https://uwmadison.box.com/shared/stat
       `addProviderTiles(providers$CartoDB.Positron)`.
       
     d. Color each tree's circle according to its species group. _Hint: Create a mapping from species groups to colors using the `colorFactor` function in Leaflet. For example, `pal <- colorFactor(brewer, filtered_trees$species_group)` creates an objet `pal` that can be called in the `color` argument to `addCircles`._
+    
+1. [Visualization for Everyday Decisions] We routinely encounter spatial and
+temporal data in everyday life, from the from the dates on a concert calendar to
+the layout of buttons in an elevator. This problem asks you to critically
+reflect on the way these data are represented.
+
+    a. Describe one type of spatial or temporal dataset (loosely defined) that you
+  encounter in a nonacademic context. What visual encodings are used? Does it
+  implement any interactivity?
+  
+    b. What questions does the visualization help you answer? How easily can you
+  arrive at an accurate answer?
+  
+    c. In the spirit of the [re-imagined parking sign](https://nightingaledvs.com/thoughtful-design-the-power-of-naive-optimism-2/) project, propose an
+  alternative representation of these data (or an alternative way of interacting
+  with the same representation). Why did you propose the design that you did?
+  What advantages do you think it has?
     
 # Network and Hierarchical Data
 
