@@ -8,7 +8,7 @@ output:
 
 _Specialized representations for time series problems_
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-2.Rmd), [Recording](https://krisrs1128.github.io/stat679_notes/2022/06/01/week7-2.html)
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-2.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%207%20-%202%3A%20Time%20Series%20Visualization%20(II)/1_ug8hxqew)
 
 ```{r, echo = FALSE}
 library(knitr)

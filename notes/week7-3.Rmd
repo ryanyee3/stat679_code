@@ -8,7 +8,7 @@ output:
 
 _An introduction to visualizing geospatial data_
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-3.Rmd), [Recording](https://krisrs1128.github.io/stat679_notes/2022/06/01/week7-3.html)
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week7-3.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%207%20-%203%3A%20Geospatial%20Visualization%20(I)/1_nimg6uzj)
 
 ```{r, echo = FALSE}
 library(knitr)

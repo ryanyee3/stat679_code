@@ -8,7 +8,7 @@ output:
 
 _An introduction to click events in Shiny_
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week+3+-+1A+Graphical+Queries+-+Click+Events/1_9zrb0tjb)
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week3-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%207%20-%201%3A%20Time%20Series%20Visualization%20(I)/1_dubryjey)
 
 ```{r, echo = FALSE}
 library(knitr)
