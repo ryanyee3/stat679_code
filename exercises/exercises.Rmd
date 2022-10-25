@@ -1812,6 +1812,19 @@ function.
     c. `rast`
     d. `geom_horizon`
 
+1. [`tmap` Exploration] There are many example maps on the `tmap` package's
+[homepage](https://github.com/r-tmap/tmap/) -- see the vignettes, tutorials, or
+presentations, for example. In this problem, you will recreate and deconstruct
+one example visualization from this webpage.
+    
+    a. Pick one figure from the page linked above. Describe the data used to
+    generate this figure. Is the data in a vector or raster format?
+    b. Regenerate the figure and write comments in the code that describe the
+    purpose for each layer (or related groups of layers).
+    c. Have you ever worked with a dataset where the type of visualization you
+    just created might have been helpful? If so, describe how. If not, imagine a
+    hypothetical data analysis project where you might use this code.
+
 1. [Glacial Lakes]. The data at this [link](https://github.com/krisrs1128/stat479_s22/tree/main/_slides/week7/exercises/data/glacial_lakes) contain labels of glacial lakes the
 Hindu Kush Himalaya, created during an ecological survey in 2015 by the
 International Centre for Integrated Mountain Development.
@@ -1882,6 +1895,14 @@ interactive map of the [NYC Trees Dataset](https://uwmadison.box.com/shared/stat
       
     d. Color each tree's circle according to its species group. _Hint: Create a mapping from species groups to colors using the `colorFactor` function in Leaflet. For example, `pal <- colorFactor(brewer, filtered_trees$species_group)` creates an objet `pal` that can be called in the `color` argument to `addCircles`._
     
+1. [Job Interview] Imagine that you are interviewing job candidates for a data
+science position that involves visualizing {This Part Filled in Class}. Prepare
+an interview question that test candidates' knowledge of / experience with
+these topics. Also prepare examples of strong responses. An good question will
+either (i) ask the interviewee to describe a specific time in the past where
+they used the concept or (ii) present the interviewee with a type of challenge
+related to what is commonly encountered and see how they would address it.
+
 1. [Visualization for Everyday Decisions] We routinely encounter spatial and
 temporal data in everyday life, from the from the dates on a concert calendar to
 the layout of buttons in an elevator. This problem asks you to critically
