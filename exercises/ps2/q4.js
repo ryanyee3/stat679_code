@@ -13,10 +13,12 @@ function update() {
     .selectAll("rect")
     .data(bar_ages, d => d.id)
 
+  // Enter the new rectangle on the left
   selection.enter()
     .append("rect")
     .attrs({ x: 0, y: 500 })
 
+  // Update all heights and locations
   d3.select("svg")
     .selectAll("rect")
     .transition()
@@ -28,9 +30,10 @@ function update() {
       width: 100
     })
 
+  // Exit the old rectangle on the right
   selection.exit()
     .transition()
     .duration(1000)
-    .attrs({ y: 500 height: 0})
+    .attrs({ y: 500, height: 0})
     .remove()
 }
