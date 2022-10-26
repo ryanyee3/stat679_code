@@ -1,0 +1,434 @@
+---
+title: "Problem Set 2 - Solutions"
+output: rmdformats::readthedown
+css: custom.css
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(shiny)
+library(lubridate)
+my_theme <- theme_bw() +
+  theme(
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.grid.minor = element_blank(),
+    axis.ticks = element_blank(),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  )
+theme_set(my_theme)
+```
+
+
+# Interactive German Traffic 
+
+## Scoring
+
+* a - b, Design (1 points): Creative and readable (1 point), generally appropriate but with some lack of critical attention (.5 points), difficult to read (0 points)
+* a - b, Code (0.5 points): Clear and concise (0.5 points), correct but unnecessarily complex (0.25 points), missing (0 points)
+* c, Design and Discussion (1 points): Creative question, solution, and
+interpretation (1 point), appropriate question, solution, and interpretation,
+but perhaps simplistic question / difficult to read design / underdeveloped
+interpretation (0.5 points), misleading design or no interpretation (0 points)
+* c, Code (0.5 points): Clear and concise (0.5 points), correct but unnecessarily complex (0.25 points), missing (0 points)
+
+## Question
+
+This problem will revisit the previous problem from an interactive point of
+view. We will build a visualization that helps users explore daily traffic
+patterns across multiple German cities, using interactivity to help users
+navigate the collection. We will need additional features related to the day of
+the week for each timepoint, created by the `wday` function below,
+
+```{r}
+traffic <- read_csv("https://uwmadison.box.com/shared/static/x0mp3rhhic78vufsxtgrwencchmghbdf.csv") %>%
+ mutate(day_of_week = wday(date))
+```
+
+
+## Example Solution
+
+a. Design and implement a Shiny app that allows users to visualize traffic
+over time across selected subsets of cities. Make sure that it is possible
+to view data from more than one city at a time. It is not necessary to label
+the cities within the associated figure.
+
+```{r, eval = FALSE}
+plot_traffic <- function(df) {
+  ggplot(df) +
+    geom_line(aes(date, value, group = name)) +
+    labs(x = "Date", y = "Traffic") +
+    theme(axis.title = element_text(size = 20))
+}
+
+ui <- fluidPage(
+  selectInput("city", "City", unique(traffic$name), multiple = TRUE),
+  plotOutput("time_series")
+)
+
+server <- function(input, output) {
+  output$time_series <- renderPlot({
+    traffic %>%
+      filter(name %in% input$city) %>%
+      plot_traffic()
+  })
+}
+
+shinyApp(ui, server)
+```
+
+<iframe src="https://data-viz.it.wisc.edu/content/da978e9a-126c-4319-abcf-ce5b3fefadc3" width=900 height=550 data-external="1"/>
+
+b. Introduce new inputs to allow users to select a contiguous range of days
+of the week. For example, the user should have a way of zooming into the
+samples taken within the Monday - Wednesday range.
+
+```{r, eval = FALSE}
+ui <- fluidPage(
+  selectInput("city", "City", unique(traffic$name), multiple = TRUE),
+  sliderInput("day_of_week", "Days", 2, 7, c(2, 7)),
+  plotOutput("time_series")
+)
+
+server <- function(input, output) {
+  output$time_series <- renderPlot({
+    traffic %>%
+      filter(
+        name %in% input$city, 
+        day_of_week >= input$day_of_week[1] & day_of_week <= input$day_of_week[2]
+      ) %>%
+      plot_traffic()
+  })
+}
+
+shinyApp(ui, server)
+```
+
+<iframe src="https://data-viz.it.wisc.edu/content/aa7c25b0-618f-41a2-80b7-1816c6ea9b41" width=900 height=550 data-external="1"/>
+
+c. Propose, but do not implement, at least one alternative strategy for
+supporting user queries from either part (a) or (b). What are the tradeoffs
+between the different approaches in terms of visual effectiveness and
+implementation complexity?
+
+# NYC Rentals
+
+## Scoring
+
+## Question
+
+In this problem, we'll create a visualization to dynamically query a
+[dataset](https://uwmadison.box.com/shared/static/zi72ugnpku714rbqo2og9tv2yib5xped.csv)
+of Airbnb rentals in Manhattan in 2019. The steps below guide you through the
+process of building this visualization.
+
+## Example Solution
+
+a. Make a scatterplot of locations (Longitude vs. Latitude) for all the rentals,
+colored in by `room_type`.
+
+```{r}
+rentals <- read_csv("https://uwmadison.box.com/shared/static/zi72ugnpku714rbqo2og9tv2yib5xped.csv")
+ggplot(rentals) +
+  geom_point(aes(longitude, latitude, col = room_type), size = 0.3, alpha = 0.6) +
+  scale_color_manual(values = c("#3F4B8C","#F26444", "#40331D")) +
+  guides(col = guide_legend(override.aes = list(alpha = 1, size = 2))) +
+  labs(col = "Room Type") +
+  coord_fixed() +
+  theme_void()
+```
+
+b. Design a plot and a dynamic query so that clicking or brushing on the
+plot updates the points that are highlighted in the scatterplot in (a). For
+example, you may query a histogram of prices to focus on neighborhoods that
+are more or less affordable.
+
+```{r, eval = FALSE}
+ui <- fluidPage(
+  h3("NYC Airbnb Rentals"),
+  fluidRow(
+    column(6,
+           plotOutput("histogram", brush = brushOpts("plot_brush", direction = "x"), height = 200),
+           dataTableOutput("table")
+    ),
+    column(6, plotOutput("map", height = 600)),
+  ),
+  theme = bs_theme(bootswatch = "minty")
+)
+
+server <- function(input, output) {
+  selected <- reactiveVal(rep(TRUE, nrow(rentals)))
+  observeEvent(input$plot_brush, {
+    selected(brushedPoints(rentals, input$plot_brush, allRows = TRUE)$selected_)
+  })
+  
+  output$histogram <- renderPlot(overlay_histogram(rentals, selected()))
+  output$map <- renderPlot(scatterplot(rentals, selected()))
+  output$table <- renderDataTable(filter_df(rentals, selected()))
+}
+
+shinyApp(ui, server)
+```
+
+```{r, eval = FALSE}
+
+scatterplot <- function(df, selected_) {
+  df %>%
+    mutate(selected = selected_) %>%
+    ggplot() +
+    geom_point(
+      aes(
+        longitude, latitude, col = room_type, 
+        alpha = as.numeric(selected),
+        size = as.numeric(selected)
+      )
+    ) +
+    scale_color_manual(values = c("#3F4B8C","#F26444", "#40331D"), guide = "none") +
+    scale_alpha(range = c(0.1, .5), guide = "none") +
+    scale_size(range = c(0.1, .9), guide = "none") +
+    coord_fixed() +
+    theme_void()
+}
+
+overlay_histogram <- function(df, selected_) {
+  sub_df <- filter(df, selected_)
+  ggplot(df, aes(trunc_price, fill = room_type)) +
+    geom_histogram(alpha = 0.3, binwidth = 25) +
+    geom_histogram(data = sub_df, binwidth = 25) +
+    scale_y_continuous(expand = c(0, 0, 0.1, 0)) +
+    scale_fill_manual(values = c("#3F4B8C","#F26444", "#40331D")) +
+    labs(
+      fill = "Room Type",
+      y = "Count",
+      x = "Price"
+    )
+}
+
+filter_df <- function(df, selected_) {
+  filter(df, selected_) %>%
+    select(name, price, neighbourhood, number_of_reviews) %>%
+    rename(Name = name, Price = price, Neighborhood = neighbourhood, `Number of Reviews` = number_of_reviews)
+}
+```
+
+
+<iframe src="https://data-viz.it.wisc.edu/content/b31a14ea-20dd-4718-b2e9-39bc318a2306" width=900 height=550 data-external="1"/>
+
+c. Implement the reverse graphical query. That is, allow the user to update
+the plot in (b) by brushing over the scatterplot in (a).
+
+```{r eval = FALSE}
+ui <- fluidPage(
+  h3("NYC Airbnb Rentals"),
+  fluidRow(
+    column(6,
+           plotOutput("histogram", brush = brushOpts("plot_brush", direction = "x"), height = 200),
+           dataTableOutput("table")
+    ),
+    column(6, plotOutput("map", brush = "plot_brush", height = 600)),
+  ),
+  theme = bs_theme(bootswatch = "minty")
+)
+```
+
+<iframe src="https://data-viz.it.wisc.edu/content/a410cc0e-84a1-46f6-959d-1c8cfbb2c729" width=900 height=550 data-external="1"/>
+
+d. Comment on the resulting visualization(s). If you had a friend who was
+interested in renting an Airbnb in NYC, what would you tell them?
+    
+
+# Random Point Transitions
+
+## Scoring
+
+## Question
+This exercise will give practice implementing
+transitions on simulated data. The code below generates a random set of 10
+numbers,
+
+```{d3, eval = FALSE}
+let generator = d3.random();
+let x = generator(10);
+```
+## Example Solution
+
+a. Encode the data in `x` using the x-coordinate positions of 10 circles.
+b. Animate the circles. Specifically, at fixed time intervals, generate a
+new set of 10 numbers, and smoothly transition the original set of circles
+to locations corresponding to these new numbers.
+c. Extend your animation so that at least one other attribute is changed at
+each time step. For example, you may consider changing the
+color or the size of the circles. Make sure that transitions remain smooth
+(e.g., if transitioning size, gradually increase or decrease the circles'
+radii).
+
+# Bar Chart Transitions
+
+## Scoring
+
+## Question
+
+This problem continues [Simple Bar Chart] above. We will create a bar chart that
+adds and removes one bar each time a button is clicked. Specifically, the
+function below takes an initial array `x` and creates a new array that removes
+the first element and adds a new one to the end. Using D3’s generate update
+pattern, write a function that updates the visualization from [Simple bar chart]
+every time that `update_data()` is called. New bars should be entered from the
+left, exited from the right, and transitioned after each click. Your solution
+should look (roughly) like [this example](https://github.com/krisrs1128/stat679_code/blob/main/activities/week5/simple_bars_example.mov?raw=true).
+
+```{d3, eval = FALSE}
+let bar_ages = [],
+generator = d3.randomUniform(0, 500),
+id = 0;
+
+function update() {
+  bar_ages = bar_ages.map(d => { return {id: d.id, age: d.age + 1, height: d.height }})
+  bar_ages.push({age: 0, height: generator(), id: id});
+  bar_ages = bar_ages.filter(d => d.age < 5)
+  id += 1;
+}
+```
+
+## Example Solution
+
+```{r, eval = FALSE}
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+  </head>
+  <body>
+    <button id="my_button" onclick="update()">Click</button>
+    <svg height=500 width=900>
+    </svg>
+  </body>
+  <script src="q4.js"></script>
+</html>
+```
+
+```{r, eval = FALSE}
+let bar_ages = [],
+generator = d3.randomUniform(0, 500),
+id = 0;
+
+function update() {
+  bar_ages = bar_ages.map(d => { return {id: d.id, age: d.age + 1, height: d.height }})
+  bar_ages.push({age: 0, height: generator(), id: id});
+  bar_ages = bar_ages.filter(d => d.age < 5)
+  id += 1;
+
+  let selection = d3.select("svg")
+    .selectAll("rect")
+    .data(bar_ages, d => d.id)
+
+  selection.enter()
+    .append("rect")
+    .attrs({ x: 0, y: 500 })
+
+  d3.select("svg")
+    .selectAll("rect")
+    .transition()
+    .duration(1000)
+    .attrs({
+      x: d => (900 / 5) * d.age,
+      y: d => 500 - d.height,
+      height: d => d.height,
+      width: 100
+    })
+
+  selection.exit()
+    .transition()
+    .duration(1000)
+    .attrs({ y: 500 height: 0})
+    .remove()
+}
+```
+
+
+
+# Transition Taxonomy
+
+## Scoring
+
+## Question
+
+In "Animated Transitions in Statistical Graphics," Heer and Robertson introduce
+a taxonomy of visualizations transitions. These include,
+
+  * View Transformation: We can move the "camera view" associated with a fixed
+  visualization. This includes panning and zooming, for example.
+  * Filtering: These transitions remove elements based on a user selection.
+  For example, we may smoothly remove points in a scatterplot based on a
+  dropdown menu selection.
+  * Substrate Transformation: This changes the background context on which
+  points lie. For example, we may choose to rescale the axis in a scatterplot
+  to show a larger range.
+  * Ordering: These transitions change the ordering of an ordinal variable.
+  For example, we may transition between sorting rows of a heatmap
+  alphabetically vs. by their row average.
+  * Timestep: These transitions smoothly vary one plot to the corresponding
+  plot at a different timestep. For example, we might show "slide" a time
+  series to the left to introduce data for the most recent year.
+  * Visualization Change: We may change the visual encoding used for a fixed
+  dataset. For example, we may smoothly transition from a bar chart to a pie
+  chart.
+  * Data Scheme Change: This changes the features that are displayed. For
+  example, we may smoothly turn a 1D point plot into a 2D scatterplot by
+  introducing a new variable.
+  
+In this problem, we will explore how these transitions arise in practice and
+explore how they may be implemented. 
+
+## Example Solution
+
+a. Pick any visualization from the New York Times Upshot, Washington Post
+Visual Stories, the BBC Interactives and Graphics, or the Guardian
+Interactives pages. Describe two transitions that it implements. Of the 7
+transition types given above, which is each one most similar to? Explain
+your choice.
+b. For any transition (which may or may not be one of those you chose in
+(a)), identify the types of graphical marks used to represent the data. How
+would you create this type of mark in SVG?
+c. To achieve the transition effect, how do you expect that the SVG elements
+would be modified / added / removed? Specifically, if elements are modified,
+what SVG `attrs` would be changed, and if elements are added or removed, how
+would the enter-exit-update pattern apply? You do not need to look at the
+code implementing the actual visualization, but you should give a plausible
+description of how the transition could be implemented in D3.
+
+# Icelandic Population Analysis
+
+## Scoring
+
+## Question
+
+In this problem, we will analyze the design and implementation of this [interactive visualization](https://observablehq.com/@mbostock/icelandic-population-by-age-1841-2019) of Iceland's population.
+
+
+## Example Solution
+
+a. Explain how to read this visualization. What are two potential insights a
+reader could takeaway from this visualization?
+b. The implementation uses the following data join,
+    
+    ```{r, eval = FALSE}
+    rect = rect
+      .data(data.filter(d => d.year === year), d => `${d.sex}:${d.year - d.age}`)
+    ```
+      
+    What does this code do? What purpose does it serve within the larger visualization?
+    
+c. When the bars are entered at `Age = 0`, they seem to "pop up," rather
+than simply being appended to the end of the bar chart. How is this effect
+implemented?
+d. Suppose that you had comparable population-by-age data for two countries.
+What queries would be interesting to support? How would you generalize the
+current visualization's design to support those queries?
+
+
