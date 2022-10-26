@@ -251,20 +251,33 @@ transitions on simulated data. The code below generates a random set of 10
 numbers,
 
 ```{d3, eval = FALSE}
-let generator = d3.random();
-let x = generator(10);
+let generator = d3.randomUniform();
+let x = d3.range(10).map(generator);
 ```
+
 ## Example Solution
 
 a. Encode the data in `x` using the x-coordinate positions of 10 circles.
+
+
+<iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q3a.html" width=900 height=550 data-external="1"/>
+
+
 b. Animate the circles. Specifically, at fixed time intervals, generate a
 new set of 10 numbers, and smoothly transition the original set of circles
 to locations corresponding to these new numbers.
+
+
+<iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q3b.html" width=900 height=550 data-external="1"/>
+
+
 c. Extend your animation so that at least one other attribute is changed at
 each time step. For example, you may consider changing the
 color or the size of the circles. Make sure that transitions remain smooth
 (e.g., if transitioning size, gradually increase or decrease the circles'
 radii).
+
+<iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q3c.html" width=900 height=550 data-external="1"/>
 
 # Bar Chart Transitions
 
@@ -327,10 +340,12 @@ function update() {
     .selectAll("rect")
     .data(bar_ages, d => d.id)
 
+  // Enter the new rectangle on the left
   selection.enter()
     .append("rect")
     .attrs({ x: 0, y: 500 })
 
+  // Update all heights and locations
   d3.select("svg")
     .selectAll("rect")
     .transition()
@@ -342,6 +357,7 @@ function update() {
       width: 100
     })
 
+  // Exit the old rectangle on the right
   selection.exit()
     .transition()
     .duration(1000)
@@ -350,7 +366,7 @@ function update() {
 }
 ```
 
-
+<iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q4.html" width=900 height=550 data-external="1"/>
 
 # Transition Taxonomy
 
