@@ -19,5 +19,6 @@ function update() {
       r: d => 50 * generator(),
       fill: d => `hsl(${360 * generator()},${100 * generator()}%,${20 + 80 * generator()}%)`
     })
-
 }
+
+d3.interval(update, 1000)

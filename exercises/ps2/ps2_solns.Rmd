@@ -57,57 +57,75 @@ over time across selected subsets of cities. Make sure that it is possible
 to view data from more than one city at a time. It is not necessary to label
 the cities within the associated figure.
 
-```{r, eval = FALSE}
-plot_traffic <- function(df) {
-  ggplot(df) +
-    geom_line(aes(date, value, group = name)) +
-    labs(x = "Date", y = "Traffic") +
-    theme(axis.title = element_text(size = 20))
-}
+    We first define a function that, when given a subset of cities, draws a line
+  plot.
 
-ui <- fluidPage(
-  selectInput("city", "City", unique(traffic$name), multiple = TRUE),
-  plotOutput("time_series")
-)
-
-server <- function(input, output) {
-  output$time_series <- renderPlot({
-    traffic %>%
-      filter(name %in% input$city) %>%
-      plot_traffic()
-  })
-}
-
-shinyApp(ui, server)
-```
-
+    ```{r, eval = FALSE}
+    plot_traffic <- function(df) {
+      ggplot(df) +
+        geom_line(aes(date, value, group = name)) +
+        labs(x = "Date", y = "Traffic") +
+        theme(axis.title = element_text(size = 20))
+    }
+    ```
+  
+    Our design will update a time series plot of all the cities every time a
+  dropdown menu is updated. We will allow multiple cities to be selected
+  simultaneously. Specifically, our UI has an input for choosing cities and
+  displays the line plot as an output. Our server recognizes changes in the
+  choice of cities, filters the data to that subset, and then draws the updated
+  time series.
+    
+    ```{r, eval = FALSE}
+    ui <- fluidPage(
+      selectInput("city", "City", unique(traffic$name), multiple = TRUE),
+      plotOutput("time_series")
+    )
+    
+    server <- function(input, output) {
+      output$time_series <- renderPlot({
+        traffic %>%
+          filter(name %in% input$city) %>%
+          plot_traffic()
+      })
+    }
+    
+    shinyApp(ui, server)
+    ```
+    
+    A hosted version of the app is provided below.
+  
 <iframe src="https://data-viz.it.wisc.edu/content/da978e9a-126c-4319-abcf-ce5b3fefadc3" width=900 height=550 data-external="1"/>
 
 b. Introduce new inputs to allow users to select a contiguous range of days
 of the week. For example, the user should have a way of zooming into the
 samples taken within the Monday - Wednesday range.
 
-```{r, eval = FALSE}
-ui <- fluidPage(
-  selectInput("city", "City", unique(traffic$name), multiple = TRUE),
-  sliderInput("day_of_week", "Days", 2, 7, c(2, 7)),
-  plotOutput("time_series")
-)
+    We use nearly the same design except that a new slider input is provided for
+    choosing days of the week. When a range of days is chosen, then the time
+    series will show only that range for the currently selected cities.
 
-server <- function(input, output) {
-  output$time_series <- renderPlot({
-    traffic %>%
-      filter(
-        name %in% input$city, 
-        day_of_week >= input$day_of_week[1] & day_of_week <= input$day_of_week[2]
-      ) %>%
-      plot_traffic()
-  })
-}
-
-shinyApp(ui, server)
-```
-
+    ```{r, eval = FALSE}
+    ui <- fluidPage(
+      selectInput("city", "City", unique(traffic$name), multiple = TRUE),
+      sliderInput("day_of_week", "Days", 2, 7, c(2, 7)),
+      plotOutput("time_series")
+    )
+    
+    server <- function(input, output) {
+      output$time_series <- renderPlot({
+        traffic %>%
+          filter(
+            name %in% input$city, 
+            day_of_week >= input$day_of_week[1] & day_of_week <= input$day_of_week[2]
+          ) %>%
+          plot_traffic()
+      })
+    }
+    
+    shinyApp(ui, server)
+    ```
+    
 <iframe src="https://data-viz.it.wisc.edu/content/aa7c25b0-618f-41a2-80b7-1816c6ea9b41" width=900 height=550 data-external="1"/>
 
 c. Propose, but do not implement, at least one alternative strategy for
@@ -131,118 +149,139 @@ process of building this visualization.
 a. Make a scatterplot of locations (Longitude vs. Latitude) for all the rentals,
 colored in by `room_type`.
 
-```{r}
-rentals <- read_csv("https://uwmadison.box.com/shared/static/zi72ugnpku714rbqo2og9tv2yib5xped.csv")
-ggplot(rentals) +
-  geom_point(aes(longitude, latitude, col = room_type), size = 0.3, alpha = 0.6) +
-  scale_color_manual(values = c("#3F4B8C","#F26444", "#40331D")) +
-  guides(col = guide_legend(override.aes = list(alpha = 1, size = 2))) +
-  labs(col = "Room Type") +
-  coord_fixed() +
-  theme_void()
-```
+    The main logic for this figure is given in the `ggplot` and `geom_point`
+    layers below. We use `scale_color_manual` to create a custom color scheme, a
+    `guide_legend` to allow the legend points to stand out more clearly than the
+    scatterplot points, and `coord_fixed` to keep longitude and latitude
+    coordinates in proportion with one another.
 
+    ```{r}
+    rentals <- read_csv("https://uwmadison.box.com/shared/static/zi72ugnpku714rbqo2og9tv2yib5xped.csv")
+    ggplot(rentals) +
+      geom_point(aes(longitude, latitude, col = room_type), size = 0.3, alpha = 0.6) +
+      scale_color_manual(values = c("#3F4B8C","#F26444", "#40331D")) +
+      guides(col = guide_legend(override.aes = list(alpha = 1, size = 2))) +
+      labs(col = "Room Type") +
+      coord_fixed() +
+      theme_void()
+    ```
+    
 b. Design a plot and a dynamic query so that clicking or brushing on the
 plot updates the points that are highlighted in the scatterplot in (a). For
 example, you may query a histogram of prices to focus on neighborhoods that
 are more or less affordable.
 
-```{r, eval = FALSE}
-ui <- fluidPage(
-  h3("NYC Airbnb Rentals"),
-  fluidRow(
-    column(6,
-           plotOutput("histogram", brush = brushOpts("plot_brush", direction = "x"), height = 200),
-           dataTableOutput("table")
-    ),
-    column(6, plotOutput("map", height = 600)),
-  ),
-  theme = bs_theme(bootswatch = "minty")
-)
+    We will implement the suggested design, using a brushed histogram to
+    highlight all the units within a specified price range. The map will always
+    show all points, but their size and opacity will be updated to reflect the
+    brush selection.
 
-server <- function(input, output) {
-  selected <- reactiveVal(rep(TRUE, nrow(rentals)))
-  observeEvent(input$plot_brush, {
-    selected(brushedPoints(rentals, input$plot_brush, allRows = TRUE)$selected_)
-  })
-  
-  output$histogram <- renderPlot(overlay_histogram(rentals, selected()))
-  output$map <- renderPlot(scatterplot(rentals, selected()))
-  output$table <- renderDataTable(filter_df(rentals, selected()))
-}
-
-shinyApp(ui, server)
-```
-
-```{r, eval = FALSE}
-
-scatterplot <- function(df, selected_) {
-  df %>%
-    mutate(selected = selected_) %>%
-    ggplot() +
-    geom_point(
-      aes(
-        longitude, latitude, col = room_type, 
-        alpha = as.numeric(selected),
-        size = as.numeric(selected)
-      )
-    ) +
-    scale_color_manual(values = c("#3F4B8C","#F26444", "#40331D"), guide = "none") +
-    scale_alpha(range = c(0.1, .5), guide = "none") +
-    scale_size(range = c(0.1, .9), guide = "none") +
-    coord_fixed() +
-    theme_void()
-}
-
-overlay_histogram <- function(df, selected_) {
-  sub_df <- filter(df, selected_)
-  ggplot(df, aes(trunc_price, fill = room_type)) +
-    geom_histogram(alpha = 0.3, binwidth = 25) +
-    geom_histogram(data = sub_df, binwidth = 25) +
-    scale_y_continuous(expand = c(0, 0, 0.1, 0)) +
-    scale_fill_manual(values = c("#3F4B8C","#F26444", "#40331D")) +
-    labs(
-      fill = "Room Type",
-      y = "Count",
-      x = "Price"
+    ```{r, eval = FALSE}
+    ui <- fluidPage(
+      h3("NYC Airbnb Rentals"),
+      fluidRow(
+        column(6,
+               plotOutput("histogram", brush = brushOpts("plot_brush", direction = "x"), height = 200),
+               dataTableOutput("table")
+        ),
+        column(6, plotOutput("map", height = 600)),
+      ),
+      theme = bs_theme(bootswatch = "minty")
     )
-}
-
-filter_df <- function(df, selected_) {
-  filter(df, selected_) %>%
-    select(name, price, neighbourhood, number_of_reviews) %>%
-    rename(Name = name, Price = price, Neighborhood = neighbourhood, `Number of Reviews` = number_of_reviews)
-}
-```
-
-
-<iframe src="https://data-viz.it.wisc.edu/content/b31a14ea-20dd-4718-b2e9-39bc318a2306" width=900 height=550 data-external="1"/>
-
+    
+    server <- function(input, output) {
+      selected <- reactiveVal(rep(TRUE, nrow(rentals)))
+      observeEvent(input$plot_brush, {
+        selected(brushedPoints(rentals, input$plot_brush, allRows = TRUE)$selected_)
+      })
+      
+      output$histogram <- renderPlot(overlay_histogram(rentals, selected()))
+      output$map <- renderPlot(scatterplot(rentals, selected()))
+      output$table <- renderDataTable(filter_df(rentals, selected()))
+    }
+    
+    shinyApp(ui, server)
+    ```
+    
+    We have encapsulated the code for updating the plots into separate
+    functions, printed below. We make sure that both the histogram and
+    scatterplot highlight the currently selected range. This is the reason for
+    using two `geom_histogram` layers in `overlay_histogram` -- one layer is
+    needed for the context and a second is used for the currently highlighted
+    selection.
+    
+    ```{r, eval = FALSE}
+    scatterplot <- function(df, selected_) {
+      df %>%
+        mutate(selected = selected_) %>%
+        ggplot() +
+        geom_point(
+          aes(
+            longitude, latitude, col = room_type, 
+            alpha = as.numeric(selected),
+            size = as.numeric(selected)
+          )
+        ) +
+        scale_color_manual(values = c("#3F4B8C","#F26444", "#40331D"), guide = "none") +
+        scale_alpha(range = c(0.1, .5), guide = "none") +
+        scale_size(range = c(0.1, .9), guide = "none") +
+        coord_fixed() +
+        theme_void()
+    }
+    
+    overlay_histogram <- function(df, selected_) {
+      sub_df <- filter(df, selected_)
+      ggplot(df, aes(trunc_price, fill = room_type)) +
+        geom_histogram(alpha = 0.3, binwidth = 25) +
+        geom_histogram(data = sub_df, binwidth = 25) +
+        scale_y_continuous(expand = c(0, 0, 0.1, 0)) +
+        scale_fill_manual(values = c("#3F4B8C","#F26444", "#40331D")) +
+        labs(
+          fill = "Room Type",
+          y = "Count",
+          x = "Price"
+        )
+    }
+    
+    filter_df <- function(df, selected_) {
+      filter(df, selected_) %>%
+        select(name, price, neighbourhood, number_of_reviews) %>%
+        rename(Name = name, Price = price, Neighborhood = neighbourhood, `Number of Reviews` = number_of_reviews)
+    }
+    ```
+  
+  <iframe src="https://data-viz.it.wisc.edu/content/b31a14ea-20dd-4718-b2e9-39bc318a2306" width=900 height=550 data-external="1"/>
+  
 c. Implement the reverse graphical query. That is, allow the user to update
 the plot in (b) by brushing over the scatterplot in (a).
-
-```{r eval = FALSE}
-ui <- fluidPage(
-  h3("NYC Airbnb Rentals"),
-  fluidRow(
-    column(6,
-           plotOutput("histogram", brush = brushOpts("plot_brush", direction = "x"), height = 200),
-           dataTableOutput("table")
-    ),
-    column(6, plotOutput("map", brush = "plot_brush", height = 600)),
-  ),
-  theme = bs_theme(bootswatch = "minty")
-)
-```
-
+  
+    We can use almost exactly the same code as in the above app. The only
+    difference is that we add a brush to our map. By keeping the brush IDs the
+    same across the two `plotOutput`s, we ensure that the plot is updated
+    whenever either brush is changed.
+    
+    ```{r eval = FALSE}
+    ui <- fluidPage(
+      h3("NYC Airbnb Rentals"),
+      fluidRow(
+        column(6,
+               plotOutput("histogram", brush = brushOpts("plot_brush", direction = "x"), height = 200),
+               dataTableOutput("table")
+        ),
+        column(6, plotOutput("map", brush = "plot_brush", height = 600)),
+      ),
+      theme = bs_theme(bootswatch = "minty")
+    )
+    ```
+    
 <iframe src="https://data-viz.it.wisc.edu/content/a410cc0e-84a1-46f6-959d-1c8cfbb2c729" width=900 height=550 data-external="1"/>
-
+  
 d. Comment on the resulting visualization(s). If you had a friend who was
 interested in renting an Airbnb in NYC, what would you tell them?
-    
-
+      
+  
 # Random Point Transitions
-
+  
 ## Scoring
 
 ## Question
@@ -259,23 +298,96 @@ let x = d3.range(10).map(generator);
 
 a. Encode the data in `x` using the x-coordinate positions of 10 circles.
 
+    The D3 code for this encoding must bind the data and then set the `cx`
+    attribute according to the current data value. Note that the radius and `cy`
+    attributes did not  have to be set here -- since they are constant across
+    all data elements, we put their values into the CSS file.
+    
+    ```{r, eval = FALSE}
+    let generator = d3.randomUniform();
+    let x = d3.range(10).map(generator);
+    
+    d3.select("svg")
+      .selectAll("circle")
+      .data(x).enter()
+      .append("circle")
+      .attr("cx", d => 900 * d)
+    ```
+
+    We had used the following HTML and CSS, which are similar to all the
+    examples used in class. They are just an empty SVG on a page that loads the
+    required resources.
+
+    HTML:
+    ```{r, eval = FALSE}
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+        <link rel="stylesheet" href="q3.css">
+      </head>
+      <body>
+        <svg height=500 width=900>
+        </svg>
+      </body>
+      <script src="q3a.js"></script>
+    </html>
+    ```
+    
+    CSS:
+    ```{r, eval = FALSE}
+    circle {
+      cy: 250;
+      r: 20
+    }
+    ```
 
 <iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q3a.html" width=900 height=550 data-external="1"/>
-
 
 b. Animate the circles. Specifically, at fixed time intervals, generate a
 new set of 10 numbers, and smoothly transition the original set of circles
 to locations corresponding to these new numbers.
-
+    
+    We add the following lines to the javascript in part (a). This is creating a
+    new `x` array and transitioning the points to a new `cx` based on the newly
+    bound data. We create the animation by repeatedly calling `update` using
+    `d3.interval()`.
+    
+    ```{r, eval = FALSE}
+    function update() {
+      x = d3.range(10).map(generator);
+      d3.selectAll("circle")
+        .data(x)
+        .transition()
+        .duration(1000)
+        .attrs({
+          cx: d => 900 * d,
+        })
+    }
+    
+    d3.interval(update, 1000)
+    ```
 
 <iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q3b.html" width=900 height=550 data-external="1"/>
-
 
 c. Extend your animation so that at least one other attribute is changed at
 each time step. For example, you may consider changing the
 color or the size of the circles. Make sure that transitions remain smooth
 (e.g., if transitioning size, gradually increase or decrease the circles'
 radii).
+
+    We modify our `.attrs` function above to set random radii and colors. Note
+    that we had to remove `r` from the CSS in part (a) to ensure that it doesn't
+    overrule our D3-defined `r` attribute.
+    
+    ```{r, eval = FALSE}
+    .attrs({
+      cx: d => 900 * d,
+      r: d => 50 * generator(),
+      fill: d => `hsl(${360 * generator()},${100 * generator()}%,${20 + 80 * generator()}%)`
+    })
+    ```
 
 <iframe src="https://krisrs1128.github.io/stat679_code/exercises/ps2/q3c.html" width=900 height=550 data-external="1"/>
 

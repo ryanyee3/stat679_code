@@ -15,5 +15,6 @@ function update() {
     .transition()
     .duration(1000)
     .attr("cx", d => 900 * d)
-
 }
+
+d3.interval(update, 1000)
