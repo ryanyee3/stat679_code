@@ -609,10 +609,10 @@ Interactives pages. Describe two transitions that it implements. Of the 7
 transition types given above, which is each one most similar to? Explain
 your choice.
 
-  We will analyze the interactive map and horizon plots from [_Mapping the Spread of Drought Across the U.S._](https://www.nytimes.com/interactive/2014/upshot/mapping-the-spread-of-drought-across-the-us.html). 
+    We will analyze the interactive map and horizon plots from [_Mapping the Spread of Drought Across the U.S._](https://www.nytimes.com/interactive/2014/upshot/mapping-the-spread-of-drought-across-the-us.html). 
 Two transitions implemented in this report are,
 
-  * Map transitions: When the reader drags a slider, they are able to see changes
+    * Map transitions: When the reader drags a slider, they are able to see changes
 in drought severity across the continental US. This exactly falls into the
 "Timestep" type of transition, because it shows the same view (the drought map)
 but with different underlying data as the sider is changed.
@@ -628,8 +628,8 @@ b. For any transition (which may or may not be one of those you chose in
 (a)), identify the types of graphical marks used to represent the data. How
 would you create this type of mark in SVG?
 
-  For the horizon plot interaction, we could use an SVG `<rect>` to draw the bar
-representing the currently howevered timepoint. The height of this SVG would
+    For the horizon plot interaction, we could use an SVG `<rect>` to draw the bar
+representing the currently hovered timepoint. The height of this SVG would
 reflect the severity of the drought at the current timepoint. There is also an
 HTML text element that is moved on each interaction, giving the tooltip
 representing the current bar's height.
@@ -641,7 +641,7 @@ would the enter-exit-update pattern apply? You do not need to look at the
 code implementing the actual visualization, but you should give a plausible
 description of how the transition could be implemented in D3.
 
-  For the bar representing the hovered position, we would have to transition
+    For the bar representing the hovered position, we would have to transition
   both the $x$-axis location and the height of the bar. There do not need to be
   any entrances or exits of HTML elements, since we are only ever showing one
   bar at a time. Roughly, we would bind data on the drought severity at the
