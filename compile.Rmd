@@ -8,7 +8,7 @@ date: "`r Sys.Date()`"
 library(tidyverse)
 library(rmarkdown)
 library(fs)
-files <- dir_ls(glob="week1-*Rmd")
+files <- str_c("notes/week8-", 1:4, ".Rmd")
 for (f in files) {
   render(f, md_document(preserve_yaml=TRUE))
 }

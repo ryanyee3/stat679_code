@@ -4,6 +4,7 @@ layout: post
 output:
   md_document:
     preserve_yaml: true
+  always_allow_html: true
 ---
 
 _Idioms for interacting with geographic data_
@@ -38,7 +39,7 @@ overlays the new vector features on top of the map. It’s worth noting that the
 vector features were created automatically – there was no need to create or read
 in any type of sf object.
 
-    ```{r}
+    ```{r, eval = FALSE}
     cities <- read_csv("https://uwmadison.box.com/shared/static/j98anvdoasfb1h651qxzrow2ua45oap1.csv")
     leaflet(cities) %>%
       addTiles() %>%
@@ -130,13 +131,18 @@ changes the fill of the currently hovered county,
     treat the map as just another collection of SVG paths, and all our
     interaction events behave in the same way.
 
-1. Here is a somewhat more complex version of the above map where each county is
-assumed to be associated with a (random) time series. Redrawing the lower and
-upper bounds on the time series changes which counties are highlighted. Though
-the implementation is more involved, there are no concepts used here that we
-haven't covered at some point in the class.
+1. We can also imagine selecting geographic regions by interacting with linked
+views. This is used in the Urbanization in East Asia
+[visualization](http://nbremer.github.io/urbanization/), for example, where we
+can see all the urban areas within one country when we hover its associated bar.
 
-  <iframe width="100%" height="584" frameborder="0" src="https://observablehq.com/embed/@krisrs1128/geo-time-selection?cells=chart"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Z0K_H_zjcYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+1. Here is a somewhat more complex version of the earlier random data example
+where acounties are associated with (random) time series. Redrawing the lower
+and upper bounds on the time series changes which counties are highlighted.
+
+<iframe width="100%" height="584" frameborder="0" src="https://observablehq.com/embed/@krisrs1128/geo-time-selection?cells=chart"></iframe>
 
 1. Though it’s not exactly interaction, another common strategy for
 spatiotemporal data is animation. The major trends often become apparent by

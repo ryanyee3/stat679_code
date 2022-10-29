@@ -1,7 +1,7 @@
 ---
 title: Spatial Data in D3
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
@@ -37,8 +37,14 @@ output:
           bounds = data.features.map(d3.geoBounds),
           areas = data.features.map(d3.geoArea);
 
-        console.log(centroids, bounds, areas)  
+        console.log(centroids, bounds, areas)
 
+    You can view the console output at [this
+    link](https://krisrs1128.github.io/stat679_code/examples/week8/week8-3/glaciers-query.html).
+    A [similar
+    query](https://github.com/krisrs1128/stat679_code/blob/main/examples/week8/week8-3/road-properties.js)
+    for the Brasilia roads dataset prints output [like
+    this](https://krisrs1128.github.io/stat679_code/examples/week8/week8-3/road-properties.html).
     A variety of related processing functions can be found in the
     [`d3-geo` library](https://github.com/d3/d3-geo).
 
@@ -61,9 +67,12 @@ output:
 2.  We haven’t considered raster data in this lecture. This is because
     javascript doesn’t have a simple built-in way to handle raster data.
     If we want to visualize a raster dataset, we need to first convert
-    them to simple PNG images — this loses the geographic metadata, and
+    them to simple PNG images. This loses the geographic metadata, and
     so any geographic processing has to be done before this step. In
     practice, it’s common to either manually convert to a PNG or to use
     a tiling library, which automatically converts raster data into a
     collection of PNGs. Both of these techniques are beyond the scope of
-    our class, unfortunately.
+    our class, but if you are curious, you can check out these resources
+    \[[1](https://datawanderings.com/2020/08/08/raster-backgrounds/),
+    [2](https://developmentseed.org/titiler/),
+    [3](https://cran.r-project.org/web/packages/tiler/vignettes/tiler-intro.html)\].
