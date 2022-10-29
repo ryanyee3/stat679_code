@@ -1,5 +1,5 @@
 ---
-title: Spatial Data in D3
+title: Geospatial Data in D3
 layout: post
 output:
   md_document:
@@ -32,7 +32,7 @@ the vector dataset.
     ```
     which shows an object like this in the console,
 
-<img src="https://github.com/krisrs1128/stat679_code/raw/main/examples/week8/week8-3/glaciers-screenshot.png" width=600/>
+    <img src="https://github.com/krisrs1128/stat679_code/raw/main/examples/week8/week8-3/glaciers-screenshot.png" width=600/>
 
 
 1. Even though these look like basic javascript objects, `d3.geojson` is
@@ -59,11 +59,46 @@ functions and can then be applied to any new collection of vector features.
 
 1. For example, we can use a path generator to draw the glacier boundaries,
 
-<iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-3/glaciers.html" width=700 height=900></iframe>
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-3/glaciers.html" width=700 height=900></iframe>
 
-1. Remember that we have the vector feature attributes stored in `.features`.
-This allows us to modify the SVG attributes to reflect the data. For example, we
-can shade the glaciers in by their depth.
+    To draw the glacier boundaries, we defined the path generator with the block
+    below. The `proj` object serves a role similar to the `x` and `y` scales
+    that are used in line generators -- it is mapping abstract geographical
+    coordinates to the pixel extent of the screen. Specifically, `.fitSize`
+    takes the
+    spatial coordinates in `data` and relates it to the size of the screen,
+    `[width, height]`. For geographic data, this process is formally called a
+    `projection`, because we have to associate the surface of the 3D globe to a
+    2D plane.
+
+    ```{r eval = FALSE}
+    let proj = d3.geoMercator()
+      .fitSize([width, height], data)
+    let path = d3.geoPath()
+      .projection(proj);
+    ```
+
+1. Given this `geoPath` generator, we can append one polygon per glacier in the
+dataset using the usual D3 data bind. Note that we bind `data.features` rather
+than just `data`. In geojson objects, the `.features` attribute contains an
+array with the spatial features coordinates.
+
+     ```{r eval = FALSE}
+     d3.select("#map")
+       .selectAll("path")
+       .data(data.features).enter()
+       .append("path")
+       .attrs({
+         d: path,
+         fill: d => scales.fill(d.properties.Thickness)
+       })
+     ```
+
+    In the block above, we've also passed a color scale to encode glacier depth
+with color. In general, these geospatial data are treated just like any other
+SVG `path` element, and we can set set their attributes using the usual `.attrs`
+command. This is also how we achieved the mouseover effect -- we simply added a
+`.on("mouseover", ...)` listener for whenever we hover over one of these paths.
 
 1. We haven’t considered raster data in this lecture. This is because javascript
 doesn’t have a simple built-in way to handle raster data. If we want to

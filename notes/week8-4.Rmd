@@ -1,5 +1,5 @@
 ---
-title: Spatial Interaction
+title: Geospatial Interaction
 layout: post
 output:
   md_document:

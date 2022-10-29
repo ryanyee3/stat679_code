@@ -53,8 +53,8 @@ function update_series(ev, flat_data, delaunay, scales) {
 
   d3.select(ev.target).raise()
   d3.select("#tooltip text")
-    .attr("transform", `translate(${scales.x(flat_data[ix].time_of_day) + 5}, ${scales.y(data[ix].Demand) - 5})`)
-    .text(data[ix].Date_string)
+    .attr("transform", `translate(${scales.x(flat_data[ix].time_of_day) + 5}, ${scales.y(flat_data[ix].Demand) - 5})`)
+    .text(flat_data[ix].Date_string)
 }
 
 function add_axes(scales) {

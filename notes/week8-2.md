@@ -81,7 +81,12 @@ output:
     brushing. We can brush to focus in on specific time windows of
     interest, while never losing the context of the overall time series
     shape. This is implemented in the following example, by Mike
-    Bostock,
+    Bostock. The main idea is to update the domain of the upper (focus)
+    time series’ x-axis scale based on the currently brushed time window
+    from the lower (context) series. This is the one-dimensional analog
+    of the approach used in the scatterplot zooming example in our
+    [earlier
+    notes](https://krisrs1128.github.io/stat679_notes/2022/06/01/week6-4.html).
 
 <iframe width="100%" height="633" frameborder="0" src="https://observablehq.com/embed/@d3/focus-context?cells=chart%2Cviewof+focus">
 </iframe>

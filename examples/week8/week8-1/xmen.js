@@ -38,7 +38,9 @@ function draw(stream) {
 }
 
 function visualize(data) {
+  console.log(data)
   let stream = reshape_array(data);
+  console.log(stream)
   draw(stream);
 }
 
