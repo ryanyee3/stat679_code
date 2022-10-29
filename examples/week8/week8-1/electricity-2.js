@@ -17,6 +17,7 @@ function visualize(data) {
   let scales = make_scales(data);
   draw_line(data, scales);
   add_axes(scales);
+  add_voronoi(data.flat(), scales);
 }
 
 function draw_line(data, scales) {
@@ -30,24 +31,30 @@ function draw_line(data, scales) {
     .append("path")
     .attrs({
       d: path_generator,
+      id: d => d[0].Date_string,
       stroke: "#a8a8a8",
-      id: d => d[0].Date_string
+      "stroke-width": 1
     })
-    .on("mouseover", (ev, data) => update_series(ev, data));
 }
 
-function update_series(ev, data) {
+function add_voronoi(flat_data, scales) {
+  let delaunay = d3.Delaunay.from(flat_data, d => scales.x(d.time_of_day), d => scales.y(d.Demand));
+  d3.select("svg").on("mousemove", (ev) => update_series(ev, flat_data, delaunay, scales))
+}
+
+function update_series(ev, flat_data, delaunay, scales) {
+  let ix = delaunay.find(ev.pageX, ev.pageY);
   d3.select("#series")
     .selectAll("path")
     .attrs({
-      "stroke": d => d[0].Date_string == ev.target.id ? "red" : "#a8a8a8"
+      stroke: e => e[0].Date_string == flat_data[ix].Date_string ? "red" : "#a8a8a8",
+      "stroke-width": e => e[0].Date_string == flat_data[ix].Date_string ? "4px" : "1px"
     })
 
   d3.select(ev.target).raise()
-  d3.select("#tooltip")
-    .style("top", ev.clientY + "px")
-    .style("left", (20 + ev.clientX) + "px")
-    .text(ev.target.id)
+  d3.select("#tooltip text")
+    .attr("transform", `translate(${scales.x(flat_data[ix].time_of_day) + 5}, ${scales.y(data[ix].Demand) - 5})`)
+    .text(data[ix].Date_string)
 }
 
 function add_axes(scales) {
