@@ -11,6 +11,10 @@ function mouseover(d) {
   d3.select("#name")
     .select("text")
     .text(d.properties.GLIMS_ID)
+
+  d3.select("#map")
+    .selectAll("path")
+    .attr("stroke-width", e => e.properties.GLIMS_ID == d.properties.GLIMS_ID ? 2 : 0)
 }
 
 function visualize(data) {
@@ -25,7 +29,8 @@ function visualize(data) {
     .append("path")
     .attrs({
       d: path,
-      fill: d => { console.log(d); return scales.fill(d.properties.Thickness)}
+      fill: d => scales.fill(d.properties.Thickness),
+      "stroke-width": 0
     })
     .on("mouseover", (_, d) => mouseover(d));
 
