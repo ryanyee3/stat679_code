@@ -1,0 +1,77 @@
+---
+title: "Problem Set 3 Solutions"
+output: pdf_document
+---
+
+```{r}
+library(tmap)
+library(sf)
+library(tidyverse)
+```
+
+
+```{r}
+lakes <- read_sf("~/Downloads/GL_3basins_2015.geojson")
+top_lakes <- lakes %>%
+  group_by(Sub_Basin) %>%
+  slice_max(Area)
+
+basin_order <- top_lakes %>%
+  arrange(-Area) %>%
+  pull(Sub_Basin)
+
+top_lakes <- top_lakes %>%
+  mutate(Sub_Basin = factor(Sub_Basin, levels = basin_order))
+```
+
+```{r}
+tm_shape(top_lakes) +
+  tm_polygons() +
+  tm_facets(by = "Sub_Basin") +
+  tm_scale_bar()
+```
+
+```{r}
+pbs <- read_csv("https://uwmadison.box.com/shared/static/fcy9q1uleqru7gcs287q903y0rcnw2a2.csv") %>%
+    mutate(Month = as.Date(Month))
+
+top_atcs <- pbs %>%
+  group_by(ATC2_desc) %>%
+  summarise(total = sum(Scripts)) %>%
+  slice_max(total, n = 10) %>%
+  pull(ATC2_desc)
+
+filtered_pbs <- pbs %>%
+  filter(ATC2_desc %in% top_atcs, Month > "2007-01-01")
+```
+
+```{r}
+ggplot(filtered_pbs) +
+  geom_area(aes(Month, Scripts, fill = ATC2_desc))
+```
+```{r}
+library(ggalluvial)
+ggplot(filtered_pbs) +
+  geom_alluvium(aes(Month, Scripts, fill = ATC2_desc, col = ATC2_desc, alluvium = ATC2_desc), alpha = 0.9, decreasing = FALSE)
+```
+
+
+
+```{r}
+spotify_full <- read_csv("https://uwmadison.box.com/shared/static/xj4vupjbicw6c8tbhuynw0pll6yh1w0d.csv")
+top_songs <- spotify_full %>%
+  group_by(track_name) %>%
+  summarise(total = sum(streams)) %>%
+  slice_max(total, n = 50) %>%
+  pull(track_name)
+
+spotify <- spotify_full %>%
+  filter(region == "global", track_name %in% top_songs)
+```
+
+```{r, fig.height = 8, fig.width = 3}
+ggplot(spotify) +
+  geom_horizon(aes(date, streams)) +
+  facet_grid(reorder(track_name, streams, max) ~ .)
+```
+
