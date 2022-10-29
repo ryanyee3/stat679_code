@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-*Manipulating spatial data in D3*
+*An introduction `d3-geo` and `geoPath`*
 
 1.  These notes summarize methods for static visualization of geospatial
     data in D3. Before we can make any plots, we need to be able to read
@@ -30,8 +30,8 @@ output:
     is actually keeping track geographic metadata behind the scenes.
     This allows us to do some basic geographic queries directly from
     javascript. For example, if we want to query the geographic
-    centroid, bounds, or areas (in steradians) of each feature, we can
-    use the calls below,
+    centroid, bounds, or areas of each feature, we can use the calls
+    below,
 
         let centroids = data.features.map(d3.geoCentroid),
           bounds = data.features.map(d3.geoBounds),
@@ -59,10 +59,10 @@ output:
 
     <iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-3/glaciers.html" width=700 height=900></iframe>
 
-    To draw the glacier boundaries, we defined the path generator with
-    the block below. The `proj` object serves a role similar to the `x`
-    and `y` scales that are used in line generators – it is mapping
-    abstract geographical coordinates to the pixel extent of the screen.
+    To draw the glacier boundaries, we defined the geographic path
+    generator. The `proj` object serves a role similar to the `x` and
+    `y` scales used in `d3.line()` generators – it is mapping abstract
+    geographical coordinates to the pixel extent of the screen.
     Specifically, `.fitSize` takes the spatial coordinates in `data` and
     relates it to the size of the screen, `[width, height]`. For
     geographic data, this process is formally called a `projection`,
@@ -74,7 +74,7 @@ output:
         let path = d3.geoPath()
           .projection(proj);
 
-6.  Given this `geoPath` generator, we can append one polygon per
+6.  Given this `d3.geoPath()` generator, we can append one polygon per
     glacier in the dataset using the usual D3 data bind. Note that we
     bind `data.features` rather than just `data`. In geojson objects,
     the `.features` attribute contains an array with the spatial

@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-_Manipulating spatial data in D3_
+_An introduction `d3-geo` and `geoPath`_
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -38,8 +38,8 @@ the vector dataset.
 1. Even though these look like basic javascript objects, `d3.geojson` is
 actually keeping track geographic metadata behind the scenes. This allows us to
 do some basic geographic queries directly from javascript. For example, if we
-want to query the geographic centroid, bounds, or areas (in steradians) of each
-feature, we can use the calls below,
+want to query the geographic centroid, bounds, or areas of each feature, we can
+use the calls below,
     ```{r eval = FALSE}
     let centroids = data.features.map(d3.geoCentroid),
       bounds = data.features.map(d3.geoBounds),
@@ -61,15 +61,14 @@ functions and can then be applied to any new collection of vector features.
 
     <iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-3/glaciers.html" width=700 height=900></iframe>
 
-    To draw the glacier boundaries, we defined the path generator with the block
-    below. The `proj` object serves a role similar to the `x` and `y` scales
-    that are used in line generators -- it is mapping abstract geographical
+    To draw the glacier boundaries, we defined the geographic path generator.
+    The `proj` object serves a role similar to the `x` and `y` scales
+    used in `d3.line()` generators -- it is mapping abstract geographical
     coordinates to the pixel extent of the screen. Specifically, `.fitSize`
-    takes the
-    spatial coordinates in `data` and relates it to the size of the screen,
-    `[width, height]`. For geographic data, this process is formally called a
-    `projection`, because we have to associate the surface of the 3D globe to a
-    2D plane.
+    takes the spatial coordinates in `data` and relates it to the size of the
+    screen, `[width, height]`. For geographic data, this process is formally
+    called a `projection`, because we have to associate the surface of the 3D
+    globe to a 2D plane.
 
     ```{r eval = FALSE}
     let proj = d3.geoMercator()
@@ -78,10 +77,10 @@ functions and can then be applied to any new collection of vector features.
       .projection(proj);
     ```
 
-1. Given this `geoPath` generator, we can append one polygon per glacier in the
-dataset using the usual D3 data bind. Note that we bind `data.features` rather
-than just `data`. In geojson objects, the `.features` attribute contains an
-array with the spatial features coordinates.
+1. Given this `d3.geoPath()` generator, we can append one polygon per glacier in
+the dataset using the usual D3 data bind. Note that we bind `data.features`
+rather than just `data`. In geojson objects, the `.features` attribute contains
+an array with the spatial features coordinates.
 
      ```{r eval = FALSE}
      d3.select("#map")
