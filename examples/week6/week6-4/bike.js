@@ -65,7 +65,7 @@ function filter_dates(ev, data, scales) {
   let dates = [];
   for (let i = 0; i < data.scatter.length; i++) {
     let di = data.scatter[i]
-    if (di.temp > x0 && di.hum < y0 && di.temp < x1 && di.hum > y1) {
+    if (di.temp > x0 && di.hum > y0 && di.temp < x1 && di.hum < y1) {
       dates.push(di.dteday)
     }
   }
@@ -87,7 +87,7 @@ function make_scales() {
       .range([0, 300]),
     y: d3.scaleLinear()
       .domain([0, 1])
-      .range([300, 0])
+      .range([0, 300])
   }
 }
 

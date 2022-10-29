@@ -1,5 +1,7 @@
 
 function query(data) {
+  console.log(data)
+
   let centroids = data.features.map(d3.geoCentroid),
     bounds = data.features.map(d3.geoBounds),
     areas = data.features.map(d3.geoArea);
