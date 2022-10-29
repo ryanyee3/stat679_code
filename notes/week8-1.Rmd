@@ -200,51 +200,6 @@ times. We manually set the height of the bars.
       })
     ```
 
-1. A common operation with Gantt charts is "collapsing." The idea is to reduce
-multiple events into a larger group. For example, we could use this to collapse
-many short subtasks in a project into one larger, longer-term task. This
-implements a form of the details-on-demand principle. We'll implement a simple
-version of this that collapses all events in the chart. The main idea is to
-define a variable, called `collapsed` below, that stores whether or not the chart is
-currently collapsed. Whenever a button is clicked, we trigger an event that
-reverses the value of that variable. We then either expand or overlay the events.
-
-    ```{r eval = FALSE}
-    function toggle_collapse(scales) {
-      if (collapsed) {
-        collapsed = false;
-        uncollapse(scales);
-      } else {
-        collapsed = true;
-        collapse();
-      }
-    }
-    ```
-
-1. To implement the collapse, we have to select all the rectangles and then
-change their `y` coordinate attribute. We similarly move the group element
-containing the `x`-axis to the top of the plot and clear the tooltip. The
-`uncollapse()` function simply reverses this operation.
-
-    ```{r eval = FALSE}
-    function collapse() {
-      d3.select("#rects")
-        .selectAll("rect")
-        .transition()
-        .duration(1000)
-        .attr("y", 0)
-
-      d3.select("#x_axis")
-        .transition()
-        .duration(1000)
-        .attr("transform", "translate(0, 8)")
-
-      d3.select("#tooltip").select("text").text("")
-    }
-    ```
-
-    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week8/week8-1/gantt2.html" height=400 width=500 style="text-align: center"></iframe>
-
 1. Next, let's consider Bump charts. These are often useful for studying how
 ranks evolve over time. The example below, from the Washington Post, shows how
 state populations have changed over time. Steps where a state changes rank have
