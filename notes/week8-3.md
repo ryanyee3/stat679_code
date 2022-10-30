@@ -8,10 +8,13 @@ output:
 
 *An introduction `d3-geo` and `geoPath`*
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-3),
+[Recording]()
+
 1.  These notes summarize methods for static visualization of geospatial
     data in D3. Before we can make any plots, we need to be able to read
     in data. To read in vector data, it’s most convenient to store the
-    data as geojson and read it in using `d3.geojson()`. The javascript
+    data as geojson and read it in using `d3.json()`. The javascript
     object created by this function includes a `features` array. Element
     `i` in this array gives properties of feature `i` in the vector
     dataset.
@@ -26,9 +29,9 @@ output:
 
     <img src="https://github.com/krisrs1128/stat679_code/raw/main/examples/week8/week8-3/glaciers-screenshot.png" width=600/>
 
-3.  Even though these look like basic javascript objects, `d3.geojson`
-    is actually keeping track geographic metadata behind the scenes.
-    This allows us to do some basic geographic queries directly from
+3.  Even though these look like basic javascript objects, `d3.json` is
+    actually keeping track geographic metadata behind the scenes. This
+    allows us to do some basic geographic queries directly from
     javascript. For example, if we want to query the geographic
     centroid, bounds, or areas of each feature, we can use the calls
     below,

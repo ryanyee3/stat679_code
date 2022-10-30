@@ -8,6 +8,9 @@ output:
 
 *Path generators for temporal visualization*
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-1),
+[Recording]()
+
 1.  These notes give the D3 analogs of visualizations created in our
     [earlier
     notes](https://krisrs1128.github.io/stat679_notes/2022/06/01/week7-1.html)
@@ -23,11 +26,11 @@ output:
     [2](https://krisrs1128.github.io/stat679_notes/2022/06/01/week6-4.html)\],
     but we glossed over important details of D3’s path generators.
     Remember that in the first of those examples, we had manually
-    generated paths using strings like`M 100 100 L 200 105 L 300 115`.
-    This means to start a path at pixel coordinates (100, 100), move to
-    the right and down by (200, 105) pixels, and so on. For a larger
-    time series dataset, it woulud be impossible to construct these path
-    strings manually.
+    generated paths by setting their `d` attributes to strings
+    like`M 100 100 L 200 105 L 300 115`. This means to start a path at
+    pixel coordinates (100, 100), move to the right and down by
+    (200, 105) pixels, and so on. For a larger time series dataset, it
+    woulud be impossible to construct these path strings manually.
 
 3.  To do this more automatically, we can use an SVG path generator.
     This is a function that converts an array of javascript objects to
@@ -119,7 +122,7 @@ output:
     it transforms an array whose elements correspond to individual
     issues (each with multiple characters),
 
-        [
+        let data = [
         ...
         {
           "issue": 187,
@@ -145,8 +148,8 @@ output:
 
         [
         ...
-          [index: "Magneto_Costume", data: [issue: t1, ymin: y1_min, ymax: y1_max], [issue: t2, ymin: y2_min, ymax: y2_max], ...]],
-          [index: "Nightcrawler_Costume", data: [issue: t1, ymin: y1_min, ymax: y1_max], [issue: t2, ymin: y2_min, ymax: y2_max], ...]],
+          [[y0_min_magneto, y0_max_magneto, data[0]], [y1_min_magneto, y1_max_magneto, data[1]], ...] // Magneto Costume
+          [[y0_min_nightcrawler, y0_max_nightcrawler, data[0]], [y1_min_nightcrawler, y1_max_nightcrawler, data[1]], ...] // Nightcrawler Costume
           ...
         ]
 

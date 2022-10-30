@@ -9,6 +9,8 @@ output:
 
 _Idioms for interacting with geographic data_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week8-4.Rmd), [Recording]()
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")

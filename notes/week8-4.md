@@ -9,6 +9,9 @@ output:
 
 *Idioms for interacting with geographic data*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week8-4.Rmd),
+[Recording]()
+
     library(tidyverse)
     library(leaflet)
 

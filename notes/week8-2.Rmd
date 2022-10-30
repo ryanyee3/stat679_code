@@ -8,6 +8,8 @@ output:
 
 _Interactivity in time series visualization_
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-2), [Recording]()
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
