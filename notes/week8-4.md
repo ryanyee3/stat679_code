@@ -10,7 +10,7 @@ output:
 *Idioms for interacting with geographic data*
 
 [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week8-4.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%208%20-%204%3A%20Geospatial%20Interaction/1_e0i2pm2s)
 
     library(tidyverse)
     library(leaflet)

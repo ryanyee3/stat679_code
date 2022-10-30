@@ -9,7 +9,7 @@ output:
 *An introduction `d3-geo` and `geoPath`*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-3),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%208%20-%203%3A%20Geospatial%20Data%20in%20D3/1_duy1w4zt)
 
 1.  These notes summarize methods for static visualization of geospatial
     data in D3. Before we can make any plots, we need to be able to read

@@ -8,7 +8,7 @@ output:
 
 _Interactivity in time series visualization_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-2), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-2), [Recording](https://mediaspace.wisc.edu/media/Week%208%20-%202%3A%20Temporal%20Interaction/1_5b02ox5g)
 
 ```{r, echo = FALSE}
 library(knitr)

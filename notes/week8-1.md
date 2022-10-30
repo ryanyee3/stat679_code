@@ -9,7 +9,7 @@ output:
 *Path generators for temporal visualization*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-1),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%208%20-%201%3A%20Temporal%20Data%20in%20D3/1_w28jl3u4)
 
 1.  These notes give the D3 analogs of visualizations created in our
     [earlier

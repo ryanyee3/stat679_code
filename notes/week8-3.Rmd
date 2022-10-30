@@ -8,7 +8,7 @@ output:
 
 _An introduction `d3-geo` and `geoPath`_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-3), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-3), [Recording](https://mediaspace.wisc.edu/media/Week%208%20-%203%3A%20Geospatial%20Data%20in%20D3/1_duy1w4zt)
 
 ```{r, echo = FALSE}
 library(knitr)

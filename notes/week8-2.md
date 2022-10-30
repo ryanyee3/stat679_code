@@ -9,7 +9,7 @@ output:
 *Interactivity in time series visualization*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week8/week8-2),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%208%20-%202%3A%20Temporal%20Interaction/1_5b02ox5g)
 
 1.  Temporal data often have high information density, making
     interactivity worthwhile. In these notes, we’ll review some of the
