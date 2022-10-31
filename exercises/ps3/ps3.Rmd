@@ -21,7 +21,7 @@ sure to demonstrate all functionality).
 **Discussion**
 
 * Temporal and Geospatial Commands [3 points]
-* Visualization for Everyday Activities [4 points]
+* Visualization for Everyday Decisions [4 points]
 
 ### Grading Criteria
 

@@ -1046,7 +1046,7 @@ two functions? Be as specific as possible.
 1. [Javascript Array Manipulation] These are some exercises to prepare you for more complex array and object manipulation that you may need in more advanced D3 visualizations. You will likely find the following resources useful: [[1](https://github.com/d3/d3-array), [2](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Array/slice), [3](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Set), [4](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Object/keys)].
     a. Find the minimum, maximum, and mean of the following array.
     ```{r, eval = FALSE}
-    let x = d3.random(100);
+    let x = d3.randomUniform(100);
     ```
     b. Extract the first 5 elements of `x` and then concatenate them to the last
     5 elements of `y`. Your result should look like `[0, 1, 2, 3, 4, 15, 16, 17, 18, 19]`.
@@ -1153,7 +1153,7 @@ similar bugs.
 transitions on simulated data. The code below generates a random set of 10
 numbers,
     ```{d3, eval = FALSE}
-    let generator = d3.random();
+    let generator = d3.randomUniform();
     let x = generator(10);
     ```
     a. Encode the data in `x` using the x-coordinate positions of 10 circles.
@@ -1168,8 +1168,8 @@ numbers,
     
 1. [Simple Bar Chart] Consider the following list of numbers,
     ```{d3, eval = FALSE}
-    let generator = d3.random();
-    let x = generator(20);
+    let generator = d3.randomUniform();
+    let x = d3.range(10).map(generator);
     ```
     
   	a. Create a bar chart that has one bar per number, with the height of that
@@ -1602,7 +1602,9 @@ approaches to visualizing this dataset.
   
     b. Implement an alluvial visualization of these data.
   
-    c. Compare and contrast the strengths and weaknesses of these two visualization strategies. Which user queries are easier to answer using one approach vs. the other?
+    c. Compare and contrast the strengths and weaknesses of these two
+    visualization strategies. Which user queries are easier to answer using one
+    approach vs. the other?
 
 
 1. [Polio incidence] In this problem, we will use a heatmap to visualize a large
@@ -1648,6 +1650,38 @@ and over the year are associated with the highest number of traffic accidents.
     arguments to `superheat`._
   
     c. Provide a brief interpretion of your final visualization.
+    
+1. [Air Pollution Time Searcher] The dataset at this link measures hourly PM2.5
+concentration in Beijing for one year (2014). We will implement a simplified
+version of a [TimeSearcher](https://www.youtube.com/watch?v=VWx1TMcrb74)
+visualization to help us discover patterns in daily pollution trends. We will
+start by creating a line plot before implementing brush interactivity.
+
+    a. We will visualize the year's worth of data as a collection fo 365
+    separate lines. How do the data need to be restructured in order support
+    this visualization? Implement a function that reshapes the data. You may use
+    either R or javascript.
+    
+    b. Build a static lineplot visualization of these data. Make sure to provide
+    $x$ and $y$-axes.
+    
+    c. Introduce a brush so that all series that pass through the brush are
+    highlighted. 
+    
+    d. Following the discussion on [this page](https://github.com/ludwigschubert/d3-brush-multiple), modify your
+    solution to part (c) so that multiple brushes can be drawn simultaneously.
+    Filter down to series that pass simultaneously through all brushes.
+    
+    e. Comment on the shapes of the series that you can discover with your
+    multi-brush visualization. What are the most common trends? Did you discover
+    any outlying shapes?
+    
+    f. Bonus: Link your time searcher visualization with a table. Consider using
+    an existing javascript tables library, like one of those discussed on [this page](https://hackernoon.com/10-data-table-libraries-for-javascript-5g263vdm).
+    
+    ```{r, echo = FALSE, out.width = 250, fig.cap = "An example solution to [Air Pollution Time Searcher].", fig.align = "center"}
+    include_graphics("figure/time-searcher.png") 
+    ```
     
 1. [Women, Business and the Law] The World Bank's Women, Business, and the Law
 program has curated a dataset about gender equality across countries since 1971.
