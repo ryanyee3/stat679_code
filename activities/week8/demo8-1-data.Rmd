@@ -17,7 +17,6 @@ pollution <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat479_s22/
 library(glue)
 library(lubridate)
 pollution2 <- pollution %>%
-  tail(1000)  %>%
   select(date, starts_with("pollution")) %>%
   pivot_longer(-date, names_to = "hour", values_to = "pollution") %>%
   mutate(
@@ -29,7 +28,7 @@ pollution2 <- pollution %>%
     datetime = as_datetime(datetime),
     pollution = exp(pollution) - 1
   ) %>%
-  #filter(year == 2014) %>%
+  filter(year == 2014) %>%
   select(date, hour, pollution)  %>%
   arrange(date, hour)
 write_csv(pollution2, "pollution.csv")

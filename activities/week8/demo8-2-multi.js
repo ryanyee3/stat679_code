@@ -1,6 +1,6 @@
 
-let margin = {top: 10, right: 10, bottom: 20, left: 50},
-  brushes = []
+// global brushes arrays
+let brushes = []
 
 function nest(data) {
   let result = {}
@@ -19,7 +19,7 @@ function nest(data) {
   return Object.values(result)
 }
 
-function make_scales(data) {
+function make_scales(data, margin) {
   return {
     x: d3.scaleLinear()
       .domain([0, 23])
@@ -45,7 +45,7 @@ function draw_lines(nested, scales) {
     })
 }
 
-function draw_axes(scales) {
+function draw_axes(scales, margin) {
   let x_axis = d3.axisBottom(scales.x)
   d3.select("#x_axis")
     .attr("transform", `translate(0, ${300 - margin.bottom})`)
@@ -58,10 +58,11 @@ function draw_axes(scales) {
 }
 
 function visualize(data) {
+  let margin = {top: 10, right: 10, bottom: 20, left: 50}
   let nested = nest(data)
-  let scales = make_scales(data)
+  let scales = make_scales(data, margin)
   draw_lines(nested, scales)
-  draw_axes(scales)
+  draw_axes(scales, margin)
   new_brush(() => update_series(scales))
 }
 

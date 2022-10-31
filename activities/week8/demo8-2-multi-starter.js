@@ -1,4 +1,6 @@
 
+// global brushes arrays
+let brushes = []
 
 function nest(data) {
   let result = {}
@@ -53,7 +55,6 @@ function draw_axes(scales, margin) {
   d3.select("#y_axis")
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(y_axis)
-
 }
 
 function visualize(data) {
@@ -62,22 +63,16 @@ function visualize(data) {
   let scales = make_scales(data, margin)
   draw_lines(nested, scales)
   draw_axes(scales, margin)
-  setup_brush(scales)
 }
 
-function setup_brush(scales) {
-  let brush = d3.brush().on("brush", (ev) => update_series(ev, scales))
-  d3.select("#brush").call(brush)
+function update_series(scales) {
+  d3.select("#lines")
+    .selectAll("path")
+    .attr("class", d => check_all(d, scales) ? "highlight" : "plain")
 }
 
-function update_series(ev, scales) {
-  d3.selectAll("path")
-    .attr("class", d => check_any(d, ev.selection, scales) ? "highlight" : "plain")
-}
-
-function check_any(d, window, scales) {
-  if (d === null) return false;
-
+function check_any(d, scales, window) {
+  // check whether any points along one series fall into a single brush
   for (let i = 0; i < d.length; i++) {
     if (scales.x(d[i].hour) > window[0][0] &
         scales.y(d[i].pollution) > window[0][1] &
@@ -87,6 +82,40 @@ function check_any(d, window, scales) {
     }
   }
   return false;
+}
+
+function check_all(d, scales) {
+  // loop over all the brushes and get the window selection for each
+      // for each brush, use check_any to see whether the current series d passes through the brush
+      // if the current window doesn't contain the truth, return false
+
+  // if we got to the end without ever returning false, that means all the
+  // windows contain the current datapoint. So, return true.
+}
+
+function new_brush(brush_fun) {
+  let brush = d3.brush()
+    .on("brush", brush_fun)
+    .on("end", brushend);
+
+  brushes.push(brush)
+
+  // insert a new g element to contain the brush
+
+  // call the newest brush on the appended element
+
+  function brushend(ev) {
+    // check whether the last brush we had inserted was used to create a selection
+
+    // if so, append a new brush
+  }
+
+  // remove pointer events from the overlay except for the most recent brush
+  for (let i = 0; i < brushes.length; i++) {
+    d3.select(`#brush-${i}`)
+      .selectAll(".overlay")
+      .style("pointer-events", i < brushes.length - 1 ? "none" : "all");
+  }
 }
 
 d3.csv("pollution.csv", d3.autoType)

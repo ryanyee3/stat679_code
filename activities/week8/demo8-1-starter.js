@@ -1,19 +1,12 @@
 
+
 function nest(data) {
   let result = {}
-
-  // Create object of (empty) arrays for each date
-  let dates = [... new Set(data.map(d => d.date))]
-  for (let i = 0; i < dates.length; i++) {
-    result[dates[i]] = []
-  }
-
-  // append to the array for each date
-  for (let i = 0; i < data.length; i++) {
-    result[data[i].date].push(data[i])
-  }
-
+  // fill this in
   return Object.values(result)
+}
+
+function draw_lines(nested, scales) {
 }
 
 function make_scales(data, margin) {
@@ -27,20 +20,6 @@ function make_scales(data, margin) {
   }
 }
 
-function draw_lines(nested, scales) {
-  let path_generator = d3.line()
-    .x(d => scales.x(d.hour))
-    .y(d => scales.y(d.pollution))
-
-  d3.select("#lines")
-    .selectAll("path")
-    .data(nested).enter()
-    .append("path")
-    .attrs({
-      d: path_generator
-    })
-}
-
 function draw_axes(scales, margin) {
   let x_axis = d3.axisBottom(scales.x)
   d3.select("#x_axis")
@@ -51,15 +30,14 @@ function draw_axes(scales, margin) {
   d3.select("#y_axis")
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(y_axis)
-
 }
 
 function visualize(data) {
   let margin = {top: 10, right: 10, bottom: 20, left: 50}
-  let nested = nest(data)
-  let scales = make_scales(data, margin)
-  draw_lines(nested, scales)
-  draw_axes(scales, margin)
+  //let nested = nest(data)
+  //let scales = make_scales(data, margin)
+  //draw_lines(nested, scales)
+  //draw_axes(scales, margin)
 }
 
 d3.csv("pollution.csv", d3.autoType)
