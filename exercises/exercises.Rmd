@@ -220,7 +220,23 @@ to support the literature review for your course project.
 	reading, group your identified papers into overall themes. Prepare a short
 	description of each theme. How are the groups of papers similar / different
 	from one another?
+
+1. [Milestone Reflection] In this exercise, you will have a chance to reflect on
+your team's workflow for the upcoming project milestone. Please respond to the
+following prompts,
+
+    a. How do you plan on organizing your team’s writing and coding efforts? How
+  can you ensure that relevant resources and preliminary progress can be easily
+  reviewed?
   
+    b. What do you anticipate will be the most significant challenge your team
+  faces in preparing the project milestone? Which aspects of this challenge are
+  within your team’s control? How do you plan on overcoming (or sidestepping)
+  this challenge?
+  
+    c. Do you have any questions for the teaching staff related to the upcoming
+  project milestone?
+
 1. [Code Analysis] Pick one code example from this week's lecture notes. Provide
 a 3 - 4 sentence summary of the overall implementation strategy. Then, add
 comments every 10 - 15 lines describing what each section of code is doing. If
