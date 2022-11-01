@@ -1,12 +1,13 @@
 
 // global brushes arrays
-let brushes = []
+let brushes = [],
+  scales;
 
 function nest(data) {
   let result = {}
 
   // Create object of (empty) arrays for each date
-  let dates = [... new Set(data.map(d => d.date))]
+  let dates = data.map(d => d.date)
   for (let i = 0; i < dates.length; i++) {
     result[dates[i]] = []
   }
@@ -60,21 +61,20 @@ function draw_axes(scales, margin) {
 function visualize(data) {
   let margin = {top: 10, right: 10, bottom: 20, left: 50}
   let nested = nest(data)
-  let scales = make_scales(data, margin)
+  scales = make_scales(data, margin)
   draw_lines(nested, scales)
   draw_axes(scales, margin)
-  new_brush(() => update_series(scales))
+  new_brush(update_series)
 }
 
-function update_series(scales) {
+function update_series() {
   d3.select("#lines")
     .selectAll("path")
-    .attrs({
-      class: d => check_all(d, scales) ? "highlight" : "plain"
-    })
+    .attr("class", d => check_all(d, scales) ? "highlight" : "plain")
 }
 
 function check_any(d, scales, window) {
+  // check whether any points along one series fall into a single brush
   for (let i = 0; i < d.length; i++) {
     if (scales.x(d[i].hour) > window[0][0] &
         scales.y(d[i].pollution) > window[0][1] &
@@ -87,10 +87,9 @@ function check_any(d, scales, window) {
 }
 
 function check_all(d, scales) {
-  if (d === null) return false;
-  for (let j = 0; j < brushes.length; j++) {
-    cur_brush = d3.select(`#brush-${j}`).node()
-    let window = d3.brushSelection(cur_brush)
+  for (let i = 0; i < brushes.length; i++) {
+    let current_brush = d3.select(`#brush-${i}`).node()
+    let window = d3.brushSelection(current_brush)
     if (window !== null && !check_any(d, scales, window)) {
       return false;
     }
@@ -104,20 +103,25 @@ function new_brush(brush_fun) {
     .on("end", brushend);
 
   brushes.push(brush)
-  d3.select("#brushes")
-    .selectAll("g")
-    .data(brushes).enter()
-    .insert("g", "g")
-    .attr("id", (_, i) => `brush-${i}`)
 
-  d3.select(`#brush-${brushes.length - 1}`).call(brushes[brushes.length - 1])
+  // insert a new g element to contain the brush
+  d3.select("#brushes")
+    .insert("g", "g")
+    .attr("id", `brush-${brushes.length - 1}`)
+
+  // call the newest brush on the appended element
+  d3.select(`#brush-${brushes.length - 1}`).call(brush)
 
   function brushend(ev) {
-    let last_brush = d3.select(`#brush-${brushes.length - 1}`)
-    let selection = d3.brushSelection(last_brush.node())
-    if (selection) new_brush(brush_fun);
+    // check whether the last brush we had inserted was used to create a selection
+    let current_brush = d3.select(`#brush-${brushes.length - 1}`).node()
+    let window = d3.brushSelection(current_brush)
+
+    // if so, append a new brush
+    if (window !== null) new_brush(brush_fun)
   }
 
+  // remove pointer events from the overlay except for the most recent brush
   for (let i = 0; i < brushes.length; i++) {
     d3.select(`#brush-${i}`)
       .selectAll(".overlay")

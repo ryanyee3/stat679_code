@@ -1,13 +1,12 @@
 
 // global brushes arrays
-let brushes = [],
-  scales;
+let brushes = []
 
 function nest(data) {
   let result = {}
 
   // Create object of (empty) arrays for each date
-  let dates = data.map(d => d.date)
+  let dates = [... new Set(data.map(d => d.date))]
   for (let i = 0; i < dates.length; i++) {
     result[dates[i]] = []
   }
@@ -61,12 +60,13 @@ function draw_axes(scales, margin) {
 function visualize(data) {
   let margin = {top: 10, right: 10, bottom: 20, left: 50}
   let nested = nest(data)
-  scales = make_scales(data, margin)
+  let scales = make_scales(data, margin)
   draw_lines(nested, scales)
   draw_axes(scales, margin)
+  new_brush(() => update_series(scales))
 }
 
-function update_series() {
+function update_series(scales) {
   d3.select("#lines")
     .selectAll("path")
     .attr("class", d => check_all(d, scales) ? "highlight" : "plain")
@@ -86,10 +86,16 @@ function check_any(d, scales, window) {
 }
 
 function check_all(d, scales) {
-  // loop over the brushes
-    // select the current brush
-    // check whether the series goes through the current brush
-  // if series went through all brushes, return true
+  let current_brush = d3.select("#brush-0").node()
+  let window = d3.brushSelection(current_brush)
+  return check_any(d, scales, window)
+
+  // loop over all the brushes and get the window selection for each
+      // for each brush, use check_any to see whether the current series d passes through the brush
+      // if the current window doesn't contain the truth, return false
+
+  // if we got to the end without ever returning false, that means all the
+  // windows contain the current datapoint. So, return true.
 }
 
 function new_brush(brush_fun) {
@@ -99,12 +105,18 @@ function new_brush(brush_fun) {
 
   brushes.push(brush)
 
+  d3.select("#brushes")
+    .append("g")
+    .attr("id", "brush-0")
+
+  d3.select("#brush-0").call(brush)
   // insert a new g element to contain the brush
 
   // call the newest brush on the appended element
 
   function brushend(ev) {
     // check whether the last brush we had inserted was used to create a selection
+
     // if so, append a new brush
   }
 
