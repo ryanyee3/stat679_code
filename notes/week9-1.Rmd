@@ -12,6 +12,7 @@ _Reading and modifying graph data_
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
+  cache = TRUE,
   warning = FALSE, 
   message = FALSE,
   fig.path = "stat679_notes/assets/week9-1/"
@@ -21,27 +22,29 @@ opts_chunk$set(
 ```{r}
 library(tidygraph)
 library(ggraph)
+theme_set(theme_bw())
 ```
 
 
 1. Before diving into graph data visualization, let’s get some experience
-manipulating graphs hands on.
-
-1. The goal of the tidygraph package is to extend the semantics of the tidyverse
-to graph-structured data. This is necessary because any graph is represented by
-two data structures, a set of nodes and a set of edges.
+manipulating graphs hands on. One of the best R packages for graph manipulation
+is called `tidygraph`. The goal of this package is to extend the semantics of the
+tidyverse to graph-structured data. We can't simply use the standard `dplyr`
+functions because graphs cannot be stored in simple data.frames -- any graph
+must be represented by two data structures, a set of nodes and a set of edges.
 
 1. This can be usefully organized as a pair of `data.frames`, and the
 `tidygraph` structure represents graphs in exactly this way.
 For example, `G` below is a tidy graph structure showing the friendship
-connections between 70 students in a high school over two years.
+connections between 70 students in a high school over two years. The `Node Data`
+component gives features for each student (in this case, just the name), while
+`Edge Data` represents friendship links between students.
 
-```{r}
-G <- as_tbl_graph(highschool)
-G
-```
-
-
+    ```{r}
+    G <- as_tbl_graph(highschool)
+    G
+    ```
+    
 1. The beauty of this data structure is that we can define the analogs of the
 usual tidyverse verbs for it. For example, we can derive a new node attribute
 using `mutate`.
@@ -60,8 +63,8 @@ using `mutate`.
       mutate(weight = runif(n()))
     ```
     
-  To avoid these activate calls, a convenient shorthand is calling mutate with
-  `%N>%` and `%E>%`.
+    To avoid these activate calls, a convenient shorthand is calling mutate with
+    `%N>%` and `%E>%` for modifying node and edge data, respectively,
   
     ```{r}
     G %E>%
@@ -72,28 +75,34 @@ using `mutate`.
 example, we can join two graphs together.
 
     ```{r}
+    ## initialize two simple graphs
     G1 <- create_ring(10)  %N>%
       mutate(id = LETTERS[1:n()])
     G2 <- create_bipartite(4, 2) %>%
       mutate(id = LETTERS[1:n()])
+    
+    ## join them together
     G1 %>%
       graph_join(G2)
     ```
     
-```{r, echo = FALSE}
-ggraph(G1) +
-  geom_edge_link() +
-  geom_node_label(aes(label = id))
-  
-ggraph(G2) +
-  geom_edge_link() +
-  geom_node_label(aes(label = id))
-  
-ggraph(G1 %>% graph_join(G2)) +
-  geom_edge_link() +
-  geom_node_label(aes(label = id))
-```
+    ```{r, echo = FALSE}
+    library(patchwork)
+    p1 <- ggraph(G1) +
+      geom_edge_link() +
+      geom_node_label(aes(label = id))
+      
+    p2 <- ggraph(G2) +
+      geom_edge_link() +
+      geom_node_label(aes(label = id))
+      
+    p3 <- ggraph(G1 %>% graph_join(G2)) +
+      geom_edge_link() +
+      geom_node_label(aes(label = id))
     
+    p1 | p2 | p3
+    ```
+      
 1. Similarly, we can filter nodes or edges based on their attributes.
 
     ```{r}
@@ -106,28 +115,29 @@ ggraph(G1 %>% graph_join(G2)) +
 1. It’s possible to perform simple graph algorithms using these verbs. For
 example, we can cluster nodes based on their connection structure.
 
-```{r}
-G %>%
-  to_undirected() %>%
-  mutate(cluster = group_louvain())
-```
+    ```{r}
+    G %>%
+      to_undirected() %>%
+      mutate(cluster = group_louvain())
+    ```
 
-```{r}
-G %>%
-  to_undirected() %>%
-  mutate(cluster = group_louvain()) %>%
-  ggraph() +
-  geom_edge_link(width = 0.2) +
-  geom_node_point(aes(col = as.factor(cluster)), size = 3) +
-  scale_color_brewer(palette = "Set2")
-```
 
+    ```{r, echo = FALSE}
+    G %>%
+      to_undirected() %>%
+      mutate(cluster = group_louvain()) %>%
+      ggraph() +
+      geom_edge_link(width = 0.2) +
+      geom_node_point(aes(col = as.factor(cluster)), size = 3) +
+      scale_color_brewer(palette = "Set2")
+    ```
+  
 1. We can even map over nodes to compute topological queries. For example, the
-block below computes the number of neighbors within two step of each node, using
-the `map_nodes` function.
+block below computes the number of neighbors within two steps of each node,
+using the [`local_size` function](https://tidygraph.data-imaginist.com/reference/local_graph.html). More general operations can be computed using map operations, like
+[`map_local`](https://tidygraph.data-imaginist.com/reference/map_local.html) or [`map_bfs`](https://tidygraph.data-imaginist.com/reference/map_bfs.html).
 
     ```{r}
     G %>%
       mutate(two_steps = local_size(order = 2))
     ```
-  

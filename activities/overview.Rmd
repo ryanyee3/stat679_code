@@ -2026,8 +2026,8 @@ whose interpretation might not be obvious at first.
 
 ### November 2, 2022
 
-1. 
-1. 
+1. In-Class Demo 8.2 
+1. In-Class Exercise 8.2
 
 ---
 

@@ -19,6 +19,17 @@ output:
     criteria that can be used to evaluate the quality of a graph
     visualization.
 
+    <img src="/stat679_notes/assets/week9-2/tree_of_life.png" alt="An evolutionary tree, from the Interactive Tree of Life." width="350" />
+    <p class="caption">
+    An evolutionary tree, from the Interactive Tree of Life.
+    </p>
+
+    <img src="/stat679_notes/assets/week9-2/covid-network.png" alt="A COVID-19 transmission network, from 'Clustering and superspreading potential of SARS-CoV-2 infections in Hong Kong.'" width="500" />
+    <p class="caption">
+    A COVID-19 transmission network, from ‘Clustering and superspreading
+    potential of SARS-CoV-2 infections in Hong Kong.’
+    </p>
+
 2.  Viewed narrowly, there are two basic types of queries for graph
     data: Topological and attributional. In topological queries, we ask
     questions about how nodes are linked with one another. For example,
@@ -32,13 +43,13 @@ output:
     structures of interest — for example, we may discover the existence
     of,
 
-    -   Clusters: Nodes that are tightly linked with one another, but
+    -   *Clusters*: Nodes that are tightly linked with one another, but
         not with nodes outside of the cluster.
-    -   Hubs: Nodes with many more neighbors than others.
-    -   Central nodes: Nodes that lie on the shortest paths between many
-        pairs of nodes.
-    -   Connections: Links between nodes or clusters of interest. though
-        there are probably more than is reasonable to list.
+    -   *Hubs*: Nodes with many more neighbors than others.
+    -   *Central nodes*: Nodes that lie on the shortest paths between
+        many pairs of nodes.
+    -   *Connections*: Links between nodes or clusters of interest.
+        though there are probably far more possibilities than these.
 
 4.  What distinguishes a good from a bad graph visualization? As in all
     data visualization, effectiveness is closely tied to function. The
@@ -48,16 +59,24 @@ output:
 
 5.  For example, if a visualization has too many edge crossings, then we
     will have trouble answering any topological queries — crossings can
-    make it impossible to follow edges.
+    make it impossible to follow edges. As an alternative, consider
+    either edge bundling or adjacency matrix views. Both highlight the
+    key connectivity structure and minimize the overlap that comes with
+    more naive visualizations. We’ll see how to make both types of
+    visualizations in later lectures.
 
-6.  As an alternative, consider either edge bundling or adjacency matrix
-    views. Both highlight the key connectivity structure and minimize
-    the overlap that comes with more naive visualizations.
+    <img src="/stat679_notes/assets/week9-2/bundle_compare.png" alt="An edge bundled view of a network is much easier to read." width="500" />
+    <p class="caption">
+    An edge bundled view of a network is much easier to read.
+    </p>
 
-    \[Example with edge bundling and adjacencies\] We’ll see how to make
-    both types of visualizations in later lectures.
+    <img src="/stat679_notes/assets/week9-2/adjacency.png" alt="A comparison between node-link and adjacency matrix views of a network, from Munzner's Visualization Analysis and Design." width="500" />
+    <p class="caption">
+    A comparison between node-link and adjacency matrix views of a
+    network, from Munzner’s Visualization Analysis and Design.
+    </p>
 
-7.  In interactive graphs, we should aim to minimize the amount of
+6.  In interactive graphs, we should aim to minimize the amount of
     change in the positions of the nodes and edges given any user input
     — too much movement creates confusion. The same lesson applies to
     dynamic graphs. It is hard to make sense of an evolving graph if the
