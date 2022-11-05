@@ -31,9 +31,40 @@ function visualize(data) {
     .attrs({
       cx: d => d.x,
       cy: d => d.y,
-      r: d => 10 * Math.exp(-.5 * d.depth), // decreasing sizes
+      r: d => radius(d.depth),
+      fill: "#A0C3D9",
       transform: "translate(0, 10)"
     })
+
+  neighborhoods = d3.Delaunay.from(tree.descendants().map(d => [d.x, d.y]))
+  d3.select("svg").on("mousemove", (ev) => update_labels(ev, neighborhoods, tree))
+}
+
+function update_labels(ev, neighborhoods, tree) {
+  let pos = d3.pointer(ev),
+    ix = neighborhoods.find(pos[0], pos[1]),
+    cur_node = tree.descendants()[ix]
+
+  d3.select("#tree")
+    .selectAll("circle")
+    .transition()
+    .duration(100)
+    .attrs({
+      r: (d, i) => i == ix ? 2 * radius(d.depth) : radius(d.depth),
+      fill: (d, i) => i == ix ? "#364959" : "#A0C3D9"
+    })
+
+  d3.select("#labels")
+    .selectAll("text")
+    .text(cur_node.id)
+    .attrs({
+      transform: `translate(${cur_node.x}, ${cur_node.y})`
+    })
+
+}
+
+function radius(depth) {
+  return 10 * Math.exp(-.5 * depth)
 }
 
 d3.json("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/examples/week9/week9-1/flare.json")
