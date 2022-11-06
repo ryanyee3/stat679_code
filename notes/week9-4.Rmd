@@ -21,6 +21,7 @@ opts_chunk$set(
 ```{r}
 library(tidygraph)
 library(ggraph)
+theme_set(theme_bw())
 ```
 
 
@@ -73,7 +74,11 @@ edges <- G %E>%
 write_json(list(edges = edges, nodes = nodes), "~/Desktop/teaching/stat679_code/examples/week9/week9-4/highschool.json")
 ```
 
-  	We can then use d3’s force-directed layout algorithm to compute a layout of the nodes given a connectivity structure. The algorithm simulates forces that try to repel nodes from each other, while tension on the edges keeps connected ones close to one another. It is just one of many layout algorithms, some of which we’ll review in the next lecture.
+  	We can then use d3’s force-directed layout algorithm to compute a layout of
+  	the nodes given a connectivity structure. The algorithm simulates forces that
+  	try to repel nodes from each other, while tension on the edges keeps
+  	connected ones close to one another. It is just one of many layout
+  	algorithms, some of which we’ll review in the next lecture.
 
 	
 1. The key drawback of node-link diagrams is that they do not scale well to
