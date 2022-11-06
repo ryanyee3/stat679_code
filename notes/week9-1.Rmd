@@ -1,21 +1,21 @@
 ---
 title: Manipulating Graph Data
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 _Reading and modifying graph data_
 
-[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week9-1.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week9-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%209%20-%201%3A%20Manipulating%20Graph%20Data/1_co3nvevc)
 
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   cache = TRUE,
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE,
   fig.path = "stat679_notes/assets/week9-1/"
   )
@@ -46,7 +46,7 @@ component gives features for each student (in this case, just the name), while
     G <- as_tbl_graph(highschool)
     G
     ```
-    
+
 1. The beauty of this data structure is that we can define the analogs of the
 usual tidyverse verbs for it. For example, we can derive a new node attribute
 using `mutate`.
@@ -58,21 +58,21 @@ using `mutate`.
 
 1. What if we want to mutate the edges instead? We have to tell tidygraph to
 “activate” the edge set,
-    
+
     ```{r}
     G %>%
       activate(edges) %>%
       mutate(weight = runif(n()))
     ```
-    
+
     To avoid these activate calls, a convenient shorthand is calling mutate with
     `%N>%` and `%E>%` for modifying node and edge data, respectively,
-  
+
     ```{r}
     G %E>%
       mutate(weight = runif(n()))
     ```
-      
+
 1. There are many other verbs that have been defined for tidygraph objects. For
 example, we can join two graphs together.
 
@@ -82,29 +82,29 @@ example, we can join two graphs together.
       mutate(id = LETTERS[1:n()])
     G2 <- create_bipartite(4, 2) %>%
       mutate(id = LETTERS[1:n()])
-    
+
     ## join them together
     G1 %>%
       graph_join(G2)
     ```
-    
+
     ```{r, echo = FALSE}
     library(patchwork)
     p1 <- ggraph(G1) +
       geom_edge_link() +
       geom_node_label(aes(label = id))
-      
+
     p2 <- ggraph(G2) +
       geom_edge_link() +
       geom_node_label(aes(label = id))
-      
+
     p3 <- ggraph(G1 %>% graph_join(G2)) +
       geom_edge_link() +
       geom_node_label(aes(label = id))
-    
+
     p1 | p2 | p3
     ```
-      
+
 1. Similarly, we can filter nodes or edges based on their attributes.
 
     ```{r}
@@ -113,7 +113,7 @@ example, we can join two graphs together.
       filter(weight < 0.2) %>%
       arrange(-weight)
     ```
-    
+
 1. It’s possible to perform simple graph algorithms using these verbs. For
 example, we can cluster nodes based on their connection structure.
 
@@ -133,7 +133,7 @@ example, we can cluster nodes based on their connection structure.
       geom_node_point(aes(col = as.factor(cluster)), size = 3) +
       scale_color_brewer(palette = "Set2")
     ```
-  
+
 1. We can even map over nodes to compute topological queries. For example, the
 block below computes the number of neighbors within two steps of each node,
 using the [`local_size` function](https://tidygraph.data-imaginist.com/reference/local_graph.html). More general operations can be computed using map operations, like

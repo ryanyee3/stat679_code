@@ -1,7 +1,7 @@
 ---
 title: Manipulating Graph Data
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
@@ -9,7 +9,7 @@ output:
 *Reading and modifying graph data*
 
 [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week9-1.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%209%20-%201%3A%20Manipulating%20Graph%20Data/1_co3nvevc)
 
     library(tidygraph)
     library(ggraph)

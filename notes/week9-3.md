@@ -9,7 +9,7 @@ output:
 *An important special case of graph data visualization*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week9/week9-1),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%209%20-%203%3A%20Tree%20Representations/1_0dtb6zo3)
 
     library(tidygraph)
     library(ggraph)
@@ -57,11 +57,11 @@ output:
     type of node-link geoms as before. We can organize nodes by depth
     (distance from the root) by specifying that the layout be `tree`.
 
-        p1 <- ggraph(G_flare, 'tree') +
+        p1 <- ggraph(G_flare, "tree") +
           geom_edge_link() +
           geom_node_label(aes(label = shortName), size = 3)
 
-        p2 <- ggraph(G_flare, 'tree', circular = TRUE) +
+        p2 <- ggraph(G_flare, "tree", circular = TRUE) +
           geom_edge_link() +
           geom_node_label(aes(label = shortName), size = 3)
 

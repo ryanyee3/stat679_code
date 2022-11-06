@@ -1,7 +1,7 @@
 ---
 title: Graph Visualization Tasks
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
@@ -9,7 +9,7 @@ output:
 *What are typical queries for graph data?*
 
 [Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week9-2.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%209%20-%202%3A%20Graph%20Visualization%20Tasks/1_n5sq9x5d)
 
 1.  Graphs are common across a wide range of fields — for example,
     biochemistry (metabolic networks), sociology (friendship networks),
@@ -65,8 +65,13 @@ output:
     make it impossible to follow edges. As an alternative, consider
     either edge bundling or adjacency matrix views. Both highlight the
     key connectivity structure and minimize the overlap that comes with
-    more naive visualizations. We’ll see how to make both types of
-    visualizations in later lectures.
+    more naive visualizations. Both can be made using either ggraph
+    \[[1](https://ggraph.data-imaginist.com/reference/geom_conn_bundle.html),
+    [2](https://ggraph.data-imaginist.com/reference/geom_edge_tile.html)\]
+    or D3 layouts
+    \[[3](https://observablehq.com/@d3/hierarchical-edge-bundling),
+    [4](https://observablehq.com/@fil/hello-reorder-js)\], which we’ll
+    be getting more practice with over the next few lectures.
 
     <img src="/stat679_notes/assets/week9-2/bundle_compare.png" alt="An edge bundled view of a network is much easier to read." width="500" />
     <p class="caption">

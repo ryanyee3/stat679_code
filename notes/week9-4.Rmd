@@ -136,8 +136,9 @@ define each link.
 1. More than simply showing the layout after 100 simulation iterations, we can
 redraw the visualization after every tick. The idea is that, when we run the
 simulation, the `nodes` and `links` data objects will be changing after each
-tick. After rebinding the data, to the circle and line SVGs, we can update their
-`attrs` to reflect new locations. The function below encapsulates this update.
+tick. After running one step of the simulation, we can update the circle and
+line `attrs` to reflect new simulation locations. The function below
+encapsulates this update.
 
     ```{r eval = FALSE}
     function ticked() {
