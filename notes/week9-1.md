@@ -8,6 +8,9 @@ output:
 
 *Reading and modifying graph data*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week9-1.Rmd),
+[Recording]()
+
     library(tidygraph)
     library(ggraph)
     theme_set(theme_bw())

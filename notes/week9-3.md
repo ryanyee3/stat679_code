@@ -1,12 +1,15 @@
 ---
 title: Tree Representations
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
 
 *An important special case of graph data visualization*
+
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week9/week9-1),
+[Recording]()
 
     library(tidygraph)
     library(ggraph)
@@ -54,15 +57,15 @@ output:
     type of node-link geoms as before. We can organize nodes by depth
     (distance from the root) by specifying that the layout be `tree`.
 
-            p1 <- ggraph(G_flare, 'tree') + 
-              geom_edge_link() +
-              geom_node_label(aes(label = shortName), size = 3)
+        p1 <- ggraph(G_flare, 'tree') +
+          geom_edge_link() +
+          geom_node_label(aes(label = shortName), size = 3)
 
-            p2 <- ggraph(G_flare, 'tree', circular = TRUE) + 
-              geom_edge_link() +
-              geom_node_label(aes(label = shortName), size = 3)
+        p2 <- ggraph(G_flare, 'tree', circular = TRUE) +
+          geom_edge_link() +
+          geom_node_label(aes(label = shortName), size = 3)
 
-            p1 | p2
+        p1 | p2
 
     ![](/stat679_notes/assets/week9-3/unnamed-chunk-4-1.png)
 
@@ -70,7 +73,7 @@ output:
     to find coordinates for both nodes and links across the tree. Once
     we have these coordinates, we can append corresponding `circle` and
     `path` SVG elements. There are three main steps before we can reach
-    this point, each with an D3 helper function.
+    this point,
 
     -   Convert the flat array containing the list of edges into a
         stratified JS object that can be input to the next steps. This
@@ -92,31 +95,25 @@ output:
     node with no parents,
 
         [
-          {from: null, to: "flare"}, 
-          {from: 'flare', to: 'flare.analytics'},
-          {from: 'flare', to: 'flare.vis'},
-          {from: 'flare.vis', to: 'flare.vis.operator'},
+          {from: null, to: "flare"},
+          {from: "flare", to: "flare.analytics"},
+          {from: "flare", to: "flare.vis"},
+          {from: "flare.vis", to: "flare.vis.operator"},
           ...
         ]
 
     We define a function that stratifies this flat edge array using the
-    following syntax. The the `id` and `parentId` methods parse the tree
-    structure from a single element in the edge array – we could have
-    used any keys in the above edge list, as long as we say how to look
-    up each node’s name and its parent.
+    following syntax. The `id` and `parentId` methods parse the
+    parent-child relationship structure from each array element.
 
-          let stratifier = d3.stratify()
-            .id(d => d.to)
-            .parentId(d => d.from)
+        let stratifier = d3.stratify()
+          .id(d => d.to)
+          .parentId(d => d.from)
 
     Calling the stratifier on the original edgelist creates the nested
     data structure shown below. Notice that it has automatically
     calculated many useful properties, like the node’s depth in the tree
     and the data from its parent.
-
-        let stratifier = d3.stratify()
-          .id(d => d.to)
-          .parentId(d => d.from),
 
         stratifier(edge_array)
 
@@ -125,8 +122,8 @@ output:
 6.  The really wonderful thing about the stratified object is that it
     includes many [helper
     methods](https://github.com/d3/d3-hierarchy/blob/main/README.md)
-    which allow us to avoid manually implementing common tree operations
-    without. For example, the call below will return the 22 nodes
+    which allow us to avoid manually implementing common tree
+    operations. For example, the call below will return the 22 nodes
     descending from the first child of the root (since the children are
     sorted alphabetically, this node is `flare.animate`).
 
@@ -135,7 +132,7 @@ output:
 
     <img src="/stat679_notes/assets/week9-3/descendants.png" width="914" />
 
-7.  Next, we call `d3.tree()` on this stratified object. This is what
+7.  Next, we call `d3.tree()` on the stratified object. This is what
     calculates the pixel coordinates of each node along the tree. The
     `.size()` method below specifies the maximum `x` and `y` coordinates
     of the final layout. In the screenshot below, you can see that the
@@ -148,12 +145,13 @@ output:
     <img src="/stat679_notes/assets/week9-3/stratified_tree.png" width="708" />
 
 8.  In order to bind data using the general update pattern, we’re going
-    to need convert these data back into arrays. We can use the
-    `.links()` and `.descendants()` methods to get arrays with the edge
-    and node data. Unlike the edge data we had initially, this modified
-    edge array also includes `x` and `y` coordinate information, thanks
-    to the previous call to `d3.tree()`. For example, this will bind
-    circles associated with each node in the tree.
+    to need convert these data back into arrays. Fortunately, there are
+    two methods, `.links()` and `.descendants()`, which let us retrieve
+    edge and node arrays from this stratified object. Unlike the edge
+    data we had initially read in, this modified edge array also
+    includes `x` and `y` coordinate information, thanks to the previous
+    call to `d3.tree()`. For example, this will bind circles associated
+    with each node in the tree.
 
         d3.select("#tree")
           .selectAll("circle")
@@ -165,10 +163,11 @@ output:
             ...
           })
 
-9.  If we want curved edges, we can use a special path generator
-    designed to draw tree links. We could always have used a `d3.line()`
-    generator to draw the path, but those edges would be straight paths
-    from one node to the next. The resulting tree is shown below.
+9.  If we want curved edges, we can use a special path generator, called
+    `d3.linkVertical()`, designed to draw tree links. The resulting tree
+    is shown below. We could always have used a `d3.line()` generator to
+    draw the path, but those edges would be straight paths from one node
+    to the next.
 
         let link_gen = d3.linkVertical()
           .x(d => d.x)
@@ -199,17 +198,16 @@ output:
     using node-link diagrams. There is one other very common tree
     representation that is worth knowing: treemaps. The idea is to
     encode parent-child relationships using enclosure (i.e., the
-    containment of some visual marks within others) to encode those
-    relationships.
+    containment of some visual marks within others).
 
-12. In this visualization below, each node is allocated an area, and all
+12. In the visualization below, each node is allocated an area, and all
     its children are drawn within that area (and so on, recursively,
     down to the leaves). The first two lines of code are the most
     important. The first says that we want to use a `treemap` layout,
     and the size of each node should reflect the `size` column in the
-    nodes dataset. The second line specifies visual encodings to add to
-    each treemap tile – the color will reflect how deep we are into the
-    tree.
+    nodes component of `G_flare`. The second line specifies visual
+    encodings to add to each treemap tile – the color will reflect how
+    deep we are into the tree.
 
             ggraph(G_flare, "treemap", weight = size) +
               geom_node_tile(aes(fill = depth)) +
@@ -229,10 +227,10 @@ output:
     diagram, but they require deliberate inspection when using treemaps.
 
 14. In D3, the analogous code is generated using the `d3.treemap()`
-    function. Though the layout is quite different, but the way in which
-    it is applied to a stratified data object is very similar to the use
-    of `d3.tree()`. The source code can be read
-    \[here\]((<https://observablehq.com/@d3/nested-treemap>) – note that
+    function. Though the layout is quite different, the way in which it
+    is applied to a stratified data object is very similar to the use of
+    `d3.tree()`. The source code can be read
+    [here](https://observablehq.com/@d3/nested-treemap) – note that
     `d3.stratify()` was not needed here, because the input data are
     already a stratified object (not just an array of edges).
 
@@ -247,7 +245,7 @@ output:
 
 <!-- -->
 
-    ggraph(G_flare, "partition", weight = size) + 
+    ggraph(G_flare, "partition", weight = size) +
       geom_node_tile(aes(y = -y, fill = depth)) +
       scale_fill_distiller(direction = 1)
 

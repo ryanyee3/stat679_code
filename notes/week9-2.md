@@ -8,6 +8,9 @@ output:
 
 *What are typical queries for graph data?*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week9-2.Rmd),
+[Recording]()
+
 1.  Graphs are common across a wide range of fields — for example,
     biochemistry (metabolic networks), sociology (friendship networks),
     digital humanities (letter-writing networks), evolution
