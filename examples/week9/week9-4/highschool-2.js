@@ -39,7 +39,6 @@ function ticked() {
       x2: d => d.target.x,
       y2: d => d.target.y
     })
-
 }
 
 function visualize(data) {

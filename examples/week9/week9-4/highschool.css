@@ -1,12 +1,12 @@
 
 #links line {
   fill: none;
-  stroke: #0c0c0c;
-  stroke-width: .5;
+  stroke: #bcbcbc;
+  stroke-width: 1.5;
 }
 
 #nodes circle {
   stroke: none;
   fill: "#0c0c0c";
-  r: 10.5;
+  r: 5;
 }
