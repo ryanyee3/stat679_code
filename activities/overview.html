@@ -2100,6 +2100,108 @@ sheet. If you think your strategies might be interesting to other teams, you are
 also welcome to share your responses to this [google doc](https://tinyurl.com/8epa6dec) (https://tinyurl.com/8epa6dec).
 
   
+---
+  
+### November 7, 2022
+
+1. Exercise Review
+1. In-Class Demo 9.1
+1. Discussion 9.1
+
+---
+
+### Announcements
+
+1. Problem Set 3 is due in next Monday (11/14).
+1. Project Milestone 2 is due 11/18
+
+---
+
+### Exercise Review -- Instructions
+
+1. You don't need to include code in the write-up itself. It's enough to provide
+a public link / upload a zipped file with your code repository.
+1. You don't need to include code in your Piazza post. It's enough to share your
+write-up.
+1. By "critical design evaluation," we mean that your write-up accurately
+discusses the limits / trade-offs associated with your proposed designs. It is
+not necessary to compare with designs that are not your own.
+1. You can use existing code (from the course or elsewhere) as long as you cite
+your sources.
+
+---
+
+### Exercise Review -- Conceptual Issues
+
+What metrics can we use as a guide? 
+
+There is no absolute answer, but here are some heuristics: 
+
+   * Information density
+   * Interaction latency
+   * Request informal feedback from peers
+   * Make formal quizzes for peers
+
+---
+
+### Exercise Review -- Conceptual Issues
+
+How to narrow down the scope?
+
+  * Start with the subsets that you are most familiar with (PhD course story)
+  * Imagine the details in your intended outcome. You may find even a small part
+  of the current scope can still lead to a rich, interesting outcome
+  * Think of your work as one statement within a larger conversation. What do
+  you want to say, and to whom?
+
+---
+
+### Exercise Review -- Implementation Issues
+
+How to merge across many data sources?
+
+  * Specify the units of analysis (there can be multiple)
+  * For each unit of analysis, create a "clean" dataset for just that unit
+  * Don't aggregate / filter rows, but do select columns. You want to show the
+  samples in as high a resolution as possible, but your audience doesn't know
+  which features you're not showing
+
+---
+
+### Exercise Review -- Implementation Issues
+
+How to manage slow steps in an interactive app?
+
+  * First, make sure to isolate the true source of the latency 
+    - You can use `profvis` for Shiny apps
+    - Is it in the visualization rendering or the background computation?
+  * If it is background computation, consider saving precomputed summaries
+  * If it is rendering, consider aggregating visual marks (second PhD story)
+  Alternatively, Canvas
+  [[1](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial), [2](https://www.visualcinnamon.com/2015/11/learnings-from-a-d3-js-addict-on-starting-with-canvas/)]
+  is a very fast alternative to SVG, and it has similar syntax
+
+---
+
+### Code Demo [9.1]
+
+* We will work through [Climate Crisis Youtube recommendations]
+
+* I've uploaded some starter code here: https://go.wisc.edu/j9vm8x
+
+---
+
+### Discussion [9.1]
+
+We'll set aside some time to go over points that may help with the upcoming
+homework. On this doc (https://go.wisc.edu/l565j4), list anything you would like
+to go over.
+
+  * Is there a concept / code example from the notes / lectures that you would like to go through in more detail?
+
+  * Is there a simplified example that would be helpful to work through?
+  
+  * Any other questions?
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
