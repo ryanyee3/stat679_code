@@ -1,7 +1,7 @@
 ---
 title: Graph Interactivity II
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
@@ -20,26 +20,62 @@ output:
     highlight one-step neighborhoods based on the position of the user’s
     mouse. For example, here is an example for node-link views,
 
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-1/highschool-hover.html" data-external="1" height=450 width=600></iframe>
+
     and here is one for adjacency matrix views,
 
-3.  Conceptually, there is nothing unique about this interactivity code,
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-1/miserables-adj-neighbors.html" data-external="1" height=450 width=600></iframe>
+
+3.  In both of these examples, we first build a data structure
+    containing the neighbors of each node in the graph. For example the
+    array following `0:` gives the indices of all nodes that are
+    neighbors with node `0`,
+
+    <img src="/stat679_notes/assets/week10-1/neighbors-js.png" width="350" style="display: block; margin: auto;" />
+
+    Once we have this data structure, we can quickly look up neighbors
+    every time we hover over a node (or matrix tile in the adjacency
+    matrix view). We then update the graphical marks to reflect these
+    neighborhoods. In the node-link view, we highlight the neighbors in
+    red using the following update,
+
+        d3.select("#nodes")
+          .selectAll("circle")
+          .attrs({
+            fill: d => neighbors[ix].indexOf(d.index) == -1 ? "black" : "red"
+          })
+
+    and similarly, for the adjacency matrix visualization, we change the
+    x-label font size and opacity using this so that only the neighbors
+    are visible,
+
+        d3.select("#xlabels")
+          .selectAll("text")
+          .attrs({
+        "font-size": d => d.index == target? 14 : 10,
+        "opacity": d => neighbors[source].indexOf(d.index) == -1? 0 : 1
+          })
+
+4.  Conceptually, there is nothing unique about this interactivity code,
     compared to what we already have used for more basic plots (e.g.,
     for scatterplots), and many of the techniques we learned earlier
     apply here. For example, if want to allow the user to select a node
-    without placing their mouse directly over it, we could use a voronoi
-    overlay
-    <https://bl.ocks.org/alexmacy/15962e97f7a9ebacd55710bf277593d4>.
+    without placing their mouse directly over it, we can adapt the
+    Delaunay lookups that we have [previously
+    used](https://krisrs1128.github.io/stat679_notes/2022/06/01/week6-3.html)
+    in scatterplot interaction. Here is an implementation of this idea
+    by Alex Macy,
 
-4.  Brushing and linking is often used for encoding interactivity.
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/_8jeKfFnPvk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+5.  Brushing and linking is often used for encoding interactivity.
     Properly coordinated views can be used to highlight nodes or edges
     with a particular property. For example, suppose we wanted to a
     simple way of highlighting all the hubs in a network (i.e., nodes
     with many neighbors). One idea is to link a histogram of node
-    degrees with the actual node-link diagram.
-
-5.  In principle, we could modify a variety of node and edge attributes
-    based on user interactions (size, color, line type, …). However,
-    it’s usually
+    degrees with the actual node-link diagram. In principle, we could
+    modify a variety of node and edge attributes based on user
+    interactions (size, color, line type, …). However, it’s usually
 
 6.  Next, let’s consider data interactions. Two common types of data
     interactions are user-guided filtering and aggregation. In
@@ -51,6 +87,8 @@ output:
     edge-betweeness-centrality (a measure of how many paths go through
     that edge). This is helpful for isolating the “backbone” of the
     network.
+
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-3/interactome-2.html" data-external="1" height=450 width=600></iframe>
 
 8.  To implement this view, we use the standard enter-update-exit
     pattern. We had precomputed the edge centralities in advance, so
@@ -66,9 +104,13 @@ output:
     are shown so that additional details are shown on demand.
 
 10. For example, a semantic zoom with two zoom levels would allow the
-    user to collapse and expand metanodes based on user interest. We
-    implement a version of this below, based on the compound graph
-    visualization from our earlier notes.
+    user to collapse and expand metanodes based on user interest. Here
+    is an implementation by @rymarchikbot. The construction of the
+    enclosing paths is similar to our `convex_hull`-based compound graph
+    visualization from the first set of notes for this week.
+
+    <iframe width="100%" height="500" frameborder="0"
+      src="https://observablehq.com/embed/@rymarchikbot/d3-js-force-layout-click-to-group-bundle-nodes?cell=*"></iframe>
 
 11. Both filtering and aggregation work by refocusing our attention on
     graph structures, either from the top down (removing less
@@ -78,19 +120,22 @@ output:
 12. The main idea of graph navigation is to start zoomed in, with only a
     small part of the graph visible. Then, based on user interest, we
     can visually signal those directions of the graph that are
-    especially worth moving towards.
+    especially worth moving towards. Concretely, it is possible to
+    define a degree-of-interest function across the collection of nodes,
+    as formalized by [(Van Ham and Perer
+    2009)](https://dig.cmu.edu/publications/2009-doigraphs.html). This
+    function can update based on user inputs. The encoding of the graph
+    can then be modified to suggest that certain regions be focused in
+    on.
 
-13. Concretely, we can define a degree-of-interest function across the
-    collection of nodes. This function can update based on user inputs.
-    The encoding of the graph can then be modified to suggest that
-    certain regions be focused in on.
+    <img src="/stat679_notes/assets/week10-1/2009-doigraphs.png" width="350" style="display: block; margin: auto;" />
 
-14. Note that this is different from the overview-plus-detail principle
+13. Note that this is different from the overview-plus-detail principle
     that we have used in many places. It is helpful when attempting to
     overview the entire network may not be necessary and exploring local
     neighborhoods is enough to answer most questions.
 
-15. Together, view, encoding, and data interaction provide a rich set of
+14. Together, view, encoding, and data interaction provide a rich set of
     techniques for exploring graph data. Moreover, many of the
     techniques we described here are still areas of active research, and
     perhaps in the future, it will be easier to design and implement
