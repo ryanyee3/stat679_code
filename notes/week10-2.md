@@ -35,7 +35,7 @@ output:
     graph and then pan and zoom to specific neighborhoods of interest.
 
 4.  In D3, panning and zooming can be implemented using `d3.zoom()`.
-    These are used to construct functions that can then be called on `g`
+    This are used to construct functions that can then be called on `g`
     elements containing the objects to pan and zoom over (conceptually,
     this is similar to `d3.brush()`). The `scaleExtent()` method
     specifies the maximum and minimum zoom levels. For example, to pan
@@ -111,8 +111,8 @@ output:
             ...
           })
 
-    and whenever the mose moves, we call a function that will update the
-    display.
+    and whenever the mouse moves, we call a function that will update
+    the display.
 
         d3.select("#overall")
           .on("mousemove", e => move_lens(e, nodes, links))

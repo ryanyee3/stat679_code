@@ -52,8 +52,8 @@ output:
         d3.select("#xlabels")
           .selectAll("text")
           .attrs({
-        "font-size": d => d.index == target? 14 : 10,
-        "opacity": d => neighbors[source].indexOf(d.index) == -1? 0 : 1
+            "font-size": d => d.index == target? 14 : 10,
+            "opacity": d => neighbors[source].indexOf(d.index) == -1? 0 : 1
           })
 
 4.  Conceptually, there is nothing unique about this interactivity code,
@@ -75,27 +75,27 @@ output:
     with many neighbors). One idea is to link a histogram of node
     degrees with the actual node-link diagram. In principle, we could
     modify a variety of node and edge attributes based on user
-    interactions (size, color, line type, …). However, it’s usually
+    interactions (size, color, line type, …).
 
 6.  Next, let’s consider data interactions. Two common types of data
     interactions are user-guided filtering and aggregation. In
     filtering, we remove data from view — this can be determined by UI
     inputs, dynamic queries, or direct manipulation of marks on the
-    screen.
-
-7.  For example, in the example below, we filter edges based on their
+    screen. For example, here we filter edges based on their
     edge-betweeness-centrality (a measure of how many paths go through
     that edge). This is helpful for isolating the “backbone” of the
     network.
 
     <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-3/interactome-2.html" data-external="1" height=450 width=600></iframe>
 
-8.  To implement this view, we use the standard enter-update-exit
-    pattern. We had precomputed the edge centralities in advance, so
-    updating the displayed marks is simply a matter of determining which
-    edge array elements to bind.
+7.  To implement this view, we use the standard enter-update-exit
+    pattern. We used the brush selection to change the subset of edges
+    that should be bound to the SVG lines defining the links. We had
+    precomputed the edge centralities in advance, so updating the
+    displayed marks is simply a matter of determining which edge array
+    elements to display.
 
-9.  Pruning reduces the number of marks on the display by removing some.
+8.  Pruning reduces the number of marks on the display by removing some.
     In contrast, aggregation reduces the number of marks by collapsing
     many into a few. One approach to aggregation is to clump tightly
     connected clusters of nodes into metanodes. This is a special case
@@ -103,7 +103,7 @@ output:
     collection of elements, semantic zooming modifies the elements that
     are shown so that additional details are shown on demand.
 
-10. For example, a semantic zoom with two zoom levels would allow the
+9.  For example, a semantic zoom with two zoom levels would allow the
     user to collapse and expand metanodes based on user interest. Here
     is an implementation by @rymarchikbot. The construction of the
     enclosing paths is similar to our `convex_hull`-based compound graph
@@ -112,12 +112,12 @@ output:
     <iframe width="100%" height="500" frameborder="0"
       src="https://observablehq.com/embed/@rymarchikbot/d3-js-force-layout-click-to-group-bundle-nodes?cell=*"></iframe>
 
-11. Both filtering and aggregation work by refocusing our attention on
+10. Both filtering and aggregation work by refocusing our attention on
     graph structures, either from the top down (removing less
     interesting elements) or from the bottom up (combining similar
     ones). An intermediate strategy is based on graph navigation.
 
-12. The main idea of graph navigation is to start zoomed in, with only a
+11. The main idea of graph navigation is to start zoomed in, with only a
     small part of the graph visible. Then, based on user interest, we
     can visually signal those directions of the graph that are
     especially worth moving towards. Concretely, it is possible to
@@ -130,12 +130,12 @@ output:
 
     <img src="/stat679_notes/assets/week10-1/2009-doigraphs.png" width="350" style="display: block; margin: auto;" />
 
-13. Note that this is different from the overview-plus-detail principle
+12. Note that this is different from the overview-plus-detail principle
     that we have used in many places. It is helpful when attempting to
     overview the entire network may not be necessary and exploring local
     neighborhoods is enough to answer most questions.
 
-14. Together, view, encoding, and data interaction provide a rich set of
+13. Together, view, encoding, and data interaction provide a rich set of
     techniques for exploring graph data. Moreover, many of the
     techniques we described here are still areas of active research, and
     perhaps in the future, it will be easier to design and implement

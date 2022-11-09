@@ -64,8 +64,8 @@ the indices of all nodes that are neighbors with node `0`,
 d3.select("#xlabels")
   .selectAll("text")
   .attrs({
-    "font-size": d => d.index == target? 14 : 10,
-    "opacity": d => neighbors[source].indexOf(d.index) == -1? 0 : 1
+        "font-size": d => d.index == target? 14 : 10,
+        "opacity": d => neighbors[source].indexOf(d.index) == -1? 0 : 1
   })
       ```
 
@@ -85,22 +85,22 @@ property. For example, suppose we wanted to a simple way of highlighting all the
 hubs in a network (i.e., nodes with many neighbors). One idea is to link a
 histogram of node degrees with the actual node-link diagram. In principle, we
 could modify a variety of node and edge attributes based on user interactions
-(size, color, line type, …). However, it’s usually
+(size, color, line type, …).
 
 1. Next, let’s consider data interactions. Two common types of data interactions
 are user-guided filtering and aggregation. In filtering, we remove data from
 view — this can be determined by UI inputs, dynamic queries, or direct
-manipulation of marks on the screen.
-
-1. For example, in the example below, we filter edges based on their
-edge-betweeness-centrality (a measure of how many paths go through that edge).
-This is helpful for isolating the “backbone” of the network.
+manipulation of marks on the screen. For example, here we filter edges based on
+their edge-betweeness-centrality (a measure of how many paths go through that
+edge). This is helpful for isolating the “backbone” of the network.
 
     <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-3/interactome-2.html" data-external="1" height=450 width=600></iframe>
 
-1. To implement this view, we use the standard enter-update-exit pattern. We had
-precomputed the edge centralities in advance, so updating the displayed marks is
-simply a matter of determining which edge array elements to bind.
+1. To implement this view, we use the standard enter-update-exit pattern. We
+used the brush selection to change the subset of edges that should be bound to
+the SVG lines defining the links. We had precomputed the edge centralities in
+advance, so updating the displayed marks is simply a matter of determining which
+edge array elements to display.
 
 1. Pruning reduces the number of marks on the display by removing some. In
 contrast, aggregation reduces the number of marks by collapsing many into a few.
