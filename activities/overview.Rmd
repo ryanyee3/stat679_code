@@ -2171,11 +2171,33 @@ to go over.
 
 ### November 9, 2022
 
-1. Exercise Review
 1. In-Class Demo 9.2
 1. In-Class Exercise 9.2
 
 ---
+
+### Announcements
+
+1. Problem Set 3 is due in next Monday (11/14).
+1. Project Milestone 2 is due 11/18
+
+---
+
+### Code Demo [9.2]
+
+Link: https://go.wisc.edu/1x0t6m
+
+With those who are sitting at your table, provide a two-sentence description of
+for one of the following two functions,
+
+* `d3.stratify()`
+* `d3.tree()`
+
+You may choose to focus on either the function's theoretical purpose and or
+practical application.
+
+---
+
 
 ### Code Demo [9.2]
 
@@ -2185,7 +2207,6 @@ the Week 9 - 3 notes.
 * I've uploaded some starter code here: https://go.wisc.edu/2io696
 
 <iframe src="https://krisrs1128.github.io/stat679_code/examples/week9/week9-1/flare3.html" data-external="1" width=800 height=350></iframe>
-
 
 ---
 
