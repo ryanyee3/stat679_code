@@ -14,12 +14,17 @@ d3.select("svg")
     r: 5
   })
 
-// zooming code
-let zoom = d3.zoom()
-  .scaleExtent([1, 10])
-  .on("zoom", zoom_fun)
-d3.select("svg").call(zoom)
+// dragging code
+let drag = d3.drag()
+  .on("drag", drag_fun)
+d3.select("svg")
+  .selectAll("circle")
+  .call(drag)
 
-function zoom_fun(ev) {
-  d3.select("svg").attr("transform", ev.transform);
+function drag_fun(ev) {
+  d3.select(this)
+    .attrs({
+      cx: d => ev.x,
+      cy: d => ev.y,
+    })
 }
