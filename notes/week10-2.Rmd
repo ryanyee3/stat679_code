@@ -26,12 +26,9 @@ build a holistic understanding of even very complex graphs.
 though the boundaries can often be fuzzy. From most superficial to most
 substantive, these are,
 
-		* View interactivity: For a fixed mapping from data to visual marks, we alter
-		the user’s view so that different regions become easier to study.
-		* Encoding interactivity: We can change the visual encodings of a fixed
-		collection of data based on user queries.
-		* Data interactivity: We can allow the user to manipulate the data that appear
-		in any given graph.
+    * View interactivity: For a fixed mapping from data to visual marks, we alter the user’s view so that different regions become easier to study.
+    * Encoding interactivity: We can change the visual encodings of a fixed collection of data based on user queries.
+    * Data interactivity: We can allow the user to manipulate the data that appear in any given graph.
 	In these notes, we’ll consider a few examples of view interactivity. Later,
 	we’ll discuss encoding and data interactivity.
 
@@ -40,7 +37,6 @@ can be used to change the center and extent of the user’s field of view. Even
 though these operations don’t require any complex redrawing of the graph, they
 allow a simple form of overview + detail interactivity. We can zoom out to view
 the overall graph and then pan and zoom to specific neighborhoods of interest.
-
 
 1. In D3, panning and zooming can be implemented using
 `d3.zoom()`. These are used to construct functions that can then
@@ -60,7 +56,7 @@ function zoom_fun(ev) {
 }
     ```
 
-    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-2/pan-zoom.html" data-external="1" height=300 width=600></iframe>
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-1/pan-zoom.html" data-external="1" height=450 width=600></iframe>
 
 1. A related behavior comes from `d3.drag()`. This allows us to move elements
 every time the user clicks on one and then moves the mouse. In this case, the
@@ -76,12 +72,14 @@ d3.select("svg")
 
 function drag_fun(ev) {
   d3.select(this)
-    .attrs({
-      cx: d => ev.x,
-      cy: d => ev.y,
-    })
+        .attrs({
+          cx: d => ev.x,
+          cy: d => ev.y,
+        })
 }
     ```
+
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-1/drag.html" data-external="1" height=200 width=200></iframe>
 
 1. Application to the graph context works similarly. Here is an example where we
 can pan and zoom across a node-link diagram (can you think of how to do this for
@@ -89,7 +87,7 @@ an adjacency matrix view?). We've also used `d3.drag()` to move the nodes. Note
 that when the node's position changes, it updates the forces in the simulation,
 and other nodes get dragged along.
 
-    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-2/miserables-zoom.html" data-external="1" height=300 width=600></iframe>
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-2/miserables-zoom.html" data-external="1" height=450 width=600></iframe>
 
 1. There are more subtle forms of view interactivity. One interesting example
 discussed in the reading for this week is “edge lensing.” This type of
@@ -104,7 +102,7 @@ not direct neighbors.
 that are not directly relevant to the queried region. For example, this removes
 long-range interactions between nodes far from the lens.
 
-    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-2/miserables-lens.html" data-external="1" height=300 width=600></iframe>
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-2/miserables-lens.html" data-external="1" height=450 width=600></iframe>
 
 1. We can implement a simple version of this in D3. We can easily draw a lens by
 asking a circle to follow our mouse using a mousemove interaction. Specifically, we append a circle,
@@ -113,9 +111,9 @@ asking a circle to follow our mouse using a mousemove interaction. Specifically,
 d3.select("#lens")
   .append("circle")
   .attrs({
-    r: lens_radius,
-    fill: "white",
-    ...
+        r: lens_radius,
+        fill: "white",
+        ...
   })
     ```
 
@@ -143,10 +141,10 @@ let sel = d3.select("#local_links")
 sel.enter()
   .append("line")
   .attrs({
-    x1: d => d.source.x,
-    y1: d => d.source.y,
-    x2: d => d.target.x,
-    y2: d => d.target.y
+        x1: d => d.source.x,
+        y1: d => d.source.y,
+        x2: d => d.target.x,
+        y2: d => d.target.y
   })
 
 sel.exit().remove()
@@ -166,7 +164,7 @@ The user’s past history of inputs can be used to define an “interest” func
 over regions of the graph, and areas considered more interesting can be expanded
 to take up more space in the layout.
 
-<iframe width="100%" height="350" frameborder="0" src="https://observablehq.com/embed/@maliky/force-directed-graph-a-to-z?cells=chart5"></iframe>
+    <iframe width="100%" height="350" frameborder="0" src="https://observablehq.com/embed/@maliky/force-directed-graph-a-to-z?cells=chart5"></iframe>
 
 1. None of these approaches directly change the graph data (Data Interactivity)
 or their encodings (Encoding Interactivity). In the next set of notes, we’ll
