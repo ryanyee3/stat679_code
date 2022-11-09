@@ -1,7 +1,7 @@
 ---
 title: Structured Graphs
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
@@ -12,7 +12,7 @@ _Representing known structure in graphs_
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE,
   fig.path = "stat679_notes/assets/week10-1/"
 )
@@ -23,16 +23,10 @@ structure of the graph or purpose of the visualization. These notes describe a
 few of the situations that arise most frequently in practice.
 
 1. When there is no additional structure / specific purpose, a reasonable
-default for node-link diagrams uses force-directed layout. In this layout, we
+default for node-link diagrams uses force-directed layout, as discussed previously. In this layout, we
 think of nodes as particles that want to repel one another, but which are tied
-together by elastic edges. In ggraph, this can be specified by the `force`
-layout.
+together by elastic edges.
 
-	In D3, we can use the `d3.force()` function. This animates the physical system
-	as it settles into an equilibrium state. These can be visually attractive, but
-	be careful when using this, since the animation serves no specific visual
-	purpose.
-	
 1. One common situation where we can go beyond force-directed graphs is when we
 have additional information about the nodes that can be used to constrain their
 position. For example, the Royal Constellations visualization, attempts to
@@ -40,14 +34,31 @@ visualize the family trees of royal families. On the y-axis, the nodes are
 constrained to be sorted by year, and across the x-axis, nodes are constrained
 according to the country of the royal family.
 
+<iframe src="https://royalconstellations.visualcinnamon.com/" width=800 height=500></iframe>
+
 1. More generally, we can define x and y-axis constraints and then use a
 force-directed algorithm to layout the nodes, subject to those constraints.
-These can be easily implemented by combining D3 with the cola library.
+These can be implemented by combining D3 with the [cola library](https://ialab.it.monash.edu/webcola/). For example, we've simulated data that are known to fall into three tight clusters, but using a naive force-directed layout leads to clusters that cross one another.
 
-1. The key line in the example above is `.constraints(graph.constraints)`. This
-takes a dictionary of pixel constraints between pairs of nodes; e.g.,
-`{"axis":"y", "left":0, "right":1, "gap":25}` says that node 1 should be (at
-least) 25 pixels above node 0.
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-1/cola-example.html" data-external="1" height=400 width=500></iframe>
+
+1. To resolve this, we can explicitly tell the layout algorithm to constrain the x-coordinates for nodes within each cluster.
+
+    <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-2/cola-example.html" data-external="1" height=400 width=500></iframe>
+
+    To accomplish this, we defined an array of objects specifying pixel
+    constraints between pairs of nodes; e.g., `{"axis":"y", "left":0, "right":1,
+    "gap":25}` says that node 1 should be (at least) 25 pixels above node 0.
+
+
+```{r eval = FALSE}
+let constrained = cola.d3adaptor()
+  .nodes(nodes)
+  .links(links)
+  .constraints(constraints)
+  .groups(groups)
+  .start()
+```
 
 1. Another common situation is that the nodes can be organized into a hierarchy
 of subgraphs. That is, nodes can be partitioned into non-overlapping sets. These
@@ -58,7 +69,7 @@ matrix visualizations. For example, in node-link views, we can draw shapes
 enclosing the sets,
 
 	and in adjacency matrices, we can draw trees specifying the hierarchy.
-	
+
 1. We can in fact use the cola library to encode hierarchy in node-link views.
 The example below uses cola to ensure sets don’t overlap. It then draws (and
 fills in) paths that contain the separate sets.
@@ -96,8 +107,8 @@ virus.
 
 1. There is no single way to visualize these networks, but common strategies
 include use of animation,
-	faceting over time, 
-	combined encodings (like time series within nodes), 
+	faceting over time,
+	combined encodings (like time series within nodes),
 	or coordinated views.
 
 1. In these notes, we’ve see some academic literature on visualization. Even

@@ -2166,3 +2166,36 @@ to go over.
   * Is there a simplified example that would be helpful to work through?
   
   * Any other questions?
+  
+---
+
+### November 9, 2022
+
+1. Exercise Review
+1. In-Class Demo 9.2
+1. In-Class Exercise 9.2
+
+---
+
+### Code Demo [9.2]
+
+* We will implement the interactive version of the Flare Tree visualization from
+the Week 9 - 3 notes.
+
+* I've uploaded some starter code here: https://go.wisc.edu/2io696
+
+<iframe src="https://krisrs1128.github.io/stat679_code/examples/week9/week9-1/flare3.html" data-external="1" width=800 height=350></iframe>
+
+
+---
+
+### In-Class Exercise [9.2]
+
+Work through [Code Analysis] in the exercises sheet (also copied below). You can
+pick examples from before this week if you want.
+
+[Code Analysis] Pick one code example from the lecture notes. Provide a 3 - 4
+sentence summary of the overall implementation strategy. Then, add comments
+every 10 - 15 lines describing what each section of code is doing. If there are
+parts that you do not understand, add a ??? next to it (we will review these in
+the next lecture).
