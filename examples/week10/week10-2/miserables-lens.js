@@ -21,7 +21,7 @@ function make_scales(order) {
 
 function initialize_graph(nodes, links) {
   d3.select("#overall")
-    .on("mousemove", e => move_lens(e, links))
+    .on("mousemove", e => move_lens(e, nodes, links))
 
   d3.select("#lens")
     .append("circle")
@@ -85,7 +85,7 @@ function drag_end(simulation, event) {
   event.subject.fy = null;
 }
 
-function move_lens(event, links) {
+function move_lens(event, nodes, links) {
   d3.select("#lens")
     .select("circle")
     .attrs({
@@ -93,7 +93,7 @@ function move_lens(event, links) {
       cy: event.y,
     })
 
-  let links_ = local_links(event, links)
+  let links_ = local_links(event, nodes, links)
   let sel = d3.select("#local_links")
     .selectAll("line")
     .data(links_, d => d.index)
@@ -110,7 +110,7 @@ function move_lens(event, links) {
   sel.exit().remove()
 }
 
-function local_links(event, links) {
+function local_links(event, nodes, links) {
   let local_nodes = [];
   for (let i = 0; i < nodes.length; i++) {
     let dist2 = Math.pow(nodes[i].x - event.x, 2) + Math.pow(nodes[i].y - event.y, 2)
