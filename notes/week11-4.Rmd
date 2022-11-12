@@ -8,13 +8,15 @@ output:
 
 _Guiding dimensionality reduction through user inputs_
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-4.Rmd), [Recording]()
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/weekX-Y/"
+  ig.path = "stat679_notes/assets/week11-4/"
   )
 ```
 

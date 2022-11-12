@@ -8,6 +8,9 @@ output:
 
 *Nonlinear dimensionality reduction with UMAP*
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-3.Rmd),
+[Recording]()
+
 1.  Nonlinear dimension reduction methods can give a more faithful
     representation than PCA when the data don’t lie on a low-dimensional
     linear subspace. For example, suppose the data were shaped like
@@ -23,7 +26,7 @@ output:
           geom_point() +
           scale_color_brewer(palette = "Set2")
 
-    ![](/stat679_notes/assets/weekX-Y/unnamed-chunk-2-1.png)
+    ![](/stat679_notes/assets/week11-3/unnamed-chunk-2-1.png)
 
 2.  From a high-level, the intuition behind UMAP is to (a) build a graph
     joining nearby neighbors in the original high-dimensional space, and
@@ -72,7 +75,7 @@ output:
           geom_point(aes(color = category), alpha = 0.7, size = 0.8) +
           geom_text(aes(label = name), check_overlap = TRUE, size = 3, hjust = "inward")
 
-    ![](/stat679_notes/assets/weekX-Y/unnamed-chunk-3-1.png)
+    ![](/stat679_notes/assets/week11-3/unnamed-chunk-3-1.png)
 
 7.  We can summarize the properties of UMAP,
 
