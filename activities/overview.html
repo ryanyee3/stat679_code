@@ -2256,6 +2256,185 @@ sentence summary of the overall implementation strategy. Then, add comments
 every 10 - 15 lines describing what each section of code is doing. If there are
 parts that you do not understand, add a ??? next to it (we will review these in
 the next lecture).
+
+---
+
+### November 14, 2022
+
+1. Exercise Review
+1. In-Class Demo 10.1
+1. Discussion [10.1]
+
+---
+
+### Announcements
+
+1. This Friday's office hours rescheduled to 2 - 3pm (Zoom and MSC 7225C)
+1. Problem Set 3 is due tonight (11/14)
+1. Project Milestone 2 is due Friday (11/18)
+1. Problem Set 4 has been posted (Due 12/02)
+
+---
+
+### Exercise Review
+
+* There were a few specific questions (reviewed in a minute), but not too many
+general themes
+* An even mix of D3 and ggraph examples, so we'll make sure to review both this
+week
+
+---
+
+### Exercise Review
+
+Why do we need `tick` in the code below?
+
+
+```r
+let simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d =&gt; d.id))
+  .force("charge", d3.forceManyBody().strength(-8))
+  .force("center", d3.forceCenter(300, 300))
+  .tick(100);
+```
+
+---
+
+### Exercise Review
+
+`.tick(100)` runs the physical simulation for 100 time steps, so the nodes have
+time to converge to their final layout.
+
+
+```r
+let simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d =&gt; d.id))
+  .force("charge", d3.forceManyBody().strength(-8))
+  .force("center", d3.forceCenter(300, 300))
+  .tick(100);
+```
+
+---
+
+### Exercise Review
+
+&lt;iframe width="100%" height="634" frameborder="0"
+  src="https://observablehq.com/embed/@ben-tanen/a-tutorial-to-using-d3-force-from-someone-who-just-learned-ho?cells=viewof+keyframe_xy%2Cchart_xy"&gt;&lt;/iframe&gt;
+
+---
+
+### Exercise Review
+
+&lt;iframe width="100%" height="635" frameborder="0"
+  src="https://observablehq.com/embed/@ben-tanen/a-tutorial-to-using-d3-force-from-someone-who-just-learned-ho?cells=viewof+keyframe_collide1%2Cchart_collide1"&gt;&lt;/iframe&gt;
+
+---
+
+### Exercise Review
+
+&lt;iframe width="100%" height="705" frameborder="0"
+  src="https://observablehq.com/embed/@ben-tanen/a-tutorial-to-using-d3-force-from-someone-who-just-learned-ho?cells=viewof+mbs%2Cviewof+keyframe_mb1%2Cchart_mb1"&gt;&lt;/iframe&gt;
+
+---
+
+### Exercise Review
+
+What does `flatMap` do in the code below?
+
+
+```r
+function visualize(data) {
+  let matrix = data["links"]
+    .flatMap(({source, target, value}) =&gt; [
+      [source, target, value],
+      [target, source, value]
+    ])
+    ...
+```
+
+---
+
+### Exercise Review
+
+This code is symmetrizing the original link data. It's what makes sure the
+adjacency matrix is symmetric.
+
+
+```r
+function visualize(data) {
+  let matrix = data["links"]
+    .flatMap(({source, target, value}) =&gt; [
+      [source, target, value],
+      [target, source, value]
+    ])
+    ...
+```
+
+---
+
+### Exercise Review
+
+What is the difference between `d3.forceSimulation()` and `d3.tree()`?
+
+* `d3.tree()` will group the nodes by distance from the root
+* `d3.tree()` can only apply to tree-structured data (no loops).
+`d3.forceSimulation()` can be applied to any network.
+
+---
+
+### Exercise Review
+
+What is the difference between `d3.forceSimulation()` and `d3.tree()`?
+
+.pull-left[
+&lt;iframe width="100%" height="400" frameborder="0" src="https://observablehq.com/embed/@d3/force-directed-tree?cells=chart"&gt;&lt;/iframe&gt;
+]
+  
+.pull-right[
+&lt;iframe width="100%" height="400" frameborder="0" src="https://observablehq.com/embed/@d3/collapsible-tree?cells=chart"&gt;&lt;/iframe&gt;
+]
+
+---
+
+### Exercise Review
+
+Why is the network from our demo symmetric?
+
+&lt;img src="figures/climate_adjmat.png" width="650" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Exercise Review
+
+Why is the network from our demo symmetric?
+
+&lt;img src="figures/climate_adjmat.png" width="650" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Exercise Review
+
+When we read in the data, the graph was undirected. A -&gt; B means that B -&gt; A.
+
+```
+&gt; G
+# A tbl_graph: 499 nodes and 1374 edges
+#
+# An undirected multigraph with 1 component
+#
+# Node Data: 499 × 17 (active)
+```
+
+---
+
+
+### November 16, 2022
+
+---
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

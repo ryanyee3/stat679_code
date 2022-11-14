@@ -2225,8 +2225,194 @@ the next lecture).
 
 ### November 14, 2022
 
+1. Exercise Review
+1. In-Class Demo 10.1
+1. Discussion [10.1]
+
 ---
 
 ### Announcements
 
-* Friday Office Hours rescheduled to 2 - 3pm
+1. This Friday's office hours rescheduled to 2 - 3pm (Zoom and MSC 7225C)
+1. Problem Set 3 is due tonight (11/14)
+1. Project Milestone 2 is due Friday (11/18)
+1. Problem Set 4 has been posted (Due 12/02)
+
+---
+
+### Exercise Review
+
+* There were a few specific questions (reviewed in a minute), but not too many
+general themes
+* An even mix of D3 and ggraph examples, so we'll make sure to review both this
+week
+
+---
+
+### Exercise Review
+
+Why do we need `tick` in the code below?
+
+```{r, eval = FALSE}
+let simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id))
+  .force("charge", d3.forceManyBody().strength(-8))
+  .force("center", d3.forceCenter(300, 300))
+  .tick(100);
+```
+
+---
+
+### Exercise Review
+
+`.tick(100)` runs the physical simulation for 100 time steps, so the nodes have
+time to converge to their final layout.
+
+```{r, eval = FALSE}
+let simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id))
+  .force("charge", d3.forceManyBody().strength(-8))
+  .force("center", d3.forceCenter(300, 300))
+  .tick(100);
+```
+
+---
+
+### Exercise Review
+
+<iframe width="100%" height="634" frameborder="0"
+  src="https://observablehq.com/embed/@ben-tanen/a-tutorial-to-using-d3-force-from-someone-who-just-learned-ho?cells=viewof+keyframe_xy%2Cchart_xy"></iframe>
+
+---
+
+### Exercise Review
+
+<iframe width="100%" height="635" frameborder="0"
+  src="https://observablehq.com/embed/@ben-tanen/a-tutorial-to-using-d3-force-from-someone-who-just-learned-ho?cells=viewof+keyframe_collide1%2Cchart_collide1"></iframe>
+
+---
+
+### Exercise Review
+
+<iframe width="100%" height="705" frameborder="0"
+  src="https://observablehq.com/embed/@ben-tanen/a-tutorial-to-using-d3-force-from-someone-who-just-learned-ho?cells=viewof+mbs%2Cviewof+keyframe_mb1%2Cchart_mb1"></iframe>
+
+---
+
+### Exercise Review
+
+What does `flatMap` do in the code below?
+
+```{r eval = FALSE}
+function visualize(data) {
+  let matrix = data["links"]
+    .flatMap(({source, target, value}) => [
+      [source, target, value],
+      [target, source, value]
+    ])
+    ...
+```
+
+---
+
+### Exercise Review
+
+This code is symmetrizing the original link data. It's what makes sure the
+adjacency matrix is symmetric.
+
+```{r eval = FALSE}
+function visualize(data) {
+  let matrix = data["links"]
+    .flatMap(({source, target, value}) => [
+      [source, target, value],
+      [target, source, value]
+    ])
+    ...
+```
+
+---
+
+### Exercise Review
+
+What is the difference between `d3.forceSimulation()` and `d3.tree()`?
+
+* `d3.tree()` will group the nodes by distance from the root
+* `d3.tree()` can only apply to tree-structured data (no loops).
+`d3.forceSimulation()` can be applied to any network.
+
+---
+
+### Exercise Review
+
+What is the difference between `d3.forceSimulation()` and `d3.tree()`?
+
+.pull-left[
+<iframe width="100%" height="400" frameborder="0" src="https://observablehq.com/embed/@d3/force-directed-tree?cells=chart"></iframe>
+]
+  
+.pull-right[
+<iframe width="100%" height="400" frameborder="0" src="https://observablehq.com/embed/@d3/collapsible-tree?cells=chart"></iframe>
+]
+
+---
+
+### Exercise Review
+
+Why is the network from our demo symmetric?
+
+```{r, echo = FALSE}
+include_graphics("figures/climate_adjmat.png")
+```
+
+
+---
+
+### Exercise Review
+
+Why is the network from our demo symmetric?
+
+```{r, echo = FALSE}
+include_graphics("figures/climate_adjmat.png")
+```
+
+
+---
+
+### Exercise Review
+
+When we read in the data, the graph was undirected. A -> B means that B -> A.
+
+```
+> G
+# A tbl_graph: 499 nodes and 1374 edges
+#
+# An undirected multigraph with 1 component
+#
+# Node Data: 499 × 17 (active)
+```
+
+---
+
+### In-Class Demo [10.1]
+
+---
+
+### Discussion [10.1]
+
+Here are four thoughtfully designed network and tree visualizations data that
+attracted a bit of attention in the data science blogosphere. What is it about
+their work (its subject matter, design, execution, ...) that makes it stand out?
+What ideas might you be able to borrow for your projects (or your future work)?
+
+  1. https://truth-and-beauty.net/projects/peakspotting
+	1. https://taiwandatastories.com/bubble-tea-guide/
+	1. http://tudornetworks.net/
+	1. http://peoplemov.in/
+
+---
+
+### November 16, 2022
+
+---
+
+
