@@ -2395,19 +2395,25 @@ When we read in the data, the graph was undirected. A -> B means that B -> A.
 
 ### In-Class Demo [10.1]
 
+* We will work through UK Energy Flow (and Movie Genres, if time)
+
+* Starter code is available here: https://go.wisc.edu/928kgp
+
 ---
 
 ### Discussion [10.1]
 
-Here are four thoughtfully designed network and tree visualizations data that
-attracted a bit of attention in the data science blogosphere. What is it about
-their work (its subject matter, design, execution, ...) that makes it stand out?
-What ideas might you be able to borrow for your projects (or your future work)?
+Document: https://go.wisc.edu/h43i0k
 
-  1. https://truth-and-beauty.net/projects/peakspotting
-	1. https://taiwandatastories.com/bubble-tea-guide/
-	1. http://tudornetworks.net/
-	1. http://peoplemov.in/
+Here are four thoughtfully designed network and tree visualizations data that
+attracted a bit of attention in the data science blogosphere.
+
+1. https://truth-and-beauty.net/projects/peakspotting
+1. https://taiwandatastories.com/bubble-tea-guide/
+1. http://tudornetworks.net/
+1. http://peoplemov.in/
+
+Respond to the prompts in the linked document.
 
 ---
 
