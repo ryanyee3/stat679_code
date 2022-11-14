@@ -1,0 +1,41 @@
+---
+title: "Problem Set 4"
+output: pdf_document
+---
+
+Prepare a write-up that includes your solutions to the following questions from
+the course exercise sheet. Make sure to include all of your code and clearly
+specify where each new problem begins. For problems that require you to
+implement an interactive visualization, you may either (1) include a link to a
+"live" version of the application or (2) include a link / attach screen
+recordings of your interacting with the final visualization (in this case, make
+sure to demonstrate all functionality).
+
+**Coding**
+
+* Political Book Recommendations [3 points]
+* Topics in Pride and Prejudice [3 points]
+* Food Nutrients [3 points]
+* Interactive Phylogeny [4 points]
+
+**Discussion**
+
+* Hierarchical Edge Bundling [4 points]
+* UMAP Image Collection [3 points]
+
+### Grading Criteria
+
+Each coding problem will be graded according to the following criteria,
+
+* C1: _Attention to detail in visual design_. Your design choices should
+demonstrate critical thinking around the appearance of graphical marks and the
+queries that they support.
+* C2: _Elegant code style_. The code you use to implement your visualizations
+should be readable, modular, and concise. You may find it helpful to check your
+code against the Tidyverse [style guide](https://style.tidyverse.org/).
+* C3: _Thoughtful explanations, interpretations, and organization_.
+Your justifications should be complete, your interpretations should draw
+creatively from relevant sources, and the submission overall should be
+well-organized and formatted.
+
+Discussion problems will be evaluated based on only the last.

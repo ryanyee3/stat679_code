@@ -175,6 +175,18 @@ and Robertson introduce a taxonomy of visualizations transitions. These include,
     code implementing the actual visualization, but you should give a plausible
     description of how the transition could be implemented in D3.
 
+1. [Visual Complexity] In this problem, we will analyze a visualization hosted on the website [visualcomplexity](<http://www.visualcomplexity.com/vc/>) using the language we’ve developed in class. Briefly respond to each of the queries below.
+    
+    a. What visual encodings does your selected example use (e.g., node-link vs.
+    adjacency)? In its layout, does it use any additional structure (e.g., are
+    any constraints present)?
+    b. What types of queries does this visualization seemed designed to support?
+    If the design includes any interactive elements, classify it into either
+    view, encoding, or data interactivity.
+    c. Propose one alternative layout or form of interactivity that could be
+    used for this dataset. What are some of the trade-offs involved with using
+    the original vs. your proposed layout?
+
 1. [Dissecting a visualization] Pick two static views of visualizations from any
 of the following sites: 1, 2, 3. For each view, answer the questions below,
 
@@ -2042,7 +2054,30 @@ will try to see how genetic variation covaries with these measurements.
     d. Discuss the resulting visualization. For example, how much genetic
     diversity do different countries have? Where are different waves located
     genetically?
-  
+    
+1. [Interactive Phylogeny] We will build an interactive phylogenetic tree of
+SARS-CoV-2 genetic sequences. Each sequence has been annotated with a date and
+location of its discovery. We will use D3 to allow readers to explore the way
+genetic changes unfold over time and space. You can find the raw data here:
+[nodes](https://raw.githubusercontent.com/krisrs1128/stat679_code/main/exercises/ps4/covid-nodes.csv), [edges](https://raw.githubusercontent.com/krisrs1128/stat679_code/main/exercises/ps4/covid-edges.csv). We have provided [starter code](https://github.com/krisrs1128/stat679_code/tree/main/exercises/ps4) to build a `d3.stratify()` object from
+the edge data and to define an object, `node_lookup`, which can be used to look
+up the country and date associated with the `from` and `to` fields in the edges.
+
+    a. Create a static tree visualization that shows how the different COVID
+    variants evolved from one another. Use color to encode the location of the
+    variant’s discovery. You may group rare countries into “Other,” and draw
+    variants with unknown origins using either white or grey.
+    b. Implement *one* of the following forms of interactivity, 
+        i. Provide a selection menu that highlights countries that the user selects. 
+        ii. As the user hovers near to a node, highlight all of its ancestors.
+        Blend the rest of the nodes into the background.
+        iii. As the user brushes a collection of nodes, highlight only those
+        nodes under the brush. Blend the rest of the nodes into the background.
+    c. Propose, but do not implement, an extend version of part (b) that is
+    linked with an additional table or visualization. How would the second
+    graphic be updated in response to user interactions? What additional queries
+    become possible in your proposed visualization?
+
 1. [Climate Crisis Youtube recommendations] We will study a
 [dataset](https://observablehq.com/@emma-ba/youtube-recommendation-network-on-the-climate-crisis)
 giving links between Youtube videos related to the climate crisis.  The data
@@ -2123,6 +2158,32 @@ memberships.
     `group_infomap()` functions from `tidygraph`._
     
     d. Comment on the visualization from (c). How would you interpret the resulting clustering?
+    
+    
+1. [Hierarchical Edge Bundling] In this problem, we will study a D3 hierarchical
+edge bundling implementation available at [this link](https://observablehq.com/@d3/hierarchical-edge-bundling). The display
+shows how different files in a software package import from one another. Unlike
+a naive radial node-link layout, this layout “bundles” together edges if their
+source and target nodes have common ancestors in the package’s directory tree
+(which is why the resulting layout is called a “Hierarchical Edge Bundling”).
+
+    a. Use `console.log()` to inspect the `root` object. Describe its structure.
+    b. What does this line do?
+        ```{r, eval = FALSE}
+.attr("d", ([i, o]) => line(i.path(o)))
+        ```
+    Provide one example of an edge in the original visualization (e.g., for
+    example `xor <--> or`, though this is not a correct answer) where you
+    believe `i.path(o)` contains more than two elements, and explain your
+    reasoning. You may find it useful to `console.log()` the result from
+    `i.path(o)`.
+    c. Imagine that you are working for a biotechnology firm that is interested
+    in visualizing a protein network. You have data on the co-occurrence
+    frequency for all pairs of proteins (high-co-occurrence can be interpreted
+    as the proteins lying on a shared regulatory pathway). What, if any,
+    additional information would you need before you could implement a
+    hierarchical edge bundling visualization of the network? Explain your
+    reasoning.
     
 # High-Dimensional and Text Data
 
@@ -2453,6 +2514,21 @@ progress in the field of speech recognition.
       
     c. Create a visualization of your UMAP embeddings from (b). Which phonemes
     seem the most similar to one another in the high-dimensional audio space?
+ 
+ 
+1. [UMAP Image Collection] We will analyze the visualization available at [this link](https://observablehq.com/@cpietsch/explorawolke-fisheye-view-snappy),
+which supports exploration of artworks in the Staatliche Museen zu Berlin. The
+visualization shows the results of applying UMAP to the high-dimensional image
+features extracted using a pretrained deep learning model (if you are curious,
+[this notebook](https://github.com/cpietsch/smb-vis/blob/master/notebooks/2-SMB_Feature_extraction_bit.ipynb)
+gives details). It is implemented using a combination of D3 and a graphics
+library called PIXI (which we won’t be covering).
+
+    a. This visualization supports panning and zooming. Which lines of code
+    support this?
+    b. This visualization applies a “fisheye” lens in addition to more standard
+    pan and zoom. Why do you think this was included? Do you think it is
+    effective? Why or why not?
  
 1. [Political Blogs] In this problem, we will use topic modeling to see how the topics discussed
 across the political blogsphere evolved over course of 2008. We have fitted a
