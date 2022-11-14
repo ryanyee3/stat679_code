@@ -8,6 +8,8 @@ output:
 
 _Encoding and data interaction in graphs_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week10-3.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2010%20-%203%3A%20Graph%20Interactivity%20II/1_zbx9zb6t)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")

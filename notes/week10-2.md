@@ -8,6 +8,9 @@ output:
 
 *View interaction in graphs*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week10-2.Rmd),
+[Recording](https://mediaspace.wisc.edu/media/Week%2010%20-%202%3A%20Graph%20Interactivity%20I/1_ifn5dvu8)
+
 1.  Interactivity makes it possible to tinker with different views of a
     graph and get immediate feedback. By exploring a sequence of views,
     it can be possible to build a holistic understanding of even very

@@ -2220,3 +2220,13 @@ sentence summary of the overall implementation strategy. Then, add comments
 every 10 - 15 lines describing what each section of code is doing. If there are
 parts that you do not understand, add a ??? next to it (we will review these in
 the next lecture).
+
+---
+
+### November 14, 2022
+
+---
+
+### Announcements
+
+* Friday Office Hours rescheduled to 2 - 3pm

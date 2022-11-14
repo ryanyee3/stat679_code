@@ -8,6 +8,8 @@ output:
 
 _View interaction in graphs_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week10-2.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2010%20-%202%3A%20Graph%20Interactivity%20I/1_ifn5dvu8)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
@@ -96,7 +98,6 @@ dense regions of the graph. For example, suppose we want to identify the
 neighbors of a node that lies in the core of the graph. Since it lies in a dense
 region, there is a good chance that many links cross over  it, even if they are
 not direct neighbors.
-
 
 1. The idea of the edge lens interaction is to create a “lens” that hides edges
 that are not directly relevant to the queried region. For example, this removes

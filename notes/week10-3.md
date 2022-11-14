@@ -8,6 +8,9 @@ output:
 
 *Encoding and data interaction in graphs*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week10-3.Rmd),
+[Recording](https://mediaspace.wisc.edu/media/Week%2010%20-%203%3A%20Graph%20Interactivity%20II/1_zbx9zb6t)
+
 1.  These notes continue our tour of graph interactivity. We’ll explore
     how certain graph queries can be more easily answered by allowing
     users to modify visual encodings (Encoding Interactivity) and the

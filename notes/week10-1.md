@@ -8,6 +8,9 @@ output:
 
 *Representing known structure in graphs*
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week10-1.Rmd),
+[Recording](https://mediaspace.wisc.edu/media/Week%2010%20-%201%3A%20Structured%20Graphs/1_fafxe09y)
+
 1.  Graph layouts can often benefit from additional information known
     about the structure of the graph or purpose of the visualization.
     These notes describe a few of the situations that arise most
@@ -71,10 +74,17 @@ output:
     hierarchy.
 
     <img src="/stat679_notes/assets/week10-1/matlink.png" width="200" style="display: block; margin: auto;" />
+    Here is an example implementation, again using [the Cola
+    library](https://ialab.it.monash.edu/webcola/examples/smallgroups.html).
+    Notice how nodes across groups always remain separated from one
+    another.
+
+    <iframe src="https://ialab.it.monash.edu/webcola/examples/smallgroups.html" data-external="1" height=350 width=700></iframe>
 
 8.  Here is a simplified implementation that draws a boundary around
-    groups of nodes. In addition to drawing nodes and links, it adds
-    (and fills in) paths that contain the separate sets.
+    groups of nodes without the help of the cola library. In addition to
+    drawing nodes and links, it adds (and fills in) paths that contain
+    the separate sets.
 
     <iframe src="https://krisrs1128.github.io/stat679_code/examples/week10/week10-1/miserables-group.html" data-external="1" height=400 width=500></iframe>
 
@@ -91,8 +101,8 @@ output:
           .selectAll("path")
           .data(convex_hull(nodes))
           .attrs({
-        d: path_generator,
-        fill: (d, i) => scales.fill(i)
+            d: path_generator,
+            fill: (d, i) => scales.fill(i)
           })
 
 10. In some graphs, we have clustering structure. Within each cluster,
