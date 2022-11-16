@@ -2463,6 +2463,8 @@ Mondays (not Fridays) at 11:59pm
 
 * Starter code is available here: https://go.wisc.edu/75787d
 
+* Make sure to also download `helpers.js`
+
 ---
 
 ### Discussion
