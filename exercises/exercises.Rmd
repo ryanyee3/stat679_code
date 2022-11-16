@@ -175,7 +175,12 @@ and Robertson introduce a taxonomy of visualizations transitions. These include,
     code implementing the actual visualization, but you should give a plausible
     description of how the transition could be implemented in D3.
 
-1. [Visual Complexity] In this problem, we will analyze a visualization hosted on the website [visualcomplexity](<http://www.visualcomplexity.com/vc/>) using the language we’ve developed in class. Briefly respond to each of the queries below.
+1. [Network Visualization Breakdown] In this problem, we will analyze a
+visualization hosted on either
+[visualcomplexity](http://www.visualcomplexity.com/vc/) or
+[FlowingData](https://flowingdata.com/category/visualization/network-visualization/)
+using the language we’ve developed in class. Briefly respond to each of the
+queries below.
     
     a. What visual encodings does your selected example use (e.g., node-link vs.
     adjacency)? In its layout, does it use any additional structure (e.g., are
@@ -1995,8 +2000,8 @@ also bought these other books").
     object to store the graph.
     
     ```{r}
-    edges <- read_csv("https://uwmadison.box.com/shared/static/54i59bfc5jhymnn3hsw8fyolujesalut.csv", col_types = "cci")
-    nodes <- read_csv("https://uwmadison.box.com/shared/static/u2x392i79jycubo5rhzryxjsvd1jjrdy.csv", col_types = "ccc")
+    edges <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/activities/week10/political-books-edges.csv", col_types = "cci")
+    nodes <- read_csv("https://raw.githubusercontent.com/krisrs1128/stat679_code/main/activities/week10/political-books-nodes.csv", col_types = "ccc")
     ```
     
     b. Use the result from part (a) to visualize the network as a node-link
@@ -2007,6 +2012,18 @@ also bought these other books").
     visual queries that are easy to answer using one encoding but not the other
     (i.e., what is easy to see in the node-link view vs. what is easy to see in
     the adjacency matrix).
+    
+1. [Interactive Political Books] In this problem, we'll study a network dataset of Amazon bestselling US Politics books. Books are linked by an edge if they appeared together in the recommendations ("customers who bought this book also bought these other books"). Since including all the book titles in a single static view can be overwhelming, we will design an interactive view that selectively reveals titles depending on user interest.
+
+    a. Represent the network using a node-link diagram. Layout the nodes using a force-directed layout. Color nodes in by their political affiliation.
+    
+    b. Implement a tooltip that reveals the title of a book whenever the user places their mouse near (but not necessarily on) its node. Use a transition to gradually increase the size of the associated node.
+    
+    c. Extend the interactivity in (b) so that the titles of all neighboring books of the currently hovered node are also displayed. Ensure that the title of the central book appears larger than the rest.
+    
+    ```{r, fig.cap = "An example solution to [Interactive Political Books] part (c). The currently selected book is Ghost Wars. All its neighbors are also labeled, but in a smaller font.", out.width = 200, fig.align = "center", echo = FALSE}
+    include_graphics("figure/political_labels.png")
+    ```
     
 1. [Network Vis T/F] Select all the true statements about network visualization.
     * For large, dense networks, node-link diagrams are preferable to adjacency matrix visualizations.
