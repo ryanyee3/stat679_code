@@ -2442,6 +2442,36 @@ Respond to the prompts in the linked document.
 
 ### November 16, 2022
 
+1. In-Class Demo 10.2
+1. Discussion 10.2
+
 ---
 
+### Announcements
 
+1. This Friday's office hours rescheduled to 2 - 3pm (Zoom and MSC 7225C)
+1. Deadlines for project milestones and problem sets have been extended to
+Mondays (not Fridays) at 11:59pm
+1. Project Milestone 2 is due Monday (11/21)
+1. Problem Set 4 has been posted (Due 12/05)
+
+---
+
+### In-Class Demo
+
+* We will work through [Interactive Political Books]
+
+* Starter code is available here: https://go.wisc.edu/75787d
+
+---
+
+### Discussion
+
+* With your project team, work trough [Network Visualization Breakdown] in the
+exercise sheet.
+
+* Copy your answers to [these slides](https://go.wisc.edu/er259z)
+(https://go.wisc.edu/er259z) so that you can share your analysis with another
+team. 
+
+* Include a screenshot of the original visualization for reference.
