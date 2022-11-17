@@ -33,20 +33,31 @@ dimensionality reduction results.
 1. For example, here is an interactive version of the UMAP from the example in
 the previous notes. A brush can be used to retrieve sample details.
 	
+    <p align="center">
+    <iframe src="https://data-viz.it.wisc.edu/content/a4fa41a7-ce85-411d-a42a-1ff4963a39dc" width=700 height = 600></iframe>
+    </p>
+	
 1. A less obvious idea is that interactivity can guide the application or
 refinement of the dimensionality reduction itself. For example, it can be used
 to filter the data that are input to the dimensionality reduction. More
 generally, the input data may be the result of a complex preprocessing pipeline,
-and parameters of that pipeline can be interactively adjusted. For example, in
-dimensionality reduction of temporal data, we may first want to compute a
-sliding window average over time, and the widths of the windows can be chosen
-interactively. For each choice of window width, the dimensionality reduction
-scatterplot can be regenerated.
+and parameters of that pipeline can be interactively adjusted. 
 
     <p align="center">
     ```{r, out.width = 600, echo = FALSE}
     include_graphics("stat679_notes/assets/week11-4/conceptual-overview.png")
     ```
+    </p>
+
+
+    For example, in
+dimensionality reduction of temporal data, we may first want to compute a
+sliding window average over time, and the widths of the windows can be chosen
+interactively. For each choice of window width, the dimensionality reduction
+scatterplot can be regenerated.
+    
+    <p align="center">
+    <iframe src="https://data-viz.it.wisc.edu/content/7489973a-9efa-47c7-b140-c58444db6d43" width=750 height = 800></iframe>
     </p>
 
 1. Some systems allow users to interactively label observations into classes —
@@ -60,6 +71,12 @@ features. For example, the PCA loadings define derived features. By
 interactively adjusting the values of these loadings, we can examine how the
 dimensionality reduction would change when the derived features are manually
 refined.
+
+    <p align="center">
+    ```{r, echo = FALSE, out.width = 450}
+    include_graphics("stat679_notes/assets/week11-4/feature_dimming.png")
+    ```
+    </p>
 
 1. It’s also possible to interactively select between several competing
 dimensionality reduction methods. This can be done using a measure of
