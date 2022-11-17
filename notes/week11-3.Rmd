@@ -1,7 +1,7 @@
 ---
 title: Uniform Manifold Approximation
 layout: post
-output: 
+output:
   md_document:
     preserve_yaml: true
 ---
@@ -14,7 +14,7 @@ _Nonlinear dimensionality reduction with UMAP_
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE,
   fig.path = "stat679_notes/assets/week11-3/",
   cache = TRUE
@@ -28,14 +28,15 @@ line through these data that separate the groups well. We will need an
 alternative approach to reducing dimensionality if we want to preserve nonlinear
 structure.
 
-    ```{r}
-    library(tidyverse)
-    library(embed)
-    
-    moons <- read_csv("https://uwmadison.box.com/shared/static/kdt9qqvonhcz2ssb599p1nqganrg1w6k.csv")
-    ggplot(moons, aes(X, Y, col = Class)) +
-      geom_point() +
-      scale_color_brewer(palette = "Set2")
+    ```{r, fig.cap = "An example nonlinear dataset where projections onto any straight line will necessarily cause the classes to bleed together."}
+library(tidyverse)
+library(embed)
+theme_set(theme_minimal())
+
+moons <- read_csv("https://uwmadison.box.com/shared/static/kdt9qqvonhcz2ssb599p1nqganrg1w6k.csv")
+ggplot(moons, aes(X, Y, col = Class)) +
+  geom_point() +
+  scale_color_brewer(palette = "Set2")
     ```
 
 1. From a high-level, the intuition behind UMAP is to (a) build a graph joining
@@ -45,22 +46,40 @@ wave below. If we build a graph, we can try to layout the resulting nodes and
 edges on a 1-dimensional line in a way that approximately preserves the
 ordering.
 
-1. A natural way to build a graph is to join each node to its K closest
-neighbors. The choice of K will influence the final reduction, and it is treated
-as a hyperparameter of UMAP. Larger values of K prioritize preservation of
-global structure, while smaller K will better reflect local differences. This
-property is not obvious a priori, but is suggested by the simulations described
-in the reading.
+    <p align="center">
+    ```{r, fig.cap = "UMAP (and many other nonlinear methods) begins by constructing a graph in the high-dimensional space, whose layout in the lower dimensional space will ideally preserve the essential relationships between samples.", out.width = 400, echo = FALSE}
+include_graphics("stat679_notes/assets/week11-3/sine_wave.png")
+    ```
+    </p>
+
+1. A natural way to build a graph is to join each node to its $K$ closest
+neighbors. The choice of $K$ will influence the final reduction, and it is
+treated as a hyperparameter of UMAP. Larger values of $K$ prioritize
+preservation of global structure, while smaller $K$ will better reflect local
+differences. This property is not obvious a priori, but is suggested by the
+simulations described in the reading.
+
+    <p align="center">
+    ```{r, fig.cap = "When using fewer nearest neighbors, the final dimensionality reduction will place more emphasis on effectively preserving the relationships between points in local neighborhoods.", echo = FALSE, out.width = 400}
+include_graphics("stat679_notes/assets/week11-3/soft_neighborhoods.png")
+```
+    </p>
 
 1. One detail in the graph construction: In UMAP, the edges are assigned weights
 depending on the distance they span, normalized by the distance to the closest
 neighbor. Neighbors that are close, relative to the nearest neighbors, are
 assigned higher weights than those that are far away, and points that are linked
 by high weight edges are pulled together with larger force in the final graph
-layout. This is what the authors mean by using a “fuzzy” nearest neighbor graph.
-The fuzziness allows the algorithm to distinguish neighbors that are very close
-from those that are far, even though they all lie within a
-K-nearest-neighborhood.
+layout. This is what the authors mean by using a ``fuzzy'' nearest neighbor
+graph. The fuzziness allows the algorithm to distinguish neighbors that are very
+close from those that are far, even though they all lie within a
+$K$-nearest-neighborhood.
+
+    <p align="center">
+    ```{r, fig.cap = "When using larger neighborhoods, UMAP will place more emphasis on preserving global structure, sometimes at the cost of local relationships between points.", out.width = 400, echo = FALSE}
+include_graphics("stat679_notes/assets/week11-3/soft_neighborhoods_large_k.png")
+```
+    </p>
 
 1. Once the graph is constructed, there is the question of how the graph layout
 should proceed. UMAP uses a variant of force-directed layout, and the global
@@ -68,10 +87,17 @@ strength of the springs is another hyperparameter. Lower tension on the springs
 allow the points to spread out more loosely, higher tension forces points closer
 together. This is a second hyperparameter of UMAP.
 
+    <p align="center">
+    ```{r, out.width = 350, echo = FALSE}
+    include_graphics("stat679_notes/assets/week11-3/graph_layout.png")
+    ```
+    </p>
+
 1. In R, we can implement this using almost the same code as we used for PCA.
 The `step_umap` command is available through the embed package.
 
     ```{r}
+    theme_set(theme_bw())
     cocktails_df <- read_csv("https://uwmadison.box.com/shared/static/qyqof2512qsek8fpnkqqiw3p1jb77acf.csv")
     umap_rec <- recipe(~., data = cocktails_df) %>%
       update_role(name, category, new_role = "id") %>%
@@ -82,7 +108,7 @@ The `step_umap` command is available through the embed package.
       geom_point(aes(color = category), alpha = 0.7, size = 0.8) +
       geom_text(aes(label = name), check_overlap = TRUE, size = 3, hjust = "inward")
     ```
-    
+
 
 1. We can summarize the properties of UMAP,
 
