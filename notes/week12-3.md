@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-*Short description*
+*The Stanford Dissertation Browser case study*
 
 1.  For most of the course, we have focused on visualizing the data
     directly. For the last few weeks, though, we have visualized the
@@ -25,11 +25,11 @@ output:
 3.  The authors of this week’s reading suggest a mnemonic: “interpret
     but verify.” This captures several principles,
 
-         * Interpret: Models and visualizations should be designed in such a way that
-         users can draw inferences that are relevant to their understanding of a
-         domain.
-         * Verify: It is the designer’s responsibility that these inferences be
-         accurate.
+-   Interpret: Models and visualizations should be designed in such a
+    way that users can draw inferences that are relevant to their
+    understanding of a domain.
+-   Verify: It is the designer’s responsibility that these inferences be
+    accurate.
 
 #### Stanford Dissertation Browser
 
@@ -52,7 +52,11 @@ output:
     department to appear very close to electrical engineering, when they
     really had more in common with those in other biology departments.
 
-    \[Show the petroleum engineering example\]
+    <p align="center">
+
+    <img src="/stat679_notes/assets/week12-3/petroleum_case.png" width="400" />
+
+    </p>
 
 3.  The authors carefully tracked and manually verified inferences made
     by a group of test users. Based on this qualitative evaluation, they
@@ -61,19 +65,22 @@ output:
     replaced their original dimensionality reduction scatterplot with a
     visualization of topic-derived inter-department similarities.
 
-    \[Show the updated dimensionality reduction for petroleum
-    engineering\]
+    <p align="center">
+
+    <img src="/stat679_notes/assets/week12-3/radial_view.png" width="400" />
+
+    </p>
 
 #### Overall Strategy
 
 1.  To implement the “interpret but verify” idea, the authors recommend,
 
-         * Align the analysis, visualization, and models along appropriate “units of
-         analysis.”
-         * Verify that the modeling results in abstractions / concepts that are
-         relevant to the analysis, and modify accordingly.
-         * Progressively disclose data to support reasoning at multiple levels of
-         abstraction.
+    -   Align the analysis, visualization, and models along appropriate
+        “units of analysis.”
+    -   Verify that the modeling results in abstractions / concepts that
+        are relevant to the analysis, and modify accordingly.
+    -   Progressively disclose data to support reasoning at multiple
+        levels of abstraction.
 
 2.  The units of analysis in the dissertation browser were departments
     and theses. In general, these are the “entities, relationships, and
@@ -86,16 +93,25 @@ output:
     model structure, or simply override the model with user-provided
     values.
 
-4.  Progressive disclosure allows the user to go up and down the ladder
-    of abstraction. It makes it possible to navigate large-scale data
-    while supporting verification through specific examples.
+4.  Progressive disclosure allows the user to go up and down the [ladder
+    of abstraction](http://worrydream.com/LadderOfAbstraction/). It
+    makes it possible to navigate large-scale data while supporting
+    verification through specific examples.
 
 5.  In the dissertation browser, this is implemented through semantic
     zooming (from departmental to dissertation views) and linked
     highlighting (revealing the dissertation abstract on mouseover).
 
+    <p align="center">
+
+    <img src="/stat679_notes/assets/week12-3/dissertation_browser_overview.png" width="800" />
+
+    </p>
+
 6.  The question of how to effectively weave together model building
     with visual design is still one that is actively explored in
     research today. If you enjoyed reading about this project, you may
-    enjoy other papers on visualization for topic models or in machine
-    learning more generally.
+    enjoy other papers on visualization for topic models or machine
+    learning \[[1](https://visxai.io/), [2](https://distill.pub/),
+    [3](https://www.sciencedirect.com/science/article/pii/S2468502X17300086)\]
+    more generally.

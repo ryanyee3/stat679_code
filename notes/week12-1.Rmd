@@ -6,7 +6,9 @@ output:
     preserve_yaml: true
 ---
 
-_Short description_
+_Quantitative descriptions of document topics_
+
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd), [Recording]()
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -14,7 +16,7 @@ opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/weekX-Y/",
+  fig.path = "stat679_notes/assets/week12-1/",
   eval = FALSE
   )
 ```

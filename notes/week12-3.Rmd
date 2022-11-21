@@ -6,7 +6,7 @@ output:
     preserve_yaml: true
 ---
 
-_Short description_
+_The Stanford Dissertation Browser case study_
 
 ```{r, echo = FALSE}
 library(knitr)
@@ -14,7 +14,7 @@ opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/weekX-Y/"
+  fig.path = "stat679_notes/assets/week12-3/"
   )
 ```
 
@@ -34,11 +34,11 @@ complexity is one of the reasons data science training takes years.
 1. The authors of this week’s reading suggest a mnemonic: “interpret but
 verify.” This captures several principles,
 
-		* Interpret: Models and visualizations should be designed in such a way that
-		users can draw inferences that are relevant to their understanding of a
-		domain.
-		* Verify: It is the designer’s responsibility that these inferences be
-		accurate.
+  * Interpret: Models and visualizations should be designed in such a way that
+  users can draw inferences that are relevant to their understanding of a
+  domain.
+  * Verify: It is the designer’s responsibility that these inferences be
+  accurate.
 
 #### Stanford Dissertation Browser
 
@@ -58,8 +58,12 @@ neurobiology (voltage, current, …) led to theses in this department to appear
 very close to electrical engineering, when they really had more in common with
 those in other biology departments.
 
-	[Show the petroleum engineering example]
-	
+    <p align="center">
+    ```{r, echo = FALSE, out.width = 400}
+    include_graphics("stat679_notes/assets/week12-3/petroleum_case.png")
+    ```
+    </p>
+  	
 1. The authors carefully tracked and manually verified inferences made by a
 group of test users. Based on this qualitative evaluation, they were able to
 refine their modeling and visualization approach. For example, they used a
@@ -67,17 +71,21 @@ supervised variant of topics models, and they replaced their original
 dimensionality reduction scatterplot with a visualization of topic-derived
 inter-department similarities.
 
-	[Show the updated dimensionality reduction for petroleum engineering]
+    <p align="center">
+    ```{r, echo = FALSE, out.width = 400}
+    include_graphics("stat679_notes/assets/week12-3/radial_view.png")
+    ```
+    </p>
 
 #### Overall Strategy
 
 1. To implement the “interpret but verify” idea, the authors recommend,
 
-		* Align the analysis, visualization, and models along appropriate “units of
+    * Align the analysis, visualization, and models along appropriate “units of
 		analysis.”
-		* Verify that the modeling results in abstractions / concepts that are
+    * Verify that the modeling results in abstractions / concepts that are
 		relevant to the analysis, and modify accordingly.
-		* Progressively disclose data to support reasoning at multiple levels of
+    * Progressively disclose data to support reasoning at multiple levels of
 		abstraction.
 		
 1. The units of analysis in the dissertation browser were departments and
@@ -89,15 +97,23 @@ and qualitative evaluation (e.g., user studies). For revising models, it can be
 possible to refit parameters, add labels, modify model structure, or simply
 override the model with user-provided values.
 
-1. Progressive disclosure allows the user to go up and down the ladder of
-abstraction. It makes it possible to navigate large-scale data while supporting
+1. Progressive disclosure allows the user to go up and down the [ladder of
+abstraction](http://worrydream.com/LadderOfAbstraction/). It makes it possible to navigate large-scale data while supporting
 verification through specific examples.
 
 1. In the dissertation browser, this is implemented through semantic zooming
 (from departmental to dissertation views) and linked highlighting (revealing the
 dissertation abstract on mouseover).
 
+    <p align="center">
+    ```{r, echo = FALSE, out.width = 800}
+    include_graphics("stat679_notes/assets/week12-3/dissertation_browser_overview.png")
+    ```
+    </p>
+
 1. The question of how to effectively weave together model building with visual
 design is still one that is actively explored in research today. If you enjoyed
 reading about this project, you may enjoy other papers on visualization for
-topic models or in machine learning more generally.
+topic models or machine learning [[1](https://visxai.io/),
+[2](https://distill.pub/),
+[3](https://www.sciencedirect.com/science/article/pii/S2468502X17300086)] more generally.
