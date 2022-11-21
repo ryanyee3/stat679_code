@@ -8,28 +8,70 @@ output:
 
 _Visual encodings for memberships and topics_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-2.Rmd), [Recording]()
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 library(knitr)
+library(tidyverse)
 opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
   fig.path = "stat679_notes/assets/week12-2/",
-  eval = FALSE
+  dpi = 400
   )
+theme479 <- theme_minimal() + 
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.border = element_rect(fill = NA, color = "#0c0c0c", size = 0.6),
+    legend.position = "bottom"
+  )
+theme_set(theme479)
+```
+
+```{r, echo = FALSE}
+kl_div <- function(p1, p2) {
+  p1 * log(p1 / p2) + (p2 - p2)
+}
+
+kl_mat <- function(p) {
+  K <- matrix(0, nrow = length(p), ncol = length(p))
+  
+  for (i in seq_along(p)) {
+    for (j in seq_len(i - 1)) {
+      K[i, j] <- kl_div(p[i], p[j])
+    }
+  }
+  K
+}
+
+discrepancy <- function(p, lambda = 1e-7) {
+  p <- (p + lambda) / sum(p + lambda) # Laplace smoothing
+  K <- kl_mat(p)
+  max(K)
+}
+```
+
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(topicmodels)
+library(superheat)
+library(ggrepel)
+load("12-1.rda")
 ```
 
 
 1. A topic is a probability distribution across a collection of words. If the
 vocabulary isn’t too large, two appropriate visualization strategies are,
 
-		* Faceted barplot: Each facet corresponds to a topic. The height of each bar
-		corresponds to a given word’s probability within the topic. The sum of heights
-		across all bars is 1.
-		* Heatmap: Each row is a topic and each column is a word. The color of the
-		heatmap cells gives the probability of the word within the given topic.
+    * Faceted barplot: Each facet corresponds to a topic. The height of each bar
+    corresponds to a given word’s probability within the topic. The sum of
+    heights across all bars is 1.
+    * Heatmap: Each row is a topic and each column is a word. The color of the
+    heatmap cells gives the probability of the word within the given topic.
 		
 1. We can construct a faceted barplot using the tidied beta matrix. We’ve
 filtered to only words with a probability of at least 0.0003 in at least one
@@ -38,10 +80,10 @@ Nonetheless, it seems that there are words that have relatively high probability
 in one topic, but not others.
 
     ```{r}
-  	ggplot(topics %>% filter(beta > 3e-4), aes(term, beta)) +
-  	  geom_col() +
-  	  facet_grid(topic ~ .) +
-  	  theme(axis.text.x = element_blank())
+ggplot(topics %>% filter(beta > 3e-4), aes(term, beta)) +
+  geom_col() +
+  facet_grid(topic ~ .) +
+  theme(axis.text.x = element_blank())
     ```
   
 1. For the heatmap, we need to pivot the topics, so that words appear along
@@ -51,26 +93,27 @@ probabilities 1 the main differences of interest are between low and high
 probability words.
 
     ```{r}
-  	topics %>%
-  	  filter(beta > 3e-4) %>%
-  	  pivot_wider(topic, term, values_from = "beta", values_fill = 0, names_repair = "unique") %>%
-  	  select(-1) %>%
-  	  superheat(
-    		pretty.order.cols = TRUE,
-    		legend = FALSE
-  	  )
+topics %>%
+  filter(beta > 3e-4) %>%
+  pivot_wider(names_from = "term", values_from = "beta", values_fill = 0, names_repair = "unique") %>%
+  select(-1) %>%
+  superheat(
+      pretty.order.cols = TRUE,
+      legend = FALSE
+  )
     ```
 	
 1. Neither approach is very satisfactory since there are too many words for us
 to effectively label. A workaround is to restrict attention to a subset of
 “interesting” words. For example, we could filter to,
 
-		* Top words overall: We can consider only words whose probabilities are above
-		some threshold. This is the approach used in the visualizations above, though
-		the threshold is very low (there are still too many words to add labels).
-		* Top words per topic: We can sort the words within each topic in order from
-		highest to lowest probability, and then keep only the S largest.
-		
+    * Top words overall: We can consider only words whose probabilities are
+    above some threshold. This is the approach used in the visualizations above,
+    though the threshold is very low (there are still too many words to add
+    labels).
+    * Top words per topic: We can sort the words within each topic in order from
+    highest to lowest probability, and then keep only the S largest.
+ 
 1. Most discriminative words: Some words have high probability just because they
 are common. They have high probability within each topic but aren’t actually
 interesting as far as characterizing the topics is concerned. Instead, we can
@@ -85,16 +128,16 @@ Great Expectations, 2 -> 20,000 Leagues Under the Sea, 3 -> Pride & Prejudice, 4
 -> War of the Worlds.
 
     ```{r}
-  	top_terms <- topics %>%
-  	  group_by(topic) %>%
-  	  slice_max(beta, n = 10) %>%
-  	  mutate(term = reorder_within(term, beta, topic))
-  	
-  	ggplot(top_terms, aes(beta, term, fill = factor(topic))) +
-  	  geom_col(show.legend = FALSE) +
-  	  facet_wrap(~ topic, scales = "free") +
-  	  scale_fill_brewer(palette = "Set2") +
-  	  scale_y_reordered()
+top_terms <- topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>%
+  mutate(term = reorder_within(term, beta, topic))
+
+ggplot(top_terms, aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_fill_brewer(palette = "Set2") +
+  scale_y_reordered()
     ```
 
 1. To visualize discriminative words, we first compute a discrimination measure
@@ -108,21 +151,21 @@ that discriminate between topics k and l, we compute
 	much larger probability than topic l (see the figure).
 	
     ```{r}
-  	p <- seq(0.01, .99, length.out = 50)
-  	df <- expand.grid(p, p) %>%
-  	  mutate(D = kl_div(Var1, Var2))
-  	
-  	ggplot(df, aes(Var2, Var1)) +
-  	  geom_tile(aes(col = D, fill = D)) +
-  	  scale_x_continuous(expand = c(0, 0)) +
-  	  scale_y_continuous(expand = c(0, 0)) +
-  	  coord_fixed() +
-  	  scale_color_distiller(direction = 1) +
-  	  scale_fill_distiller(direction = 1) +
-  	  labs(
-  	    y = expression(beta[kw]),
-  	    x = expression(beta[lw])
-  	  )
+p <- seq(0.01, .99, length.out = 50)
+df <- expand.grid(p, p) %>%
+  mutate(D = kl_div(Var1, Var2))
+
+ggplot(df, aes(Var2, Var1)) +
+  geom_tile(aes(col = D, fill = D)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_fixed() +
+  scale_color_distiller(direction = 1) +
+  scale_fill_distiller(direction = 1) +
+  labs(
+      y = expression(beta[kw]),
+      x = expression(beta[lw])
+  )
     ```
 	
 1. An example heatmap of discriminative words is shown below. This backs up our
@@ -131,26 +174,27 @@ common words (e.g., hand, people, and time appeared in the plot above) and
 highlights rarer words that are specific to individual topics (e.g., names of
 characters that appear in only one of the books).
 
-    ```{r}
-  	discriminative_terms <- topics %>%
-  	  group_by(term) %>%
-  	  mutate(D = discrepancy(beta)) %>%
-  	  ungroup() %>%
-  	  slice_max(D, n = 200) %>%
-  	  mutate(term = fct_reorder(term, -D))
-  	
-  	discriminative_terms %>%
-  	  pivot_wider(term, topic, values_from = "beta") %>%
-  	  column_to_rownames("term") %>%
-  	  superheat(
-  	    pretty.order.rows = TRUE,
-  	    left.label.size = 1.5,
-  	    left.label.text.size = 3,
-  	    bottom.label.size = 0.05,
-  	    legend = FALSE
-  	  )
-    ```
 
+    ```{r, fig.height = 8, fig.width = 3, dpi = 400}
+discriminative_terms <- topics %>%
+  group_by(term) %>%
+  mutate(D = discrepancy(beta)) %>%
+  ungroup() %>%
+  slice_max(D, n = 200) %>%
+  mutate(term = fct_reorder(term, -D))
+
+discriminative_terms %>%
+  select(-D) %>%
+  pivot_wider(names_from = "topic", values_from = "beta") %>%
+  column_to_rownames("term") %>%
+  superheat(
+        pretty.order.rows = TRUE,
+        left.label.size = 1.5,
+        left.label.text.size = 3,
+        bottom.label.size = 0.05,
+        legend = FALSE
+  )
+    ```
 
 #### Visualizing Memberships
 
@@ -164,15 +208,15 @@ the Sea.
 
 
     ```{r}
-    memberships <- memberships %>%
-      mutate(
-        book = str_extract(document, "[^_]+"),
-        topic = factor(topic)
-      )
-    
-    ggplot(memberships, aes(topic, gamma)) +
-      geom_boxplot() +
-      facet_wrap(~book)
+memberships <- memberships %>%
+  mutate(
+    book = str_extract(document, "[^_]+"),
+    topic = factor(topic)
+  )
+
+ggplot(memberships, aes(topic, gamma)) +
+  geom_boxplot() +
+  facet_wrap(~book)
     ```
     
 1. The boxplot considers the collection of documents in aggregate. If we want to
@@ -184,11 +228,11 @@ below shows that chapter 119 of Great Expectations has unusually high membership
 in Topic 2 and low membership in topic 3.
 
     ```{r}
-    ggplot(memberships, aes(topic, gamma, col = book)) +
-      geom_point(position = position_jitter(h = 0.05, w = 0.3)) +
-      geom_text_repel(aes(label = document), size = 3) +
-      facet_wrap(~ book) +
-      scale_color_brewer(palette = "Set1")
+ggplot(memberships, aes(topic, gamma, col = book)) +
+  geom_point(position = position_jitter(h = 0.05, w = 0.3)) +
+  geom_text_repel(aes(label = document), size = 3) +
+  facet_wrap(~ book) +
+  scale_color_brewer(palette = "Set1")
     ```
   
 1. Alternatively, we can use a “structure” plot. This is a type of stacked
@@ -197,19 +241,18 @@ documents using the result of a hierarchical clustering on their proportion
 vectors. The takeaways here are similar to those in the scatterplot above.
     
     ```{r}
-    gamma <- memberships %>%
-      pivot_wider(document:book, topic, values_from = gamma)
-    hclust_result <- hclust(dist(gamma[, 3:6]))
-    document_order <- gamma$document[hclust_result$order]
-    memberships <- memberships %>%
-      mutate(document = factor(document, levels = document_order))
-    ggplot(memberships, aes(gamma, document, fill = topic, col = topic)) +
-      geom_col(position = position_stack()) +
-      facet_grid(book ~ ., scales = "free", space = "free") +
-      scale_x_continuous(expand = c(0, 0)) +
-      scale_fill_brewer(palette = "Set2") +
-      scale_color_brewer(palette = "Set2") +
-      theme(axis.text.y = element_blank())
+gamma <- memberships %>%
+  pivot_wider(names_from = "topic", values_from = "gamma")
+hclust_result <- hclust(dist(gamma[, 3:6]))
+document_order <- gamma$document[hclust_result$order]
+memberships <- memberships %>%
+  mutate(document = factor(document, levels = document_order))
+ggplot(memberships, aes(gamma, document, fill = topic, col = topic)) +
+  geom_col(position = position_stack()) +
+  facet_grid(book ~ ., scales = "free", space = "free") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.y = element_blank())
     ```
-  
   
