@@ -6,7 +6,7 @@
 function draw_scatter(data, scales) {
   d3.select("#scatter")
     .selectAll("circle")
-    .data(data).enter()
+    .data(data, d => d.cell_tag).enter()
     .append("circle")
     .attrs({
       cx: d => scales.data_x(d.UMAP1),
