@@ -2,10 +2,10 @@
 function make_scales(data) {
   return {
     data_x: d3.scaleLinear()
-      .domain([-12, 15])
+      .domain(d3.extent(data.map(d => d.UMAP1)))
       .range([0, 400]),
     data_y: d3.scaleLinear()
-      .domain([-10, 12])
+      .domain(d3.extent(data.map(d => d.UMAP2)))
       .range([400, 0]),
     bar_order: d3.scaleBand()
       .domain(d3.range(max_bars))
