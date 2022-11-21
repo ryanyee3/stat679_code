@@ -2488,7 +2488,23 @@ more common in positive vs. negative reviews.
     facet documents according to hotel rating. Are there certain topics that
     appear to be more common in negative vs. positive reviews?
     
-1. [Single-Cell Genomics]  In this problem, we will apply UMAP to a
+1. [Interpreting UMAP] Imagine that you are a statistical consultant working
+with a scientist / sports team / journalist / sales division head (pick your
+favorite or make up your own example). At one point in your study, you found it
+useful to apply nonlinear dimensionality reduction with UMAP. In this problem,
+you are asked to provide a non-technical explanation of how to interpret the
+dimensionality reduction output, assuming that your audience is familiar with
+their data but not statistical methodology.
+
+    a. You have run UMAP on the dataset, which includes $50$ different
+    measurements for each row. You plot the first two dimensions as a
+    scatterplot. Explain to your audience what the embedding represents.
+    
+    b. Though they have not heard of UMAP, your audience has previously
+    encountered principal components analysis for dimensionality reduction. Help
+    your audience understand UMAP by comparing and contrasting it with PCA.
+
+1. [Single-Cell Genomics] In this problem, we will apply UMAP to a
 [dataset](https://uwmadison.box.com/shared/static/ai539s30rjsw5ke4vxbjrxjaiihq7edk.csv)
 of Peripheral Blood Mononuclear Cells (PBMC) released by 10X Genomics. The first
 column, `cell_tag`, gives an identifier for each cell in the dataset. All other
@@ -2506,6 +2522,37 @@ molecule often found on the surface of T-cells.
     
     b. Compute the UMAP embeddings across cells. Color points in by their value of
     the GNLY molecule.
+
+1. [Interactive Single-Cell Genomics] The cell-level UMAP embeddings from the
+previous problem give an overview of the landscape of PBMC cells. However, on
+their own, the embeddings do not provide details for why cells are grouped in
+the way that they are. In this problem, we will build an interactive view that
+allows users to investigate these details.
+
+    a. Sketch an interactive visualization that supports the following queries,
+    
+      * For a subset of cells of interest, which gene expression patterns set it
+      apart? Does the subset seem to have elevated levels of any specific genes?
+      
+      * For a given gene (or genes) of interest, which groups of cells show
+      elevated (or suppressed) expression levels for this gene?
+      
+    b. Implement the design you proposed in part (a). Give an example conclusion
+    that you derived interactively that would have been more difficult to
+    discover using static views alone.
+
+1. [How to (Mis)Read UMAP] This
+[article](https://pair-code.github.io/understanding-umap/) includes a section
+titled "How to (Mis)Read UMAP," which provides five practical takeaways for
+reading UMAP visualizations. In this problem, you will study one of these
+takeaways (e.g., "Hyperparameters really Matter") in detail.
+    
+    a. Provide relevant screenshots from the interactive displays that
+    illustrate the point you have chosen. Explain how the screenshot
+    communicates the main takeaway.
+
+    b. Imagine one real-world data analysis problem where failing to follow
+    these recommendations could have serious consequences. Justify your claim.
 
 1. [Phoneme Identification] The data read in below are a subset of about 4500
 audio signals from the TIMIT speaker database. Each row is a processed version
