@@ -9,7 +9,7 @@ output:
 *When is dimensionality reduction helpful?*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-1.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%2010%20%5B1%5D%20Introduction%20to%20Dimensionality%20Reduction/1_z4difn4d)
 
 1.  High-dimensional data are data where many features are collected for
     each observation. These tend to be wide datasets with many columns.

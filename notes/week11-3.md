@@ -1,5 +1,5 @@
 ---
-title: Uniform Manifold Approximation
+title: Uniform Manifold Approximation and Projection
 layout: post
 output:
   md_document:
@@ -9,7 +9,7 @@ output:
 *Nonlinear dimensionality reduction with UMAP*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-3.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%2010%20%5B4%5D%20Uniform%20Manifold%20Approximation%20and%20Projection/1_8tb5x1es)
 
 1.  Nonlinear dimension reduction methods can give a more faithful
     representation than PCA when the data don’t lie on a low-dimensional

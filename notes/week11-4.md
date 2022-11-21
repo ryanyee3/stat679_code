@@ -9,7 +9,7 @@ output:
 *Guiding dimensionality reduction through user inputs*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-4.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week+11+-+4A+Interactivity+in+Dimensionality+Reduction/1_ji2xa69j)
 
 1.  In the academic literature, dimensionality reduction methods are
     usually presented with an algorithmic focus. However, in practice,

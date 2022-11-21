@@ -8,7 +8,7 @@ output:
 
 _Guiding dimensionality reduction through user inputs_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-4.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-4.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week+11+-+4A+Interactivity+in+Dimensionality+Reduction/1_ji2xa69j)
 
 ```{r, echo = FALSE}
 library(knitr)

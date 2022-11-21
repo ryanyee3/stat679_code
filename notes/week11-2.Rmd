@@ -8,7 +8,7 @@ output:
 
 _Linear dimensionality reduction with PCA_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-2.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-2.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2010%20%5B3%5D%20Principal%20Components%20Analysis%20II/1_uows5d33)
 
 ```{r, echo = FALSE}
 library(knitr)

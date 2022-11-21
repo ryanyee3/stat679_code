@@ -9,7 +9,7 @@ output:
 *Linear dimensionality reduction with PCA*
 
 [Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week11/week11-2.Rmd),
-[Recording]()
+[Recording](https://mediaspace.wisc.edu/media/Week%2010%20%5B3%5D%20Principal%20Components%20Analysis%20II/1_uows5d33)
 
     library(tidyverse)
     library(tidymodels)
@@ -125,16 +125,16 @@ output:
         ## # A tibble: 1,600 × 4
         ##    terms             value component id       
         ##    <chr>             <dbl> <chr>     <chr>    
-        ##  1 light_rum        0.163  PC1       pca_V6l0A
-        ##  2 lemon_juice     -0.0140 PC1       pca_V6l0A
-        ##  3 lime_juice       0.224  PC1       pca_V6l0A
-        ##  4 sweet_vermouth  -0.0661 PC1       pca_V6l0A
-        ##  5 orange_juice     0.0308 PC1       pca_V6l0A
-        ##  6 powdered_sugar  -0.476  PC1       pca_V6l0A
-        ##  7 dark_rum         0.124  PC1       pca_V6l0A
-        ##  8 cranberry_juice  0.0954 PC1       pca_V6l0A
-        ##  9 pineapple_juice  0.119  PC1       pca_V6l0A
-        ## 10 bourbon_whiskey  0.0963 PC1       pca_V6l0A
+        ##  1 light_rum        0.163  PC1       pca_tMJA6
+        ##  2 lemon_juice     -0.0140 PC1       pca_tMJA6
+        ##  3 lime_juice       0.224  PC1       pca_tMJA6
+        ##  4 sweet_vermouth  -0.0661 PC1       pca_tMJA6
+        ##  5 orange_juice     0.0308 PC1       pca_tMJA6
+        ##  6 powdered_sugar  -0.476  PC1       pca_tMJA6
+        ##  7 dark_rum         0.124  PC1       pca_tMJA6
+        ##  8 cranberry_juice  0.0954 PC1       pca_tMJA6
+        ##  9 pineapple_juice  0.119  PC1       pca_tMJA6
+        ## 10 bourbon_whiskey  0.0963 PC1       pca_tMJA6
         ## # … with 1,590 more rows
 
         juice(pca_prep)
@@ -159,16 +159,16 @@ output:
         ## # A tibble: 160 × 4
         ##    terms    value component id       
         ##    <chr>    <dbl>     <int> <chr>    
-        ##  1 variance  2.00         1 pca_V6l0A
-        ##  2 variance  1.71         2 pca_V6l0A
-        ##  3 variance  1.50         3 pca_V6l0A
-        ##  4 variance  1.48         4 pca_V6l0A
-        ##  5 variance  1.37         5 pca_V6l0A
-        ##  6 variance  1.32         6 pca_V6l0A
-        ##  7 variance  1.30         7 pca_V6l0A
-        ##  8 variance  1.20         8 pca_V6l0A
-        ##  9 variance  1.19         9 pca_V6l0A
-        ## 10 variance  1.18        10 pca_V6l0A
+        ##  1 variance  2.00         1 pca_tMJA6
+        ##  2 variance  1.71         2 pca_tMJA6
+        ##  3 variance  1.50         3 pca_tMJA6
+        ##  4 variance  1.48         4 pca_tMJA6
+        ##  5 variance  1.37         5 pca_tMJA6
+        ##  6 variance  1.32         6 pca_tMJA6
+        ##  7 variance  1.30         7 pca_tMJA6
+        ##  8 variance  1.20         8 pca_tMJA6
+        ##  9 variance  1.19         9 pca_tMJA6
+        ## 10 variance  1.18        10 pca_tMJA6
         ## # … with 150 more rows
 
 9.  We can interpret components by looking at the linear coefficients of
