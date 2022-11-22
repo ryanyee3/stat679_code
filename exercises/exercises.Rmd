@@ -254,6 +254,14 @@ following prompts,
     c. Do you have any questions for the teaching staff related to the upcoming
   project milestone?
 
+1. [Brainstorming Exchange] This discussion shares an opportunity to describe
+technical challenges your team has encountered as well as brainstorm potential
+solutions.
+
+    a. Describe the 1 - 2 most pressing technical challenges you encountered during your project’s implementation (e.g., “Too many overlapping lines in a time series” or “Slow interactivity in Shiny”). What is your ideal outcome and what is the gap with your current implementation? Provide concrete details.
+    b. Pair with another team and brainstorm solutions. Questions to consider are, Where might you find references from people who have encountered similar problems? Are there example visualizations from the course that might be a useful starting point? Are there ways to simplify the problem? Consider George Polya’s advice: “If you cannot solve the proposed problem do not let this failure afflict you too much but try to find consolation with some easier success, try to solve first some related problem; then you may find courage to attack your original problem again.”
+    c. Return to your original team and distill the most important takeaways. For a proposed approach, what would be the immediate next step? If you had 30 free minutes to work on it, how would you begin?
+
 1. [Code Analysis] Pick one code example from this week's lecture notes. Provide
 a 3 - 4 sentence summary of the overall implementation strategy. Then, add
 comments every 10 - 15 lines describing what each section of code is doing. If
