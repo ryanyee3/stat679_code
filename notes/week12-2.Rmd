@@ -8,7 +8,7 @@ output:
 
 _Visual encodings for memberships and topics_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-2.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-2.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2012%20-%202%3A%20Visualizing%20Topic%20Models/1_07w1sdg7)
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 library(knitr)
@@ -143,14 +143,14 @@ ggplot(top_terms, aes(beta, term, fill = factor(topic))) +
 1. To visualize discriminative words, we first compute a discrimination measure
 for each word and filter to those with the top score. The filtered results can
 be used in either faceted barplots or heatmaps. Specifically, to find the words
-that discriminate between topics k and l, we compute
-		D(k,l):=βkwlog(βkwβlw)+(βlw−βkw)
-	for each word w. By maximizing over all pairs k,l, we can determine whether the
-	word is discriminative between any pair of topics. This might seem like a
-	mysterious formula, but it is just a function that is large when topic k has
-	much larger probability than topic l (see the figure).
+that discriminate between topics $k$ and $l$, we compute
+    $$D\left(k, l\right) := \beta_{kw}\log\left(\frac{\beta_{kw}}{\beta_{lw}}\right) + \left(\beta_{lw} - \beta_{kw}\right)$$
+	for each word $w$. By maximizing over all pairs $k,l$, we can determine whether
+	the word is discriminative between any pair of topics. This might seem like a
+	mysterious formula, but it is just a function that is large when topic $k$ has
+	much larger probability than topic $l$ (see the figure).
 	
-    ```{r}
+    ```{r, echo = FALSE}
 p <- seq(0.01, .99, length.out = 50)
 df <- expand.grid(p, p) %>%
   mutate(D = kl_div(Var1, Var2))

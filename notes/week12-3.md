@@ -8,6 +8,9 @@ output:
 
 *The Stanford Dissertation Browser case study*
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd),
+[Recording](https://mediaspace.wisc.edu/media/Week%2012%20-%203%3A%20Interface%20Design%20and%20Topic%20Models/1_jocz55hl)
+
 1.  For most of the course, we have focused on visualizing the data
     directly. For the last few weeks, though, we have visualized the
     results of an initial modeling step, like fitting PCA or topic
@@ -25,11 +28,11 @@ output:
 3.  The authors of this week’s reading suggest a mnemonic: “interpret
     but verify.” This captures several principles,
 
--   Interpret: Models and visualizations should be designed in such a
-    way that users can draw inferences that are relevant to their
-    understanding of a domain.
--   Verify: It is the designer’s responsibility that these inferences be
-    accurate.
+    -   Interpret: Models and visualizations should be designed in such
+        a way that users can draw inferences that are relevant to their
+        understanding of a domain.
+    -   Verify: It is the designer’s responsibility that these
+        inferences be accurate.
 
 #### Stanford Dissertation Browser
 

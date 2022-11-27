@@ -8,6 +8,8 @@ output:
 
 _The Stanford Dissertation Browser case study_
 
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2012%20-%203%3A%20Interface%20Design%20and%20Topic%20Models/1_jocz55hl)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
@@ -34,11 +36,8 @@ complexity is one of the reasons data science training takes years.
 1. The authors of this week’s reading suggest a mnemonic: “interpret but
 verify.” This captures several principles,
 
-  * Interpret: Models and visualizations should be designed in such a way that
-  users can draw inferences that are relevant to their understanding of a
-  domain.
-  * Verify: It is the designer’s responsibility that these inferences be
-  accurate.
+    * Interpret: Models and visualizations should be designed in such a way that users can draw inferences that are relevant to their understanding of a domain.
+    * Verify: It is the designer’s responsibility that these inferences be accurate. 
 
 #### Stanford Dissertation Browser
 

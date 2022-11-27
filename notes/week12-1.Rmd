@@ -8,7 +8,7 @@ output:
 
 _Quantitative descriptions of document topics_
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd), [Recording]()
+[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2012%20-%201%3A%20Introduction%20to%20Topic%20Models/1_li5hthm0)
 
 ```{r, echo = FALSE}
 library(knitr)
