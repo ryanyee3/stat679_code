@@ -2547,3 +2547,40 @@ from where we left off
 
 * Copy your answers to this page: https://go.wisc.edu/362d74
   - This is also a chance to get more informal feedback from the teaching team
+
+---
+
+### November 28, 2022
+
+1. In-Class Demo 12.1
+1. In-Class Exercise 12.1
+
+---
+
+### Announcements
+
+1. The Project Peer Review is due next Monday (12/05)
+1. Problem Set 4 is due next Monday (12/05)
+1. Rescheduled Office Hours - Thursday 4 - 5pm instead of Friday
+1. Course evaluations are open Wednesday (11/30)
+
+---
+
+### In-Class Demo
+
+* We will work through [Hotel Reviews] in the exercise sheet.
+
+* Starter code is available here: https://go.wisc.edu/n60h92
+
+---
+
+### In-Class Exercise
+
+Work through [Code Analysis] in the exercises sheet (also copied below). You can
+pick examples from before this week if you want.
+
+[Code Analysis] Pick one code example from the lecture notes. Provide a 3 - 4
+sentence summary of the overall implementation strategy. Then, add comments
+every 10 - 15 lines describing what each section of code is doing. If there are
+parts that you do not understand, add a ??? next to it (we will review these in
+the next lecture).
