@@ -8,7 +8,7 @@ library(tidyverse)
 library(tidytext)
 library(topicmodels)
 theme_set(theme_bw())
-set.seed(1128)
+set.seed(1234)
 ```
     
 [Hotel Reviews] In this problem, we will practice using Latent Dirichlet

@@ -8,7 +8,7 @@ library(tidyverse)
 library(tidytext)
 library(topicmodels)
 theme_set(theme_bw())
-set.seed(123)
+set.seed(1234)
 ```
     
 [Hotel Reviews] In this problem, we will practice using Latent Dirichlet
@@ -36,7 +36,7 @@ with 8 topics to the prepared object.
 
 ```{r}
 tic <- Sys.time()
-fit <- LDA(reviews_dtm, k = 8, control = list(seed = 123))
+fit <- LDA(reviews_dtm, k = 8, control = list(seed = 1234))
 Sys.time() - tic
 ```
 
@@ -72,7 +72,7 @@ ggplot(memberships) +
 
 ```{r}
 memberships %>% 
-  filter(topic == 3) %>% 
+  filter(topic == 1) %>% 
   arrange(-gamma)
 ```
 
@@ -88,7 +88,7 @@ top_terms <- topics %>%
   slice_max(beta, n = 70) %>%
   mutate(term = reorder_within(term, beta, topic))
 
-ggplot(top_terms, aes(beta, term, fill = factor(topic))) +
+ggplot(top_terms, aes(sqrt(beta), term, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
   scale_fill_brewer(palette = "Set2") +
@@ -98,7 +98,7 @@ ggplot(top_terms, aes(beta, term, fill = factor(topic))) +
 Bonus: This is outside the scope of this class, but if we wanted, we could even
 fit a model to predict review rating just from the topic memberships.
 
-```{r}
+```{r, eval = FALSE}
 library(caret)
 
 pd <- memberships %>%
