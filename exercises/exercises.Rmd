@@ -2622,6 +2622,24 @@ and the resulting topicmodels object is
     design and implement a visualization that shows variation in the memberships
     $\gamma_{dk}$ either over time, across blogs, or in relation to political
     leaning. Suggest some interpretations for patterns that you see.
+    
+1. [Interpreting Topic Models] Imagine that you are a statistical consultant
+working with a scientist / sports team / journalist / sales division head (pick
+your favorite or make up your own example). At one point in your study, you
+found it useful to apply LDA for visualizing a document collection. In this
+problem, you are asked to provide a non-technical explanation of how to
+interpret the topic model output, assuming that your audience is familiar with
+their data but not statistical methodology.
+
+    a. You have run LDA on the dataset. There were originally 10,000 documents,
+    and you used $K = 15$ topics. You have shared a Structure plot for the
+    memberships and a faceted bar plot for the top terms in each topic. Explain
+    to your audience what these visualizations represent.
+    
+    b. Though they have not heard of LDA, your audience has previously
+    encountered principal components analysis for dimensionality reduction. Help
+    your audience understand LDA by comparing and contrasting it with PCA.
+
 
 # Model Visualization
 
