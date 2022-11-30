@@ -8,7 +8,7 @@ output:
 
 *Visual encodings for memberships and topics*
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-2.Rmd),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week12-2.Rmd),
 [Recording](https://mediaspace.wisc.edu/media/Week%2012%20-%202%3A%20Visualizing%20Topic%20Models/1_07w1sdg7)
 
     library(tidyverse)

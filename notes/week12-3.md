@@ -8,7 +8,7 @@ output:
 
 *The Stanford Dissertation Browser case study*
 
-[Code](https://github.com/krisrs1128/stat679_code/tree/main/examples/week12/week12-1.Rmd),
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week12-3.Rmd),
 [Recording](https://mediaspace.wisc.edu/media/Week%2012%20-%203%3A%20Interface%20Design%20and%20Topic%20Models/1_jocz55hl)
 
 1.  For most of the course, we have focused on visualizing the data
