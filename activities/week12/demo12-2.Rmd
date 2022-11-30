@@ -56,7 +56,7 @@ on the graph and interpret its relative wage profile based on the principal
 components.
     
 ```{r, eval = FALSE, fig.width = 10, fig.height = 5}
-scores <- juice(pca_prep)
+scores <- bake(pca_prep, living_wages)
 ggplot(scores) +
   geom_hline(yintercept = 0, size = 2, col = "#5d5d5d") +
   geom_vline(xintercept = 0, size = 2, col = "#5d5d5d") +
