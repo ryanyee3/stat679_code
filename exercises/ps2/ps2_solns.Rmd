@@ -36,15 +36,6 @@ but perhaps simplistic question / difficult to read design / underdeveloped
 interpretation (0.5 points), misleading design or no interpretation (0 points)
 * c, Code (0.5 points): Clear and concise (0.5 points), correct but unnecessarily complex (0.25 points), missing (0 points)
 
-* a - b, Design (0.5 points each part): Creative and readable design (0.5
-points), generally appropriate but lacking critical attention (0.5 points),
-difficult to read (0 points).
-* a - b, Code (0.5 points each part): Clear and concise code (0.5
-points), correct but unecessarily complex (0.25 points), missing (0 points).
-* c, Discussion (1 point): Creative and well-developed design proposal (1
-point), appropriate but perhaps underdeveloped proposal (0.5 points),
-inappropriate or unclear proposal (0 points).
-
 ## Question
 
 This problem will revisit the previous problem from an interactive point of
