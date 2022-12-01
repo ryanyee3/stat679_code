@@ -1,0 +1,49 @@
+---
+title: "Untitled"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(sf)
+library(tidyverse)
+library(lubridate)
+library(tsibble)
+```
+
+```{r}
+calfresh <- read_csv("https://uwmadison.box.com/shared/static/rduej9hsc4w3mdethxnx9ccv752f22yr.csv") %>%
+     filter(
+       date != "2019 Feb",
+       !is.na(calfresh)
+     ) %>%
+     mutate(date = as.numeric(yearmonth(date)))
+write_csv(calfresh, "calfresh.csv")
+     
+counties <- read_sf("https://uwmadison.box.com/shared/static/gropucqxgqm82yhq13do1ws9k16dnxq7.geojson")
+write_sf(counties, "counties.geojson")
+```
+
+
+```{r}
+library(tmap)
+sf_use_s2(FALSE)
+tm_shape(counties) +
+  tm_polygons()
+```
+
+```{r}
+ggplot(calfresh) +
+  geom_line(aes(date, calfresh, group = county)) +
+  scale_y_log10()
+```
+```{r}
+calfresh <- calfresh %>%
+  select(county, date, calfresh) %>%
+  mutate(date = as.numeric(date))
+
+counties %>%
+  left_join(calfresh) %>%
+  write_sf("../ps3/calfresh.geojson")
+```

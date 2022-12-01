@@ -1,0 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap');
+
+#map path {
+  stroke: #dcdcdc;
+}
+
+#ts path {
+  fill: none;
+  stroke-width: 2px;
+  stroke: #8C306C;
+}
+
+#label text {
+  font-size: 18px;
+  font-family: Montserrat, sans-serif;
+}
