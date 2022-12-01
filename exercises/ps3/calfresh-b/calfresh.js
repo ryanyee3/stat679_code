@@ -34,7 +34,7 @@ function line_plot(ts, scales) {
 
   d3.select("#ts")
     .selectAll("path")
-    .data([ts[0]]).enter()
+    .data(ts).enter()
     .append("path")
     .attrs({
       d: line_gen,
@@ -75,50 +75,6 @@ function choropleth(geo, ts) {
       fill: d => scales.fill(means[d.properties.county]),
       "stroke-width": 0.5
     })
-    .on("mouseover", (ev, d) => update_display(ev, d, ts))
-}
-
-function update_map(d) {
-  d3.select("#map")
-    .selectAll("path")
-    .attrs({
-      "stroke-width": e => {
-        return e.properties.county == d.properties.county ? 2 : 0.5
-      }
-    })
-}
-
-function update_label(d) {
-  d3.select("#label text")
-    .text(d.properties.county)
-}
-
-function update_display(ev, d, ts) {
-  update_label(d)
-  update_map(d)
-  update_ts(ev, d, ts)
-}
-
-function update_ts(ev, d, ts) {
-  cur_ts = ts.filter(e => e[0].county == d.properties.county)
-  scales = make_scales(cur_ts)
-
-  let line_gen = d3.line()
-    .x(d => scales.x(d.date))
-    .y(d => scales.y(Math.sqrt(d.calfresh)))
-
-  d3.select("#ts")
-    .selectAll("path")
-    .data(cur_ts)
-    .transition().duration(transition_length)
-    .attrs({
-      d: line_gen,
-      "stroke-opacity": 1
-    })
-
-  d3.select("#y_axis")
-    .transition().duration(transition_length)
-    .call(d3.axisLeft(scales.y).ticks(4))
 }
 
 function make_scales(ts) {
@@ -127,7 +83,7 @@ function make_scales(ts) {
       .domain(d3.extent(ts[0].map(d => d.date)))
       .range([0, width / 2]),
     y: d3.scaleLinear()
-      .domain(d3.extent(ts[0].map(d => Math.sqrt(d.calfresh))))
+      .domain([0, 890])
       .range([0.8 * height, 0.5 * height]),
     fill: d3.scaleLinear()
       .domain([0, 850])
