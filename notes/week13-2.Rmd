@@ -18,6 +18,14 @@ opts_chunk$set(
 )
 ```
 
+```{r}
+library(tidyverse)
+library(ggdist)
+library(distributional)
+library(patchwork)
+theme_set(theme_bw())
+```
+
 1. In the last notes, we recommended frequency framing plots as a default
 approach for visualizing uncertainty. If you have ever skimmed through
 scientific publications, though, you might have been surprised by this choice —

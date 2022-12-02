@@ -22,6 +22,7 @@ opts_chunk$set(
 library(tidyverse)
 library(ggdist)
 library(distributional)
+library(patchwork)
 theme_set(theme_bw())
 ```
 
@@ -173,15 +174,52 @@ ggplot(estimate) +
 ```
 
 1. We can compactly display the uncertainties for many inferences by stacking
-density or dotplots. For example, in the plot below, we show chocolate quality
+dotplots or intervals. For example, in the plot below, we show chocolate quality
 across many countries. More than simply describing the average quality of
-chocolate bars across countries, it helps answer the more nuanced question, “If
+chocolate bars across countries, it helps answer the more nuanced question, "If
 I were in a grocery store and randomly picked a chocolate bar from country X,
-what would I expect its quality to be?”
+what would I expect its quality to be?" That said, it can still be helpful to
+include summary intervals showing the mean +/- 1 and two standard deviations
+(right plot).
 
-1. A variation of stacked density plots are called ridgeline plots. We create
-them by adjusting the `height` parameter below; there is in fact an entire
-package specialized to ridgeline variants.
+```{r, fig.height = 8, fig.width = 13}
+cacao_small <- cacao %>%
+  filter(location %in% c("Ecuador", "Australia", "Belgium", "Switzerland", "Germany"))
+
+p <- ggplot(cacao_small, aes(rating, reorder(location, rating))) + theme(axis.title.y = element_blank())
+p1 <- p + stat_dots(dotsize = .3, binwidth = .2, fill = "#6894A6")
+p2 <- p + stat_dotsinterval(dotsize = .3, binwidth = .2, fill = "#6894A6")
+
+p1 + p2
+```
+1. A variation of stacked dotplots are called ridgeline plots. This no longer
+uses dots to support frequency framing, but it's much easier to view partially
+overlapping density plots than dot plots. 
+
+```{r}
+p + stat_slab(height = 2, col = "black",  fill = "#6894A6")
+```
+
+Since these are densities, it also isn't important for the different countries
+to have approximately the same counts. When working with a larger subset of
+countries, this makes a big difference.
+
+```{r, fig.height = 6, fig.width = 10}
+data(cacao)
+p <- cacao %>%
+  group_by(location) %>%
+  filter(n() > 12) %>%
+  ggplot(aes(rating, reorder(location, rating))) +
+  theme(axis.title.y = element_blank())
+    
+p1 <- p + 
+  stat_slab(height = 2, col = "black", fill = "#6894A6") +
+  labs(title = "Legible :)")
+p2 <- p + 
+  stat_dots(dotsize = 0.3, binwidth = 0.2, col = "#6894A6") +
+  labs(title = "Illegible :(")
+p1 + p2
+```
 
 1. Frequency framing is a reasonable default strategy for representing
 uncertainty. However, there are many other ways to visually encode distributions
