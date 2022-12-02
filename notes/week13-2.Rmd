@@ -1,5 +1,5 @@
 ---
-title: Title
+title: Visualizing Distributions
 layout: post
 output: 
   md_document:
@@ -14,7 +14,58 @@ opts_knit$set(base_dir = "/", base.url = "/")
 opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
-  fig.path = "stat679_notes/assets/weekX-Y/"
-  )
+  fig.path = "stat679_notes/assets/week13-2/"
+)
 ```
 
+1. In the last notes, we recommended frequency framing plots as a default
+approach for visualizing uncertainty. If you have ever skimmed through
+scientific publications, though, you might have been surprised by this choice —
+in technical literature, the overwhelming majority of uncertainty visualizations
+are based on error bars.
+
+1. In many of these publications, frequency framing would likely be prefereable,
+because they give a richer view of the distribution of possible outcomes.
+However, there are three scenarios where error bars are hard to beat: when we
+need to compactly represent uncertainty for many units and when we want to
+combine them with other plots.
+
+3. Since error bars take up so little space, they can be included in highly
+information dense views. For example, below, we stack 95% confidence intervals
+for 50 means.
+
+1. Since they are so compact, it is relatively easy to incorporate error bars
+into other visualizations. For example, we can replace points in a scatterplot
+with crosses that summarize uncertainty in each dimension.
+
+1. One difficulty with error bars is that their interpretations are not
+self-evident from their appearance — they need to be included in the title or
+caption to the figure. For example, 90 and 99% confidence intervals have
+different meanings, and this needs to be explained clearly.
+
+1. A variation on error bars that pack a little more information in nearly as
+little space is the graded error bar. This is a type of error bar where
+different levels of thickness are matched with different interpretations. In the
+example below, we are simultaneously showing 90, 95, and 99% confidence
+intervals for a mean.
+
+1. These graded error bars can be combined with distribution plots to create eye
+or half-eye plots. This approach benefits from the advantages of both the
+distribution and graded error approaches. From the distribution component, we
+can see the full distribution of uncertainty, not simply summaries. Using the
+error bar, we can tell whether specific values are above or below important
+cutoffs.
+
+1. A related approach is to fill in subsets of a distribution plot according to
+more interpretable cutoffs.
+
+1. Two other encodings are worth knowing, but are harder to fit into the rest of
+this discussion. In interval plots, the fill opacity is used to encode
+probability. It is harder to evaluate the exact probability values, since fill
+is harder to read than position, but it is a more compact representation than
+full distribution plots.
+
+1. A second encoding is the complementary cumulative distribution (CCDF) plot.
+It represents the probability that the data will lie above a particular value.
+Some studies have found that nontechnical audiences often have better inferences
+when they are presented distributional uncertainty via CCDFs.
