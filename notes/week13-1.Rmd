@@ -8,6 +8,8 @@ output:
 
 _More evocative uncertainty visualization_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week13-1.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2013%20-%201%3A%20Frequency%20Framing/1_ywcaurej)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
