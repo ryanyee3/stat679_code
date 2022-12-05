@@ -8,6 +8,8 @@ output:
 
 _Uncertainty through distributions_
 
+[Code](https://github.com/krisrs1128/stat679_code/blob/main/notes/week13-2.Rmd), [Recording](https://mediaspace.wisc.edu/media/Week%2013%20-%202%3A%20Visualizing%20Distributions/1_g1fbf4yy)
+
 ```{r, echo = FALSE}
 library(knitr)
 opts_knit$set(base_dir = "/", base.url = "/")
