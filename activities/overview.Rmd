@@ -2904,3 +2904,35 @@ projects -- invite anyone you think might be interested.
 linked in the google doc below.
 
 * Share your team's responses here: [https://go.wisc.edu/j541l8](https://go.wisc.edu/j541l8)
+
+---
+
+### December 7, 2022
+
+1. In-Class Demo [13.2]
+1. Reflection Activity
+
+---
+
+### Announcements
+
+1. Rescheduled Office Hours - Today from 2 - 3pm.
+1. Lightning talks on 12/12. I want people to have a chance to hear about your
+projects -- invite anyone you think might be interested.
+1. Project Milestone 3 is due 12/14
+
+---
+
+### In-Class Demo
+
+* We will work through South African Heart Disease GAM in the exercise sheet
+
+* Starter code is available here: https://go.wisc.edu/u4566i
+  - We will start with the `.Rmd`
+  - Then we will write the `.js`
+
+---
+
+### Reflection Activity
+
+https://go.wisc.edu/yj112x
