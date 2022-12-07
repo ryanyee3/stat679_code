@@ -1,0 +1,72 @@
+---
+title: "Untitled"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(mgcv)
+library(ungeviz)
+library(jsonlite)
+theme_set(theme_bw())
+```
+
+```{r}
+heart <- read.table("http://www-stat.stanford.edu/~tibs/ElemStatLearn/datasets/SAheart.data", sep=",",head=T,row.names=1)
+ggplot(heart) +
+  geom_jitter(aes(ldl, chd), width = 0, height = 0.1)
+```
+
+
+```{r}
+heart <- read.table("http://www-stat.stanford.edu/~tibs/ElemStatLearn/datasets/SAheart.data", sep=",",head=T,row.names=1)
+fit <- gam(chd ~ s(ldl), data = heart, family = "binomial")
+new_data <- expand.grid(
+  ldl = seq(min(heart$ldl), max(heart$ldl), length.out = 100)
+)
+```
+
+
+```{r}
+sample_df <- sample_outcomes(fit, new_data, 20)
+conf <- confidence_band(fit, new_data, times = 100)
+
+ggplot(heart, aes(ldl, chd)) +
+  geom_jitter(width = 0, height = 0.1) +
+  geom_ribbon(data = conf, aes(ymin = lo, ymax = hi), fill = "#d3d3d3", color = NA) +
+  geom_line(data = sample_df, aes(group = .draw), alpha = 0.3)
+```
+
+
+```{r}
+bootstrap_data <- function(df, newdata) {
+  fit <- gam(chd ~ s(ldl), data = df, family = "binomial")
+  y_hat <- predict(fit, newdata, type = "response")
+  list(
+    curve = data.frame(ldl = new_data$ldl, y_hat = y_hat),
+    ids = df[[".original_id"]] - 1
+  )
+}
+
+bootstrapper(100)(heart) %>%
+  split(.$.draw) %>%
+  map(~ bootstrap_data(., new_data)) %>%
+  write_json("curves.json")
+
+heart %>%
+  rowid_to_column() %>%
+  write_csv("heart.csv")
+
+conf %>%
+  mutate(
+    lo = as.numeric(lo),
+    hi = as.numeric(hi)
+  ) %>%
+  select(ldl, lo, hi) %>%
+  write_csv("conf.csv")
+```
