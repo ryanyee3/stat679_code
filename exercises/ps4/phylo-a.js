@@ -20,6 +20,20 @@ function make_scales(data) {
 }
 
 function draw_tree(tree, nodes_lookup) {
+  let link = d3.linkVertical()
+    .x(d => d.x)
+    .y(d => d.y)
+
+  d3.select("#tree")
+    .selectAll("path")
+    .data(tree.links()).enter()
+    .append("path")
+    .attrs({
+      d: link,
+      "stroke-width": 2,
+      stroke: "#d3d3d3"
+    })
+
   d3.select("#tree")
     .selectAll("circle")
     .data(tree.descendants()).enter()
