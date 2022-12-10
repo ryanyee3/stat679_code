@@ -10,12 +10,20 @@ function make_tree(edges) {
   return tree_gen(stratifier(edges))
 }
 
-function make_scales(data) {
-  [nodes, edges] = data
+function make_scales() {
+  let countries = [
+    "China", "UnitedStates", "Netherlands", "Australia", "UnitedKingdom",
+    "Singapore", "Switzerland", "Korea", "Japan", "NA"
+  ]
+  let colors = [
+    "#014034", "#67A60A", "#788C2E", "#D98B8B", "#322059", "#6CAFD9",
+    "#3B401A", "#F27405", "#8C6C65", "#C5D9CA"
+  ]
+
   return {
     fill: d3.scaleOrdinal()
-      .domain([... new Set(nodes.map(d => d.country))])
-      .range(d3.schemeCategory10)
+      .domain(countries)
+      .range(colors)
   }
 }
 
@@ -42,7 +50,7 @@ function draw_tree(tree, nodes_lookup) {
       cx: d => d.x,
       cy: d => d.y,
       fill: d => scales.fill(nodes_lookup[d.id].country),
-      r: 10
+      r: 4
     })
 }
 
